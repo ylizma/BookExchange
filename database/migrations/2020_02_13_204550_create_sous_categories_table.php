@@ -17,6 +17,8 @@ class CreateSousCategoriesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->unsignedInteger('categorie_id');
+
+            $table->foreign('categorie_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 
