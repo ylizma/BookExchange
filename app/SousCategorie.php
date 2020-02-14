@@ -15,7 +15,7 @@ class SousCategorie extends Model
      * @var array
     */
     protected $fillable = [
-        'name', 'categorie_id'
+        'nom', 'categorie_id'
     ];
 
     public function categorie()
