@@ -21,4 +21,7 @@ Route::get('logout', 'AuthController@logout');
 
 Route::group(['middleware' => ['jwt.auth']], function() {
     Route::get('user', 'AuthController@getAuthUser');
+
+    Route::resource('rec','RecommandationUserController');
 });
+

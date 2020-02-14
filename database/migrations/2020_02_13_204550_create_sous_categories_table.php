@@ -16,7 +16,7 @@ class CreateSousCategoriesTable extends Migration
         Schema::create('sous_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->unsignedInteger('categorie_id');
+            $table->bigInteger('categorie_id')->unsigned()->index();
 
             $table->foreign('categorie_id')->references('id')->on('categories')->onDelete('cascade');
         });
