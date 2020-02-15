@@ -4,23 +4,19 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SousCategorie extends Model
+class PhotoLivre extends Model
 {
-
-    public $timestamps = false;
-
     /**
      * The attributes that are mass assignable.
      *
      * @var array
     */
     protected $fillable = [
-        'nom', 'categorie_id'
+        'image', 'exemplaire_id'
     ];
 
-    public function categorie()
+    public function exemplaire()
     {
-        return $this->belongsTo(Categorie::Class);
+        return $this->belongsTo(Exemplaire::Class);
     }
-
 }

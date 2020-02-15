@@ -4,10 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SousCategorie extends Model
+class Livre extends Model
 {
-
-    public $timestamps = false;
+    //uncompleted
 
     /**
      * The attributes that are mass assignable.
@@ -15,12 +14,12 @@ class SousCategorie extends Model
      * @var array
     */
     protected $fillable = [
-        'nom', 'categorie_id'
+        'titre', 'auteurs', 'isbn', 'date_publication', 'resume'
     ];
 
-    public function categorie()
+    public function exemplaires()
     {
-        return $this->belongsTo(Categorie::Class);
+        return $this->hasMany(Exemplaire::class);
     }
 
 }
