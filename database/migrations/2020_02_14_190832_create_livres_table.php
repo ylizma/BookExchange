@@ -22,8 +22,9 @@ class CreateLivresTable extends Migration
             $table->string('isbn');
             $table->date('date_publication');
             $table->text('resume');
-
             $table->timestamps();
+            $table->bigInteger('type_id')->unsigned();
+            $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade');
         });
     }
 

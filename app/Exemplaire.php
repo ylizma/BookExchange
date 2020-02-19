@@ -14,13 +14,8 @@ class Exemplaire extends Model
      * @var array
     */
     protected $fillable = [
-        'langue', 'etat', 'categorie_id'
+        'langue', 'etat', 'livre_id'
     ];
-
-    public function categorie()
-    {
-        return $this->belongsTo(Categorie::Class);
-    }
 
     public function photos()
     {

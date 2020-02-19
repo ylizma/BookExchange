@@ -16,11 +16,11 @@ class CreatePhotoLivresTable extends Migration
         Schema::create('photo_livres', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('image');
-            $table->unsignedInteger('exemplaire_id');
+            $table->bigInteger('exemplaire_id')->unsigned();
 
             $table->timestamps();
 
-            $table->foreign('exemplaire_id')->references('id')->on('exemplaires')->onDelete('cascade');
+            // 
         });
     }
 

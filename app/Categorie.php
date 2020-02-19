@@ -18,9 +18,9 @@ class Categorie extends Model
         'nom',
     ];
 
-    public function souscategories()
+    public function type()
     {
-        return $this->hasMany(SousCategorie::class);
+        return $this->belongsTo(Type::class);
     }
 
 }
