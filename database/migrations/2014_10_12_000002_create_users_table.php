@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->bigInteger('ville_id')->unsigned()->index();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('telephone')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->foreign('ville_id')->references('id')->on('villes');
