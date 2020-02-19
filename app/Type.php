@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SousCategorie extends Model
+class Type extends Model
 {
 
     public $timestamps = false;
@@ -18,9 +18,14 @@ class SousCategorie extends Model
         'nom', 'categorie_id'
     ];
 
+    public function livre()
+    {
+        return $this->belongsTo(Livre::Class);
+    }
+
     public function categorie()
     {
-        return $this->belongsTo(Categorie::Class);
+        return $this->hasMany('App\Categorie');
     }
 
 }

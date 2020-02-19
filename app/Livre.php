@@ -21,5 +21,9 @@ class Livre extends Model
     {
         return $this->hasMany(Exemplaire::class);
     }
+    public function type()
+    {
+        return $this->hasOne('App\Type');
+    }
 
 }
