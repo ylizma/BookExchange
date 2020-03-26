@@ -28,4 +28,7 @@
 
     <script src="{{ asset('js/app.js') }}" ></script>
     <script>window.Laravel={csrfToken:'{{ csrf_token() }}'}</script>
+    <script src="app/assets/js/jquery.min.js"></script>
+    <script src="app/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="app/assets/js/Navbar---Apple.js"></script>
 </html>

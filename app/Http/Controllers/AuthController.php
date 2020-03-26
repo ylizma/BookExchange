@@ -13,16 +13,14 @@ class AuthController extends Controller
     public function register(Request $request)
     {
       $ville=Ville::find($request->ville);
+        $user=$ville->users()->create([
+          'nom' => $request->nom,
+          'prenom' => $request->prenom,
+          'email' => $request->email,
+          'password' => bcrypt($request->password),
+        ]);
 
-      $user=$ville->users()->create([
-        'nom' => $request->nom,
-        'prenom' => $request->prenom,
-        'email' => $request->email,
-        'password' => bcrypt($request->password),
-        'ville_id' => Ville::find($request->ville)->id,
-      ]);      
-
-      return response()->json(['message' => 'succesfuly sign in'], 200);
+        return response()->json(['message' => 'succesfuly sign in'], 200);
     }
 
     public function login(Request $request)
