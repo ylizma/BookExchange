@@ -6,7 +6,7 @@
             <h4 style="color:rgb(139,139,139);margin-bottom:0px;font-weight:400;font-size:27px;">Register</h4>
         </div>
         <div v-show="error" class="alert alert-danger alert-dismissible fade show" role="alert">
-            <center>{{msg}}  {{passwordmsg}}</center>
+            <center>{{msg.msg}}  {{passwordmsg}}</center>
            
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
