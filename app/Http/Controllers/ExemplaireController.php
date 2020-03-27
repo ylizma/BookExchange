@@ -30,7 +30,7 @@ class ExemplaireController extends Controller
         $exemplaire = Exemplaire::create([
             'langue' => $request->langue,
             'etat' => $request->etat,
-            'livre_id' => $request->livre_id
+            'livre_id' => $request->livre_id,
         ]);
 
         return new ExemplaireResource($exemplaire);
