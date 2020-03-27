@@ -14,7 +14,7 @@ class Livre extends Model
      * @var array
     */
     protected $fillable = [
-        'titre', 'auteurs', 'isbn', 'date_publication', 'resume'
+        'titre', 'auteurs', 'isbn', 'date_publication', 'resume','type_id'
     ];
 
     public function exemplaires()
@@ -23,7 +23,7 @@ class Livre extends Model
     }
     public function type()
     {
-        return $this->hasOne('App\Type');
+        return $this->belongsTo('App\Type');
     }
 
 }
