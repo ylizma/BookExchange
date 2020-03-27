@@ -19,7 +19,6 @@ class AuthController extends Controller
           'email' => $request->email,
           'password' => bcrypt($request->password),
         ]);
-
         return response()->json(['message' => 'succesfuly sign in'], 200);
     }
 
@@ -30,7 +29,6 @@ class AuthController extends Controller
       if (!$token = auth()->attempt($credentials)) {
         return response()->json(['error' => 'Unauthorized'], 401);
       }
-
       return $this->respondWithToken($token);
     }
 
