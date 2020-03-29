@@ -24,3 +24,7 @@ Route::group(['middleware' => ['jwt.auth']], function() {
     Route::resource('rec','RecommandationUserController');
 });
 
+
+
+Route::apiResource('livres', 'LivreController');
+Route::apiResource('exemplaires', 'ExemplaireController');
