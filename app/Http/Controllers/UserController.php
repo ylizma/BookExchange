@@ -11,8 +11,7 @@ class UserController extends Controller
 
     function myprofile(){
         $user=auth()->user();
-        $infos=User::with('ville')->find($user->id);
+        $infos=User::with('ville','books')->find($user->id);
         return $infos;
-   
     }
 }

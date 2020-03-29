@@ -26,4 +26,9 @@ class Exemplaire extends Model
     {
         return $this->belongsTo(Livre::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

@@ -11,8 +11,6 @@ class RecommanderUser extends Model
         'from_user_id',
     ];
     
-
-    
     public function recommandations()
     {
         return $this->belongsTo('App\User','to_user_id');

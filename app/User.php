@@ -70,4 +70,8 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany('App\RecommanderUser','to_user_id');
     }
 
+    public function books()
+    {
+        return $this->hasMany('App\Exemplaire');
+    }
 }
