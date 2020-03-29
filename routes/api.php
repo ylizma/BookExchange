@@ -27,3 +27,7 @@ Route::group(['middleware' => ['jwt.auth']], function() {
     Route::get('profile','UserController@myprofile');
 });
 
+
+
+Route::apiResource('livres', 'LivreController');
+Route::apiResource('exemplaires', 'ExemplaireController');

@@ -20,7 +20,7 @@ class Type extends Model
 
     public function livre()
     {
-        return $this->belongsTo(Livre::Class);
+        return $this->hasMany(Livre::Class);
     }
 
     public function categorie()
