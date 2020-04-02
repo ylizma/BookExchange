@@ -24,7 +24,11 @@ Route::group(['middleware' => ['jwt.auth']], function() {
     Route::get('user', 'AuthController@getAuthUser');
     Route::get('logout', 'AuthController@logout');
     Route::resource('rec','RecommandationUserController');
+
+    // test
     Route::get('profile','UserController@myprofile');
+    Route::get('books','UserController@mybooks');
+    Route::post('infos','UserController@update');
 });
 
 

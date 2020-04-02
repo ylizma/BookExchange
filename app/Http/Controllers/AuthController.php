@@ -14,8 +14,7 @@ class AuthController extends Controller
     {
       $ville=Ville::find($request->ville);
         $user=$ville->users()->create([
-          'nom' => $request->nom,
-          'prenom' => $request->prenom,
+          'name' => $request->name,
           'email' => $request->email,
           'password' => bcrypt($request->password),
         ]);

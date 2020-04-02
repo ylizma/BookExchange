@@ -17,10 +17,8 @@ class CreatePhotoLivresTable extends Migration
             $table->bigIncrements('id');
             $table->string('image');
             $table->bigInteger('exemplaire_id')->unsigned();
-
             $table->timestamps();
-
-            // 
+            $table->foreign('exemplaire_id')->references('id')->on('exemplaires')->onDelete('cascade');
         });
     }
 

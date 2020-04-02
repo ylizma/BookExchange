@@ -17,7 +17,6 @@ class VilleController extends Controller
     {
         $villes=Ville::paginate(15);
         return VilleResource::collection($villes);
-        
     }
     /**
      * Display the specified resource.

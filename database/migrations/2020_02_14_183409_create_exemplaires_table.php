@@ -20,6 +20,8 @@ class CreateExemplairesTable extends Migration
             $table->string('langue');
             $table->string('etat');
             $table->bigInteger('livre_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
             
         });
