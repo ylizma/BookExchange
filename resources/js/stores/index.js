@@ -5,9 +5,9 @@ Vue.use(Vuex)
 
 
 export default new Vuex.Store({
-
 	state:{
-		token:  localStorage.getItem('access_token') || null
+		token:  localStorage.getItem('access_token') || null,
+		user:{}
 	},
 	mutations:{
         // login stuff
@@ -16,8 +16,11 @@ export default new Vuex.Store({
 		},
 		destroyToken(state){
 			state.token=null
-        }
-        // --------------------------------------
+        },
+		// --------------------------------------
+		getUser(state,user){
+			state.user=user
+		}
 	},
 	getters:{
         //login
@@ -26,6 +29,7 @@ export default new Vuex.Store({
 		}
 	},
 	actions:{
+		
 		//login
 		retreiveToken(context,user){
 			return new Promise((resolve,reject) => { 
@@ -35,7 +39,7 @@ export default new Vuex.Store({
 	        }).then(response=>{
 	        	const token=response.data.access_token;
 	            localStorage.setItem('access_token',token);
-	            context.commit('retreiveToken',token);
+				context.commit('retreiveToken',token);
 	            resolve(response);
 
 	        }).catch(error=>{
@@ -61,6 +65,75 @@ export default new Vuex.Store({
 	        })
 	    })
 			}
+		},
+		 getProfileInfo(context){
+			// axios.defaults.headers.common['Authrization'] = 'Bearer '+context.state.token;
+			if(context.getters.logedIn){
+				const config = {
+					headers: {
+					   Authorization: "Bearer " + context.state.token
+					}
+				 };
+				return new Promise((resolve,reject)=>{
+					 axios.get('http://localhost:8000/api/profile',config).then(resp=>{
+						resolve(resp);
+					}).catch(err=>{
+						console.error(err);
+						reject(err);
+					});
+				})
+			}
+		},
+		updateProfile(context,user){
+			// axios.defaults.headers.common['Authrization'] = 'Bearer '+context.state.token;
+			if(context.getters.logedIn){
+				const config = {
+					headers: {
+					   Authorization: "Bearer " + context.state.token,
+					   'content-type': 'multipart/form-data' 
+					}
+				 };
+				return new Promise((resolve,reject)=>{
+					 axios.post('http://localhost:8000/api/update',user,config).then(resp=>{
+						 context.commit('getUser',resp.data.user)
+						resolve(resp);
+					}).catch(err=>{
+						console.error(err);
+						reject(err);
+					});
+				});
+			}
+		},
+		fetchCities(context){
+			 if(context.getters.logedIn){
+				const config = {
+					headers: {
+					   Authorization: "Bearer " + context.state.token
+					}
+				 };
+				 return new Promise((resolve,reject)=>{
+					axios.get('http://localhost:8000/api/city').then(res=>{
+						resolve(res);
+					}).catch(err=>{
+						reject(res);
+					});
+				 });
+			 }
+		},
+		getCurrentUser(context){
+			const config = {
+				headers: {
+				   Authorization: "Bearer " + context.state.token
+				}
+			 };
+			 return new Promise((resolve,reject)=>{
+				axios.get('http://localhost:8000/api/user',config).then(res=>{
+					context.commit('getUser',res.data.user);
+					resolve(res);
+				}).catch(err=>{
+					reject(res);
+				});
+			 });
 		}
 	}
 });

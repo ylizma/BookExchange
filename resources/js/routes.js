@@ -1,8 +1,10 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Signup from '@/js/pages/Signup.vue';
-import Login from '@/js/pages/Login.vue';
+import Signup from '@/js/pages/auth/Signup.vue';
+import Login from '@/js/pages/auth/Login.vue';
 import Home from '@/js/pages/Home.vue';
+import UserProfile from '@/js/pages/profile/User.vue';
+import UserInfos from '@/js/components/profile/UserInfos.vue';
 
 Vue.use(VueRouter);
 
@@ -34,6 +36,18 @@ const router=new VueRouter({
 		// 	requiresVisitor:true
 		// }
 	},
+	{
+		path:'/profile',
+		component:UserProfile,
+		name:'profile',
+		children:[
+			{
+				path:'/profile/infos',
+				name:'profileinfos',
+				component:UserInfos
+			},
+		]
+	}
 
 	]
 });  

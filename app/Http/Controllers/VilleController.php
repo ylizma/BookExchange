@@ -15,7 +15,7 @@ class VilleController extends Controller
      */
     public function index()
     {
-        $villes=Ville::paginate(15);
+        $villes=Ville::All();
         return VilleResource::collection($villes);
     }
     /**

@@ -15,7 +15,7 @@ class VilleResource extends JsonResource
     public function toArray($request)
     {
         return[
-            'name'=>$this->nom,
+            'name'=>$this->name,
             'id'=>$this->id
         ];
     }

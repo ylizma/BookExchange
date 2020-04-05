@@ -29,25 +29,27 @@ class UserController extends Controller
      */
     public function update(Request $req){
         request()->validate([
-            'imgs' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'name'=>'required|max:20',
-            'password'=>'required|max:20',
-            'telephone'=>'min:10',
+            'telephone'=>'nullable',
             'email'=>'required'
        ]);
-        $user= auth()->user();
+       $user= auth()->user();
        $user->name=$req->name;
        $user->ville_id=$req->ville;
-       $user->password=bcrypt($req->password);
        $user->name=$req->name;
        $user->email=$req->email;
        $user->telephone=$req->telephone;
-       if ($files = $req->file('imgs')) {
+       if ($files = $req->file('img')) {
         $destinationPath = 'images/users/'; // upload path
         $profileImage = time(). "." . $files->getClientOriginalExtension();
         $user->image=$profileImage;
+        $files->move($destinationPath, $profileImage);
      }
-     if($files->move($destinationPath, $profileImage) && $user->save()){
+     if($req->password!=''){
+        $user->password=bcrypt($req->password);
+     }
+     if($user->save()){
         return response()->json(['message' => 'succesfuly updated','user'=>$user], 200);
      }
      else return response()->json(['message' => 'internal erro'], 500);

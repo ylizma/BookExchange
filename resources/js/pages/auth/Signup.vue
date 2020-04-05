@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import signupc from '../components/Signup.vue';
+import signupc from '../../components/auth/Signup.vue';
 import axios from 'axios';
 
     export default {

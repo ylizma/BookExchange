@@ -28,9 +28,8 @@ Route::group(['middleware' => ['jwt.auth']], function() {
     // test
     Route::get('profile','UserController@myprofile');
     Route::get('books','UserController@mybooks');
-    Route::post('infos','UserController@update');
+    Route::post('update','UserController@update');
 });
-
 
 
 Route::apiResource('livres', 'LivreController');

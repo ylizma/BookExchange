@@ -12,7 +12,7 @@ class Ville extends Model
      * @var array
      */
     protected $fillable = [
-        'nom',
+        'name',
     ];
 
     public function users()
