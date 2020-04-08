@@ -5,6 +5,7 @@ import Login from '@/js/pages/auth/Login.vue';
 import Home from '@/js/pages/Home.vue';
 import UserProfile from '@/js/pages/profile/User.vue';
 import UserInfos from '@/js/components/profile/UserInfos.vue';
+import UserBooks from '@/js/components/profile/UserBooks.vue';
 
 Vue.use(VueRouter);
 
@@ -45,6 +46,11 @@ const router=new VueRouter({
 				path:'/profile/infos',
 				name:'profileinfos',
 				component:UserInfos
+			},
+			{
+				path:'/profile/books',
+				name:'profilebook',
+				component:UserBooks
 			},
 		]
 	}

@@ -121,19 +121,23 @@ export default new Vuex.Store({
 			 }
 		},
 		getCurrentUser(context){
+			if(context.getters.logedIn){
 			const config = {
 				headers: {
 				   Authorization: "Bearer " + context.state.token
 				}
 			 };
+			 console.log(context.getters.logedIn);
+			 
 			 return new Promise((resolve,reject)=>{
 				axios.get('http://localhost:8000/api/user',config).then(res=>{
 					context.commit('getUser',res.data.user);
 					resolve(res);
 				}).catch(err=>{
-					reject(res);
+					reject(err);
 				});
 			 });
-		}
+				}
+	}
 	}
 });

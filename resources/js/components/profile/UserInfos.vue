@@ -5,7 +5,7 @@
                     <div class="bg-white p-3 ">
                         <form class="form" @submit.prevent="updateProfile" enctype="multipart/form-data">
                             <div class="text-center">
-                              <img  class="border rounded-circle img-fluid" :src="url" >
+                              <img  class="rounded-circle " width="200" height="200" :src="url" >
                             </div>
                             <div class=""><input name="img" type="file" ref="file" @change="Onselect"></div>
                             <div><label class="d-block">Username:</label><input v-model="user.name" class="form-control" type="text" required=""></div>
@@ -37,7 +37,6 @@ export default {
     email : '',
     telephone : '',   
     password:'',
-    ville:'',
     image:null,
     ville_id:''
     },
@@ -48,26 +47,26 @@ export default {
   methods:{
      updateProfile(){
        const fd=new FormData();
-       fd.append('img',this.user.image,this.user.image.name);
+       if(this.user.image instanceof Blob )
+        fd.append('img',this.user.image,this.user.image.name);
        fd.append('name',this.user.name);
        fd.append('email',this.user.email);
        fd.append('telephone',this.user.telephone);
        fd.append('password',this.user.password);
-       fd.append('ville',this.user.ville);
-
+       fd.append('ville_id',this.user.ville_id);        
        this.$store.dispatch('updateProfile',fd).then(res=>{
          this.user=res.data.user;
          this.url="/images/users/"+this.user.image;
-         console.log(this.url)
+         console.log(res.data)
        }).catch(err=>{
-         console.error(err);
+        //  console.error(err);
        });
     },
     fetchData(){
       this.$store.dispatch('fetchCities').then(res=>{
         this.villes=res.data;
       }).catch(err=>{
-        console.error(err);
+        // console.error(err);
       })
     },
     getUser(){
@@ -75,13 +74,13 @@ export default {
         this.user=res.data;
         this.url="/images/users/"+this.user.image;
       }).catch(err=>{
-        console.error(err);
+        // console.error(err);
       })
     },
     Onselect(){
       const file=this.$refs.file.files[0]
       this.user.image=file;
-      console.log(file);
+      // console.log(file);
     }
   },
   mounted(){

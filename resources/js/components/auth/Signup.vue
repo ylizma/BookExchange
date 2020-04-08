@@ -54,8 +54,7 @@ import axios from 'axios';
                     this.error=true;
                 }else{
                     const user={
-                        'nom':this.name,
-                        'prenom':this.name,
+                        'name':this.name,
                         'ville':this.city,
                         'email':this.email,
                         'password':this.password
