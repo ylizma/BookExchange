@@ -84,10 +84,11 @@ import axios from 'axios';
                 }
             },
         fetchData(){
+            console.log("erere");
+            
             this.$store.dispatch('fetchCities').then(res=>{
                 this.villes=res.data;
                 console.log(res.data);
-                
             }).catch(err=>{
                 // console.error(err);
             })

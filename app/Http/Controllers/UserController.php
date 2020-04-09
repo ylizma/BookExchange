@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Ville;
+use File;
 
 class UserController extends Controller
 {
@@ -43,6 +44,8 @@ class UserController extends Controller
        $user->telephone=$req->telephone || null;
        if ($files = $req->file('img')) {
         $destinationPath = 'images/users/'; // upload path
+        if(File::exists($destinationPath.$user->image))
+            File::delete($destinationPath.$user->image);
         $profileImage = time(). "." . $files->getClientOriginalExtension();
         $user->image=$profileImage;
         $files->move($destinationPath, $profileImage);

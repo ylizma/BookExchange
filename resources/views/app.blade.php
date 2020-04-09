@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="/app/assets/css/Pretty-Footer.css">
     <link rel="stylesheet" href="/app/assets/css/styles.css">
 
-
         <title>Book exchange</title>
       
     </head>

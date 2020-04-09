@@ -103,7 +103,9 @@ export default new Vuex.Store({
 				 };
 				return new Promise((resolve,reject)=>{
 					 axios.post('http://localhost:8000/api/update',user,config).then(resp=>{
-						 context.commit('getUser',resp.data.user)
+						//  context.commit('getUser',resp.data.user)
+						 console.log(resp.data);
+						 
 						resolve(resp);
 					}).catch(err=>{
 						console.error(err);
@@ -113,12 +115,7 @@ export default new Vuex.Store({
 			}
 		},
 		fetchCities(context){
-			 if(context.getters.logedIn){
-				const config = {
-					headers: {
-					   Authorization: "Bearer " + context.state.token
-					}
-				 };
+				 
 				 return new Promise((resolve,reject)=>{
 					axios.get('http://localhost:8000/api/city').then(res=>{
 						resolve(res);
@@ -126,7 +123,6 @@ export default new Vuex.Store({
 						reject(res);
 					});
 				 });
-			 }
 		},
 		getCurrentUser(context){
 			if(context.getters.logedIn){
@@ -136,7 +132,6 @@ export default new Vuex.Store({
 				}
 			 };
 			 console.log(context.getters.logedIn);
-			 
 			 return new Promise((resolve,reject)=>{
 				axios.get('http://localhost:8000/api/user',config).then(res=>{
 					context.commit('getUser',res.data.user);
