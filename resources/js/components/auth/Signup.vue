@@ -5,7 +5,7 @@
         <div class="login-box-header">
             <h4 style="color:rgb(139,139,139);margin-bottom:0px;font-weight:400;font-size:27px;">Register</h4>
         </div>
-        <div v-show="error" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <div v-show="error" :class="msg.error?'alert alert-danger':'alert alert-success'" class=" alert-dismissible fade show" role="alert">
             <center>{{msg.msg}}  {{passwordmsg}}</center>
            
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -14,8 +14,13 @@
         </div>
 
         <div class="email-login" style="background-color:#ffffff;">
-            <input type="text"  class="text-imput form-control" required="" placeholder="Name" v-model="name">
-            <input type="text" class="email-input form-control" style="margin-top:10px;" placeholder="city"  v-model="city">
+            <input type="text"  class="text-input form-control" required="" placeholder="Name" v-model="name">
+            <div class="mt-2">
+                <select v-model="city" class="custom-select" required="" >
+                     <option selected value="skalsal" >ville</option>
+                     <option v-for="city in villes" :key="city.id" v-bind:value="city.id">{{city.name}}</option>
+                </select>
+            </div>
             <input type="text" class="email-input form-control" style="margin-top:10px;" required="" placeholder="Email" minlength="6" v-model="email">
             <input type="password" class="password-input form-control" style="margin-top:10px;" required="" placeholder="Password" minlength="" v-model="password">
             <input type="password" class="password-input form-control" style="margin-top:10px;" required="" placeholder="Confirm password" minlength="" v-model="password2">
@@ -23,8 +28,9 @@
         <div class="submit-row" style="margin-bottom:8px;padding-top:0px;">
             <button type="submit" class="btn btn-primary btn-block box-shadow" id="submit-id-submit">Sign up</button>
         </div>
+        
         <div id="login-box-footer" style="padding:10px 20px;padding-bottom:23px;padding-top:18px;">
-            <p style="margin-bottom:0px;">Do you have an account?<a id="register-link" href="#">Sign In!</a></p>
+            <p style="margin-bottom:0px;">Do you have an account?<router-link to="/login">Sign In!</router-link></p>
         </div>
     </div>
 </form>
@@ -34,7 +40,6 @@
 <script>
 import axios from 'axios';
     export default {
-        props:['register','msg'],
         data(){
                 return{
                 name:'',
@@ -43,7 +48,12 @@ import axios from 'axios';
                 password:'',
                 password2:'',
                 error:false,
-                passwordmsg:''
+                passwordmsg:'',
+                msg:{
+                    msg:'',
+                    error:false
+                },
+                villes:[]
                 }
             },
 
@@ -59,14 +69,32 @@ import axios from 'axios';
                         'email':this.email,
                         'password':this.password
                     };
-                    this.register(user);
+                    this.$store.dispatch('register',user).then(resp=>{
+                        this.msg.msg="your account is succesfuly created"
+                        this.msg.error=false
+                        this.error=true
+                    }
+                    ).catch(err=>{
+                        this.msg.msg=""
+                        this.msg.error=true
+                        this.msg.msg="your credetiels are not correct"
+                        this.error=true
+                    }
+                    )
                 }
-            }
+            },
+        fetchData(){
+            this.$store.dispatch('fetchCities').then(res=>{
+                this.villes=res.data;
+                console.log(res.data);
+                
+            }).catch(err=>{
+                // console.error(err);
+            })
+    },
         },
-        watch:{
-            msg:function(newv,oldv) { 
-                this.error=true;
-            }
+        mounted(){
+            this.fetchData();
         }
     }
 </script>

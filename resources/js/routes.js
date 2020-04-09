@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Signup from '@/js/pages/auth/Signup.vue';
-import Login from '@/js/pages/auth/Login.vue';
+import Signup from '@/js/components/auth/Signup.vue';
+import Login from '@/js/components/auth/Login.vue';
+import AuthComponent from '@/js/pages/auth/Auth.vue';
 import Home from '@/js/pages/Home.vue';
 import UserProfile from '@/js/pages/profile/User.vue';
 import UserInfos from '@/js/components/profile/UserInfos.vue';
@@ -14,20 +15,27 @@ const router=new VueRouter({
 	mode:'history',
 	routes:[
 	{
-		path:'/signup',
-		name:'signup',
-		component:Signup,
-		// meta:{
-		// 	requiresVisitor:true
-		// }
-	},
-	{
-		path:'/login',
-		name:'login',
-		component:Login,
-		// meta:{
-		// 	requiresVisitor:true
-		// }
+		path:'/auth',
+		name:'auth',
+		component:AuthComponent,
+		children:[
+			{
+				path:'/signup',
+				name:'signup',
+				component:Signup,
+				// meta:{
+				// 	requiresVisitor:true
+				// }
+			},
+			{
+				path:'/login',
+				name:'login',
+				component:Login,
+				// meta:{
+				// 	requiresVisitor:true
+				// }
+			},
+		]
 	},
 	{
 		path:'/home',

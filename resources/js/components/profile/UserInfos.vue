@@ -7,7 +7,8 @@
                             <div class="text-center">
                               <img  class="rounded-circle " width="200" height="200" :src="url" >
                             </div>
-                            <div class=""><input name="img" type="file" ref="file" @change="Onselect"></div>
+                            <input style="display:none" name="img" type="file" ref="file" @change="Onselect">
+                            <button class="btn btn-default" @click="$refs.file.click()">upload photo</button>
                             <div><label class="d-block">Username:</label><input v-model="user.name" class="form-control" type="text" required=""></div>
                             <div><label class="d-block">Email:</label><input v-model="user.email" class="form-control" type="email" required=""></div>
                             <div><label class="d-block">City</label>

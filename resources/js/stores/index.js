@@ -29,7 +29,6 @@ export default new Vuex.Store({
 		}
 	},
 	actions:{
-		
 		//login
 		retreiveToken(context,user){
 			return new Promise((resolve,reject) => { 
@@ -47,6 +46,15 @@ export default new Vuex.Store({
 	            reject(error)
 	        })
 	    })
+		},
+		register(context,user){
+			return new Promise((resolve,reject)=>{
+				axios.post('api/register',user).then(resp=>{
+					resolve(resp)
+				}).catch(err=>{
+					reject(err)
+				});
+			});
 		},
 		destroyToken(context){
 			axios.defaults.headers.common['Authrization'] = 'Bearer'+context.state.token;
