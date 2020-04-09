@@ -14,12 +14,10 @@ class AuthController extends Controller
     {
       $ville=Ville::find($request->ville);
         $user=$ville->users()->create([
-          'nom' => $request->nom,
-          'prenom' => $request->prenom,
+          'name' => $request->name,
           'email' => $request->email,
           'password' => bcrypt($request->password),
         ]);
-
         return response()->json(['message' => 'succesfuly sign in'], 200);
     }
 
@@ -30,7 +28,6 @@ class AuthController extends Controller
       if (!$token = auth()->attempt($credentials)) {
         return response()->json(['error' => 'Unauthorized'], 401);
       }
-
       return $this->respondWithToken($token);
     }
 

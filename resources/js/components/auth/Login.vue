@@ -24,7 +24,7 @@
             <a id="forgot-password-link" href="#">Forgot Password?</a></div>
         </div>
         <div id="login-box-footer" style="padding:10px 20px;padding-bottom:23px;padding-top:18px;">
-            <p style="margin-bottom:0px;">Don't you have an account?<a id="register-link" href="#">Sign Up!</a></p>
+            <p style="margin-bottom:0px;">Don't you have an account?<router-link to="/signup">Sign Up!</router-link></p>
         </div>
     </div>
 </form>
@@ -32,12 +32,11 @@
 
 <script>
 export default {
-    props:['login','message'],
     data(){
         return{
             email:'',
             password:'',
-            err:false
+            err:false,
         }
     },
     methods:{
@@ -46,16 +45,20 @@ export default {
                 email:this.email,
                 password:this.password
             };
-            this.login(user);
+            this.$store
+                .dispatch('retreiveToken',user)
+                .then(response=>{
+                    console.log('loged in'); 
+                    this.$router.push('/profile/infos');
+                    })
+                .catch(err=>
+                {
+                    this.err=true;
+                    console.log("error");
+                });
         }
     },
-    watch:{
-        message:function(newc,old){
-            this.err=true
-        }
     }
-
-}
 </script>
 
 <style>

@@ -73,7 +73,6 @@ class LivreController extends Controller
     public function destroy(Livre $livre)
     {
         $livre->delete();
-
         return response()->json(null, 204);
     }
 }

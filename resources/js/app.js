@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import App from '@/js/views/App';
-import router from '@/js/routes.js';
+import router from '@/js/router/routes.js';
 import store from '@/js/stores';
 
 
