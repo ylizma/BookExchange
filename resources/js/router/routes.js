@@ -1,9 +1,12 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from '@/js/stores';
+// authentication
 import Signup from '@/js/components/auth/Signup.vue';
 import Login from '@/js/components/auth/Login.vue';
 import AuthComponent from '@/js/pages/auth/Auth.vue';
+import Logout from '@/js/components/auth/Logout.vue';
+// components
 import Home from '@/js/pages/Home.vue';
 import UserProfile from '@/js/pages/profile/User.vue';
 import UserInfos from '@/js/components/profile/UserInfos.vue';
@@ -44,6 +47,11 @@ const router=new VueRouter({
 						guest
 					]
 				}
+			},
+			{
+				path:'/logout',
+				name:'logout',
+				component:Logout,
 			},
 		]
 	},
