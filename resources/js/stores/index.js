@@ -57,15 +57,17 @@ export default new Vuex.Store({
 			});
 		},
 		destroyToken(context){
-			axios.defaults.headers.common['Authrization'] = 'Bearer'+context.state.token;
 			if (context.getters.logedIn) {
+				const config = {
+					headers: {
+					   Authorization: "Bearer " + context.state.token
+					}
+				 };
 				return new Promise((resolve,reject) => { 
-			       axios.post('/api/logout',{
-	        }).then(response=>{
+			    axios.get('/api/logout',config).then(response=>{
 	            localStorage.removeItem('access_token');
 	            context.commit('destroyToken');
 	            resolve(response);
-
 	        }).catch(error=>{
 	            localStorage.removeItem('access_token');
 	            context.commit('destroyToken');
@@ -103,7 +105,7 @@ export default new Vuex.Store({
 				 };
 				return new Promise((resolve,reject)=>{
 					 axios.post('http://localhost:8000/api/update',user,config).then(resp=>{
-						//  context.commit('getUser',resp.data.user)
+						 context.commit('getUser',resp.data.user)
 						 console.log(resp.data);
 						 
 						resolve(resp);

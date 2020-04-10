@@ -33,7 +33,7 @@ class UserController extends Controller
         request()->validate([
             'img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'name'=>'required|max:20',
-            'telephone'=>'nullable',
+            'telephone'=>'nullable|max:10',
             'email'=>'required'
        ]);
 
@@ -41,7 +41,7 @@ class UserController extends Controller
        $user->name=$req->name;
        $user->ville_id=$req->ville_id;
        $user->email=$req->email;
-       $user->telephone=$req->telephone || null;
+       $user->telephone=$req->telephone;
        if ($files = $req->file('img')) {
         $destinationPath = 'images/users/'; // upload path
         if(File::exists($destinationPath.$user->image))

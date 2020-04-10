@@ -17,6 +17,7 @@ class AuthController extends Controller
           'name' => $request->name,
           'email' => $request->email,
           'password' => bcrypt($request->password),
+          
         ]);
         return response()->json(['message' => 'succesfuly sign in'], 200);
     }
@@ -24,7 +25,6 @@ class AuthController extends Controller
     public function login(Request $request)
     {
       $credentials = $request->only(['email', 'password']);
-
       if (!$token = auth()->attempt($credentials)) {
         return response()->json(['error' => 'Unauthorized'], 401);
       }
