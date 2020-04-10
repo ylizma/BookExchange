@@ -105,7 +105,7 @@ export default new Vuex.Store({
 				 };
 				return new Promise((resolve,reject)=>{
 					 axios.post('http://localhost:8000/api/update',user,config).then(resp=>{
-						//  context.commit('getUser',resp.data.user)
+						 context.commit('getUser',resp.data.user)
 						 console.log(resp.data);
 						 
 						resolve(resp);

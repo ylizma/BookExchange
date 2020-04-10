@@ -21065,7 +21065,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
         };
         return new Promise(function (resolve, reject) {
           axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('http://localhost:8000/api/update', user, config).then(function (resp) {
-            //  context.commit('getUser',resp.data.user)
+            context.commit('getUser', resp.data.user);
             console.log(resp.data);
             resolve(resp);
           })["catch"](function (err) {
