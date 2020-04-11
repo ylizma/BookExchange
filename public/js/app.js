@@ -2458,7 +2458,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_shared_Navbar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/shared/Navbar */ "./resources/js/components/shared/Navbar.vue");
 //
 //
 //
@@ -2475,17 +2474,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    Navbar: _components_shared_Navbar__WEBPACK_IMPORTED_MODULE_0__["default"]
-  }
-});
+/* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
 
@@ -2498,13 +2487,20 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _js_components_shared_Navbar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../js/components/shared/Navbar */ "./resources/js/components/shared/Navbar.vue");
 //
 //
 //
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    Navbar: _js_components_shared_Navbar__WEBPACK_IMPORTED_MODULE_0__["default"]
+  }
+});
 
 /***/ }),
 
@@ -4075,7 +4071,7 @@ var render = function() {
                             "router-link",
                             {
                               staticClass: "dropdown-item",
-                              attrs: { to: "/signup" }
+                              attrs: { to: "/login" }
                             },
                             [_vm._v("Login")]
                           )
@@ -4086,7 +4082,7 @@ var render = function() {
                             "router-link",
                             {
                               staticClass: "dropdown-item",
-                              attrs: { to: "/login" }
+                              attrs: { to: "/signup" }
                             },
                             [_vm._v("Register")]
                           )
@@ -4433,66 +4429,59 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", [_c("navbar")], 1),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "row" },
-      [
-        _c("div", { staticClass: "col-md-3 mb-3" }, [
-          _c(
-            "div",
-            {
-              staticClass: "px-3",
-              staticStyle: { "background-color": "white" }
-            },
-            [
-              _c("h5", [_vm._v("Shortcuts")]),
-              _vm._v(" "),
-              _c(
-                "div",
-                [
-                  _c(
-                    "router-link",
-                    {
-                      staticClass: "d-block profile-sidebar-link",
-                      staticStyle: { "font-size": "14px" },
-                      attrs: { to: "/profile/infos" }
-                    },
-                    [_vm._v("My profile")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "router-link",
-                    {
-                      staticClass: "d-block profile-sidebar-link",
-                      staticStyle: { "font-size": "14px" },
-                      attrs: { to: "/profile/books" }
-                    },
-                    [_vm._v("My books")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "d-block profile-sidebar-link",
-                      staticStyle: { "font-size": "14px" }
-                    },
-                    [_vm._v("Exchange history")]
-                  )
-                ],
-                1
-              )
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("router-view")
-      ],
-      1
-    )
-  ])
+  return _c(
+    "div",
+    { staticClass: "row" },
+    [
+      _c("div", { staticClass: "col-md-3 mb-3" }, [
+        _c(
+          "div",
+          { staticClass: "px-3", staticStyle: { "background-color": "white" } },
+          [
+            _c("h5", [_vm._v("Shortcuts")]),
+            _vm._v(" "),
+            _c(
+              "div",
+              [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "d-block profile-sidebar-link",
+                    staticStyle: { "font-size": "14px" },
+                    attrs: { to: "/profile/infos" }
+                  },
+                  [_vm._v("My profile")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "d-block profile-sidebar-link",
+                    staticStyle: { "font-size": "14px" },
+                    attrs: { to: "/profile/books" }
+                  },
+                  [_vm._v("My books")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "d-block profile-sidebar-link",
+                    staticStyle: { "font-size": "14px" }
+                  },
+                  [_vm._v("Exchange history")]
+                )
+              ],
+              1
+            )
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("router-view")
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -4516,7 +4505,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_c("router-view")], 1)
+  return _c("div", [_c("navbar"), _vm._v(" "), _c("router-view")], 1)
 }
 var staticRenderFns = []
 render._withStripped = true

@@ -100,8 +100,8 @@
                     <li class="nav-item dropleft">
                         <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fa fa-user"></i></a>
                         <div class="dropdown-menu" role="menu">
-                            <router-link v-if="!isLogged" to="/signup" class="dropdown-item">Login</router-link>
-                            <router-link v-if="!isLogged" to="/login" class="dropdown-item">Register</router-link>
+                            <router-link v-if="!isLogged" to="/login" class="dropdown-item">Login</router-link>
+                            <router-link v-if="!isLogged" to="/signup" class="dropdown-item">Register</router-link>
                             <router-link v-if="isLogged" to="/profile/infos" class="dropdown-item">Profile</router-link>
                             <router-link v-if="isLogged" to="/logout" class="dropdown-item">Logout</router-link>
                         </div>
