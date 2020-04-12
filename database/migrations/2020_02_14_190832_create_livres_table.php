@@ -23,8 +23,8 @@ class CreateLivresTable extends Migration
             $table->date('date_publication');
             $table->text('resume');
             $table->timestamps();
-            $table->bigInteger('type_id')->unsigned();
-            $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade');
+            $table->bigInteger('categorie_id')->unsigned();
+            $table->foreign('categorie_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 

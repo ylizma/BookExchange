@@ -14,16 +14,16 @@ class Livre extends Model
      * @var array
     */
     protected $fillable = [
-        'titre', 'auteurs', 'isbn', 'date_publication', 'resume','type_id'
+        'titre', 'auteurs', 'isbn', 'date_publication', 'resume','categorie_id'
     ];
 
     public function exemplaires()
     {
         return $this->hasMany(Exemplaire::class);
     }
-    public function type()
+    public function categorie()
     {
-        return $this->belongsTo('App\Type');
+        return $this->belongsTo('App\Categorie');
     }
 
 }

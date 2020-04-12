@@ -18,9 +18,8 @@ class Categorie extends Model
         'nom',
     ];
 
-    public function type()
+    public function livre()
     {
-        return $this->belongsTo(Type::class);
+        return $this->hasMany(Livre::Class);
     }
-
 }
