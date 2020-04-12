@@ -98,7 +98,9 @@
                 </ul>
                 <ul class="nav navbar-nav d-xl-flex ml-auto justify-content-xl-end">
                     <li class="nav-item dropleft">
-                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fa fa-user"></i></a>
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">
+                            <i class="fa fa-user"></i>
+                        </a>
                         <div class="dropdown-menu" role="menu">
                             <router-link v-if="!isLogged" to="/login" class="dropdown-item">Login</router-link>
                             <router-link v-if="!isLogged" to="/signup" class="dropdown-item">Register</router-link>

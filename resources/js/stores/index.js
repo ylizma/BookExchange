@@ -69,8 +69,9 @@ export default new Vuex.Store({
 	            context.commit('destroyToken');
 	            resolve(response);
 	        }).catch(error=>{
-	            localStorage.removeItem('access_token');
-	            context.commit('destroyToken');
+	            // localStorage.removeItem('access_token');
+				// context.commit('destroyToken');
+				console.error(error);
 	            reject(error)
 	        })
 	    })
@@ -122,7 +123,7 @@ export default new Vuex.Store({
 					axios.get('http://localhost:8000/api/city').then(res=>{
 						resolve(res);
 					}).catch(err=>{
-						reject(res);
+						reject(err);
 					});
 				 });
 		},

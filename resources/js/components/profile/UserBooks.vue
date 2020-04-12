@@ -2,13 +2,13 @@
               <div class="col-md-9">
                 <div>
                     <h3>My books</h3>
-                    <div class="bg-white p-3"><button class="btn btn-outline-primary mb-3 float-right" type="button">Add a new book</button>
+                    <div class="bg-white p-3"><button class="btn btn-info mb-3 float-right" type="button">Add a new book</button>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
                                     <tr>
                                         <th class="table-secondary">Book</th>
-                                        <th class="table-secondary">Added on</th>
+                                        <th class="table-secondary">date</th>
                                         <th class="table-secondary">Status</th>
                                         <th class="table-secondary"></th>
                                     </tr>
