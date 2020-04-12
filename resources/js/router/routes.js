@@ -1,21 +1,30 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from '@/js/stores';
-// authentication
-import Signup from '@/js/components/auth/Signup.vue';
-import Login from '@/js/components/auth/Login.vue';
-import AuthComponent from '@/js/pages/auth/Auth.vue';
-import Logout from '@/js/components/auth/Logout.vue';
-// components
-import Home from '@/js/pages/Home.vue';
-import UserProfile from '@/js/pages/profile/User.vue';
-import UserInfos from '@/js/components/profile/UserInfos.vue';
-import UserBooks from '@/js/components/profile/UserBooks.vue';
 
 // middleware
 import guest from '@/js/router/middleware/guest'
 import auth from '@/js/router/middleware/auth'
 import middlewarePipeline  from '@/js/router/middlewarePipeline'
+
+// authentication
+import Signup from '@/js/components/auth/Signup.vue';
+import Login from '@/js/components/auth/Login.vue';
+import AuthComponent from '@/js/pages/auth/Auth.vue';
+import Logout from '@/js/components/auth/Logout.vue';
+
+// components
+import Home from '@/js/pages/Home.vue';
+import UserProfile from '@/js/pages/profile/UserProfilePage.vue';
+import UserInfos from '@/js/components/profile/UserInfos.vue';
+import UserBooks from '@/js/components/profile/UserBooks.vue';
+import NewBook from "@/js/components/book/NewBook.vue";
+import EditBook from "@/js/components/book/EditBook.vue";
+import Book from "@/js/pages/book/UserBookPage.vue";
+
+
+
+
 
 Vue.use(VueRouter);
 
@@ -95,6 +104,23 @@ const router=new VueRouter({
 					]
 				}
 			},
+		]
+	},
+	{
+		path:'/book',
+		name:'book',
+		component:Book,
+		children:[
+			{
+				path:'/newBook',
+				name:'newBook',
+				component:NewBook
+			},
+			{
+				path:'/editBook',
+				name:'editBook',
+				component:EditBook
+			}
 		]
 	}
 
