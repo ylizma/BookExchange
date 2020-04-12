@@ -39,7 +39,7 @@
                         <div class="form-group"><label>Resume</label><textarea v-model="book.tiresume" class="form-control" required=""></textarea></div>
                         <div
                             class="form-row">
-                            <div class="col offset-xl-10 text-right"><button class="btn btn-outline-success" type="submit">Add book</button></div>
+                            <div class="col offset-xl-10 text-right"><button class="btn btn-primary" type="submit">Add book</button></div>
                         </div>  
                     </form>
                 </div>
