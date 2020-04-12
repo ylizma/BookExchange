@@ -33,7 +33,7 @@ class LivreController extends Controller
             'isbn' => $request->isbn,
             'date_publication' => $request->date_publication,
             'resume' => $request->resume,
-            'type_id' => $request->type_id
+            'categorie_id' => $request->categorie_id
         ]);
 
         return new LivreResource($livre);
@@ -59,7 +59,7 @@ class LivreController extends Controller
      */
     public function update(Request $request, Livre $livre)
     {
-        $livre->update($request->only(['titre', 'auteurs','isbn','date_publication','resume','type_id']));
+        $livre->update($request->only(['titre', 'auteurs','isbn','date_publication','resume','categorie_id']));
 
         return new LivreResource($livre);
     }

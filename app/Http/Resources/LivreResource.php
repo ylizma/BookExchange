@@ -23,7 +23,7 @@ class LivreResource extends JsonResource
             'resume' => $this->resume,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'type' => $this->type,
+            'categorie' => $this->categorie,
         ];
     }
 }
