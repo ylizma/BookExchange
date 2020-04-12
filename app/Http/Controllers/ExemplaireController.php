@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Exemplaire;
+use App\Livre;
+
 use App\Http\Resources\ExemplaireResource;
 
 class ExemplaireController extends Controller
@@ -27,10 +29,25 @@ class ExemplaireController extends Controller
      */
     public function store(Request $request)
     {
+        $livre = Livre::where('isbn', $request->isbn)->first();
+        if ($livre === null) {
+            // livre doesn't exist, so we will create it :D
+
+            $livre = Livre::create([
+                'titre' => $request->titre,
+                'auteurs' => $request->auteurs,
+                'isbn' => $request->isbn,
+                'date_publication' => $request->date_publication,
+                'resume' => $request->resume,
+                'categorie_id' => $request->categorie_id
+            ]);
+        }
+
         $exemplaire = Exemplaire::create([
             'langue' => $request->langue,
             'etat' => $request->etat,
-            'livre_id' => $request->livre_id,
+            'user_id' => $request->user_id,
+            'livre_id' => $livre->id,
         ]);
 
         return new ExemplaireResource($exemplaire);
