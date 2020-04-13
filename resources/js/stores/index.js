@@ -8,7 +8,8 @@ Vue.use(Vuex)
 const vuex=new Vuex.Store({
 	state:{
 		token:  localStorage.getItem('access_token') || null,
-		user:{}
+		user:{},
+		bookStatus:["new","old"]
 	},
 	mutations:{
         // login stuff
@@ -27,6 +28,9 @@ const vuex=new Vuex.Store({
         //login
 		logedIn(state){
 			return state.token != null
+		},
+		bookStatus(state){
+			return state.bookStatus
 		}
 	},
 	actions:{
