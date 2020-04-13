@@ -9,7 +9,8 @@ const vuex=new Vuex.Store({
 	state:{
 		token:  localStorage.getItem('access_token') || null,
 		user:{},
-		bookStatus:["new","old"]
+		bookStatus:["new","old"],
+		langs:['frensh','arabic','english']
 	},
 	mutations:{
         // login stuff
@@ -31,7 +32,8 @@ const vuex=new Vuex.Store({
 		},
 		bookStatus(state){
 			return state.bookStatus
-		}
+		},
+		langs(state){return state.langs}
 	},
 	actions:{
 		//login

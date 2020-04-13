@@ -2199,6 +2199,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2216,7 +2222,8 @@ __webpack_require__.r(__webpack_exports__);
       categories: [],
       apiresult: [],
       status: [],
-      url: []
+      url: [],
+      langs: []
     };
   },
   methods: {
@@ -2252,7 +2259,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     choosedOne: function choosedOne(index) {
       var cbook = this.apiresult[index];
-      this.book.title = cbook.title, this.book.author = cbook.authors;
+      this.book.title = cbook.title, this.book.author = cbook.authors.join(',');
       this.book.resume = cbook.resume;
       this.book.isbn = cbook.isbn[0].identifier;
       this.showBooks = false;
@@ -2285,6 +2292,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.getCategories();
     this.status = this.$store.getters.bookStatus;
+    this.langs = this.$store.getters.langs;
   }
 });
 
@@ -21313,7 +21321,7 @@ var render = function() {
                   _vm._l(_vm.categories, function(cat) {
                     return _c(
                       "option",
-                      { key: cat.id, attrs: { selected: "" } },
+                      { key: cat.id, attrs: { value: "cat.id", selected: "" } },
                       [_vm._v(" " + _vm._s(cat.nom) + " ")]
                     )
                   }),
@@ -21359,9 +21367,59 @@ var render = function() {
                     }
                   },
                   _vm._l(_vm.status, function(st, index) {
-                    return _c("option", { key: index }, [
-                      _vm._v(" " + _vm._s(st) + " ")
-                    ])
+                    return _c(
+                      "option",
+                      { key: index, attrs: { value: "st" } },
+                      [_vm._v(" " + _vm._s(st) + " ")]
+                    )
+                  }),
+                  0
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", [_vm._v("language")]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.book.status,
+                        expression: "book.status"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    staticStyle: { height: "42px" },
+                    attrs: { required: "" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.book,
+                          "status",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
+                    }
+                  },
+                  _vm._l(_vm.langs, function(st, index) {
+                    return _c(
+                      "option",
+                      { key: index, attrs: { value: "st" } },
+                      [_vm._v(" " + _vm._s(st) + " ")]
+                    )
                   }),
                   0
                 )
@@ -39763,7 +39821,8 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
     token: localStorage.getItem('access_token') || null,
     user: {},
-    bookStatus: ["new", "old"]
+    bookStatus: ["new", "old"],
+    langs: ['frensh', 'arabic', 'english']
   },
   mutations: {
     // login stuff
@@ -39785,6 +39844,9 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     },
     bookStatus: function bookStatus(state) {
       return state.bookStatus;
+    },
+    langs: function langs(state) {
+      return state.langs;
     }
   },
   actions: {

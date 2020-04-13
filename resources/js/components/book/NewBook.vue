@@ -27,13 +27,19 @@
                         <div class="form-group">
                             <label>Category</label>
                             <select v-model="book.category" class="form-control" style="height: 42px;" required="">
-                                    <option v-for="cat in categories" :key="cat.id"  selected=""> {{cat.nom}} </option>
+                                    <option v-for="cat in categories" :key="cat.id"  value="cat.id" selected=""> {{cat.nom}} </option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Statuts</label>
                             <select v-model="book.status" class="form-control" style="height: 42px;" required="">
-                                    <option v-for="(st,index) in status" :key="index" > {{st}} </option>
+                                    <option v-for="(st,index) in status" :key="index" value="st" > {{st}} </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>language</label>
+                            <select v-model="book.status" class="form-control" style="height: 42px;" required="">
+                                    <option v-for="(st,index) in langs" :key="index" value="st"> {{st}} </option>
                             </select>
                         </div>
                         <div class="form-group"><label>Resume</label><textarea v-model="book.resume" class="form-control" required=""></textarea></div>
@@ -77,7 +83,8 @@ export default {
             categories:[],
             apiresult:[],
             status:[],
-            url:[]
+            url:[],
+            langs:[]
         }
     },
     methods:{
@@ -113,7 +120,7 @@ export default {
         choosedOne(index){
                 const cbook=this.apiresult[index];
             this.book.title=cbook.title,
-            this.book.author=cbook.authors
+            this.book.author=cbook.authors.join(',')
             this.book.resume=cbook.resume
             this.book.isbn=cbook.isbn[0].identifier
             this.showBooks=false;
@@ -145,6 +152,7 @@ export default {
     mounted(){
         this.getCategories();
         this.status=this.$store.getters.bookStatus
+        this.langs=this.$store.getters.langs
     }
 }
 </script>
