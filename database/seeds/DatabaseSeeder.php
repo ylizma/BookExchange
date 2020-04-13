@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+// use PopulateCategorieFromCSV;
+
 
 class DatabaseSeeder extends Seeder
 {

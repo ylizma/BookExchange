@@ -117,7 +117,7 @@ const router=new VueRouter({
 				component:NewBook
 			},
 			{
-				path:'/editBook',
+				path:'/editBook/:id',
 				name:'editBook',
 				component:EditBook
 			}

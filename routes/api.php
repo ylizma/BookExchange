@@ -30,8 +30,9 @@ Route::group(['middleware' => ['jwt.auth']], function() {
     Route::get('profile','UserController@myprofile');
     Route::get('books','UserController@mybooks');
     Route::post('update','UserController@update');
+    
 });
 
-
+Route::get('cats','CategorieController@index');
 Route::apiResource('livres', 'LivreController');
 Route::apiResource('exemplaires', 'ExemplaireController');

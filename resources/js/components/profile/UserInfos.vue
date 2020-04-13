@@ -49,7 +49,7 @@ export default {
      updateProfile(){
        const fd=new FormData();
        if(this.user.image instanceof Blob )
-        fd.append('img',this.user.image,this.user.image.name);
+       fd.append('img',this.user.image,this.user.image.name);
        fd.append('name',this.user.name);
        fd.append('email',this.user.email);
        fd.append('telephone',this.user.telephone);
