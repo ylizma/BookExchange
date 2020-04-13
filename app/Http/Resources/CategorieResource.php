@@ -16,6 +16,7 @@ class CategorieResource extends JsonResource
     {
         return [
             'nom' => $this->nom,
+            'id'=>$this->id,
         ];
     }
 }

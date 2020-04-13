@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios';
+import VueJsonp from 'vue-jsonp'
+Vue.use(VueJsonp)
 Vue.use(Vuex)
 
-
-export default new Vuex.Store({
+const vuex=new Vuex.Store({
 	state:{
 		token:  localStorage.getItem('access_token') || null,
 		user:{}
@@ -134,7 +135,6 @@ export default new Vuex.Store({
 				   Authorization: "Bearer " + context.state.token
 				}
 			 };
-			 console.log(context.getters.logedIn);
 			 return new Promise((resolve,reject)=>{
 				axios.get('http://localhost:8000/api/user',config).then(res=>{
 					context.commit('getUser',res.data.user);
@@ -144,6 +144,33 @@ export default new Vuex.Store({
 				});
 			 });
 				}
+	},
+	getCategories(context){
+		if(context.getters.logedIn){
+			const config = {
+				headers: {
+				   Authorization: "Bearer " + context.state.token
+				}
+			 };
+			return new Promise((resolve,reject)=>{
+				axios.get('http://localhost:8000/api/cats',config).then(resp=>{
+					// console.log(resp);
+					resolve(resp);
+				}).catch(err=>reject(err)
+				)
+			});
+		}
+	},
+	getInfoFromGoogleApi(context,title){
+		return new Promise((resolve,reject)=>{
+			Vue.jsonp('https://www.googleapis.com/books/v1/volumes?maxResults=5&q='+title).then(json => {
+			resolve(json)
+      }).catch(err => {
+        reject(err)
+      });
+		});
 	}
 	}
 });
+
+export default vuex;

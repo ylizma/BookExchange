@@ -16,7 +16,7 @@ class CategorieController extends Controller
      */
     public function index()
     {
-        return CategorieResource::collection(Categorie::paginate(25));
+        return CategorieResource::collection(Categorie::All());
     }
 
     /**
