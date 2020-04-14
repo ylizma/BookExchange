@@ -4,6 +4,10 @@
                     <h3>Add a new book</h3>
                     
         <div class="bg-white p-3">
+            <div v-show="saved" class="alert alert-success" role="alert">
+            your book is saved succesfully !!
+            <router-link to="/profile/books">click here to preview it </router-link >
+            </div>
                 <div>
                     <form @submit.prevent="saveBook">
                                 <div class="form-group"><label>Title</label>
@@ -26,20 +30,20 @@
                         <div class="form-group"><label>Auteurs</label><input v-model="book.author" class="form-control" type="text" required=""></div>
                         <div class="form-group">
                             <label>Category</label>
-                            <select v-model="book.category" class="form-control" style="height: 42px;" required="">
-                                    <option v-for="cat in categories" :key="cat.id"  value="cat.id" selected=""> {{cat.nom}} </option>
+                            <select v-model="book.categorie_id" class="form-control" style="height: 42px;" required="">
+                                    <option v-for="cat in categories" :key="cat.id"  :value="cat.id" selected=""> {{cat.nom}} </option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Statuts</label>
                             <select v-model="book.status" class="form-control" style="height: 42px;" required="">
-                                    <option v-for="(st,index) in status" :key="index" value="st" > {{st}} </option>
+                                    <option v-for="(st,index) in status" :key="index" :value="st" > {{st}} </option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>language</label>
-                            <select v-model="book.status" class="form-control" style="height: 42px;" required="">
-                                    <option v-for="(st,index) in langs" :key="index" value="st"> {{st}} </option>
+                            <select v-model="book.lang" class="form-control" style="height: 42px;" required="">
+                                    <option v-for="(l,index) in langs" :key="index" :value="l"> {{l}} </option>
                             </select>
                         </div>
                         <div class="form-group"><label>Resume</label><textarea v-model="book.resume" class="form-control" required=""></textarea></div>
@@ -70,21 +74,21 @@ export default {
         return {
             book:{
                 title:'',
-                type:'',
                 categorie_id:'',
                 author:'',
                 resume:'',
                 isbn:'',
                 status:'',
-                imgs:[],
-                
+                imgs:[3],
+                lang:''
             },
             showBooks:false,
             categories:[],
             apiresult:[],
             status:[],
             url:[],
-            langs:[]
+            langs:[],
+            saved:false
         }
     },
     methods:{
@@ -138,15 +142,23 @@ export default {
         saveBook(){
             const fd=new FormData();
             fd.append('title',this.book.title)
-            fd.append('type',this.book.type)
             fd.append('author',this.book.author)
             fd.append('resume',this.book.resume)
             fd.append('isbn',this.book.isbn)
+            fd.append('lang',this.book.lang)
             fd.append('status',this.book.status)
             fd.append('categorie_id',this.book.categorie_id)
             for (let i = 0; i < this.book.imgs.length; i++) {
-                fd.append('imgs[' + i + ']', this.book.imgs[i],this.book.imgs[i].name);
+                fd.append('imgs[' + i + ']', this.book.imgs[i]);
             }
+
+            this.$store.dispatch('addNewBook',fd)
+            .then(res=>{
+                this.saved=true;
+            })
+            .catch(err=>{
+
+            });
         }   
     },
     mounted(){

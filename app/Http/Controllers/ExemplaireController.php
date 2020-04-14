@@ -31,23 +31,23 @@ class ExemplaireController extends Controller
     public function store(Request $request)
     {
         $livre = Livre::where('isbn', $request->isbn)->first();
+        
         if ($livre === null) {
             // livre doesn't exist, so we will create it :D
-
             $livre = Livre::create([
-                'titre' => $request->titre,
-                'auteurs' => $request->auteurs,
+                'titre' => $request->title,
+                'auteurs' => $request->author,
                 'isbn' => $request->isbn,
-                'date_publication' => $request->date_publication,
                 'resume' => $request->resume,
                 'categorie_id' => $request->categorie_id
             ]);
         }
-
+        
+        $userid=auth()->user()->id;
         $exemplaire = Exemplaire::create([
-            'langue' => $request->langue,
-            'etat' => $request->etat,
-            'user_id' => $request->user_id,
+            'langue' => $request->lang,
+            'etat' => $request->status,
+            'user_id' => $userid,
             'livre_id' => $livre->id,
         ]);
 
@@ -55,7 +55,7 @@ class ExemplaireController extends Controller
         foreach($request->file('imgs') as $file){
             $photo = new PhotoLivre;
 
-            $savePath = 'images/exemplaire_photos/'; // save path
+            $savePath = 'images/books'; // save path
             // name it differently by time and count
             $imageName = time() . $i . '.' . $file->getClientOriginalExtension();
             // move the file to desired folder
@@ -63,7 +63,6 @@ class ExemplaireController extends Controller
             // assign the location of folder to the model
             $photo->image = $savePath . $imageName;
             $photo->exemplaire_id= $exemplaire->id;
-
             $photo->save();
             $i++;
         }

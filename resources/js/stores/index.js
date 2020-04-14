@@ -43,11 +43,14 @@ const vuex=new Vuex.Store({
 	            email:user.email,
 	            password:user.password
 	        }).then(response=>{
-	        	const token=response.data.access_token;
+				if(response.status==403){
+
+				}else{
+				const token=response.data.access_token;
 	            localStorage.setItem('access_token',token);
 				context.commit('retreiveToken',token);
 	            resolve(response);
-
+				}
 	        }).catch(error=>{
 	            console.log(error);
 	            reject(error)
@@ -175,6 +178,26 @@ const vuex=new Vuex.Store({
         reject(err)
       });
 		});
+	},
+	addNewBook(context,book){
+		if(context.getters.logedIn){
+			const config = {
+				headers: {
+				   Authorization: "Bearer " + context.state.token,
+				   'content-type': 'multipart/form-data' 
+				}
+			 };
+			 return new Promise((resolve,reject)=>{
+				axios.post('http://localhost:8000/api/exemp',book,config)
+				.then(res=>{
+					resolve(res)
+				})
+				.catch(err=>{
+					reject(err)
+				});
+			 });
+		
+			}
 	}
 	}
 });

@@ -20,7 +20,6 @@ class CreateLivresTable extends Migration
             $table->string('titre');
             $table->string('auteurs');
             $table->string('isbn');
-            $table->date('date_publication');
             $table->text('resume');
             $table->timestamps();
             $table->bigInteger('categorie_id')->unsigned();

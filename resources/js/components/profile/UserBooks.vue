@@ -2,7 +2,7 @@
               <div class="col-md-9">
                 <div>
                     <h3>My books</h3>
-                    <div class="bg-white p-3"><button class="btn btn-info mb-3 float-right" type="button">Add a new book</button>
+                    <div class="bg-white p-3"><router-link to="/newBook" class="btn btn-info mb-3 float-right" type="button">Add a new book</router-link>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
