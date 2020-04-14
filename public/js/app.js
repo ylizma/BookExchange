@@ -39781,14 +39781,23 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     path: '/book',
     name: 'book',
     component: _js_pages_book_UserBookPage_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
+    meta: {
+      middleware: [_js_router_middleware_auth__WEBPACK_IMPORTED_MODULE_4__["default"]]
+    },
     children: [{
       path: '/newBook',
       name: 'newBook',
-      component: _js_components_book_NewBook_vue__WEBPACK_IMPORTED_MODULE_14__["default"]
+      component: _js_components_book_NewBook_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
+      meta: {
+        middleware: [_js_router_middleware_auth__WEBPACK_IMPORTED_MODULE_4__["default"]]
+      }
     }, {
       path: '/editBook/:id',
       name: 'editBook',
-      component: _js_components_book_EditBook_vue__WEBPACK_IMPORTED_MODULE_15__["default"]
+      component: _js_components_book_EditBook_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
+      meta: {
+        middleware: [_js_router_middleware_auth__WEBPACK_IMPORTED_MODULE_4__["default"]]
+      }
     }]
   }]
 });
