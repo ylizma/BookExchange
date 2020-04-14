@@ -14,7 +14,7 @@ class Exemplaire extends Model
      * @var array
     */
     protected $fillable = [
-        'langue', 'etat', 'livre_id'
+        'langue', 'etat', 'livre_id', 'user_id'
     ];
 
     public function photos()
