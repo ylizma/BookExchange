@@ -19,7 +19,9 @@ class ExemplaireController extends Controller
      */
     public function index()
     {
-        return ExemplaireResource::collection(Exemplaire::paginate(25));
+
+        $ex=Exemplaire::where('user_id','=',auth()->user()->id)->with('livre','photos')->paginate(5);
+        return $ex;
     }
 
     /**
@@ -61,7 +63,7 @@ class ExemplaireController extends Controller
             // move the file to desired folder
             $file->move($savePath, $imageName);
             // assign the location of folder to the model
-            $photo->image = $savePath . $imageName;
+            $photo->image = $imageName;
             $photo->exemplaire_id= $exemplaire->id;
             $photo->save();
             $i++;

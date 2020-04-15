@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios';
+import router from '../router/routes.js'
 import VueJsonp from 'vue-jsonp'
 Vue.use(VueJsonp)
 Vue.use(Vuex)
@@ -43,15 +44,15 @@ const vuex=new Vuex.Store({
 	            email:user.email,
 	            password:user.password
 	        }).then(response=>{
-				if(response.status==403){
 
-				}else{
 				const token=response.data.access_token;
 	            localStorage.setItem('access_token',token);
 				context.commit('retreiveToken',token);
 	            resolve(response);
-				}
 	        }).catch(error=>{
+				if(response.status==401){
+					localStorage.removeItem('access_token')
+				}
 	            console.log(error);
 	            reject(error)
 	        })
@@ -79,8 +80,8 @@ const vuex=new Vuex.Store({
 	            context.commit('destroyToken');
 	            resolve(response);
 	        }).catch(error=>{
-	            // localStorage.removeItem('access_token');
-				// context.commit('destroyToken');
+	            localStorage.removeItem('access_token');
+				context.commit('destroyToken');
 				console.error(error);
 	            reject(error)
 	        })
@@ -99,7 +100,11 @@ const vuex=new Vuex.Store({
 					 axios.get('http://localhost:8000/api/profile',config).then(resp=>{
 						resolve(resp);
 					}).catch(err=>{
-						console.error(err);
+						if(err.response.status==401){
+							localStorage.removeItem('access_token')
+							router.push('/login')
+						}
+						// console.error(err);
 						reject(err);
 					});
 				})
@@ -122,6 +127,10 @@ const vuex=new Vuex.Store({
 						resolve(resp);
 					}).catch(err=>{
 						console.error(err);
+						if(err.response.status==401){
+							localStorage.removeItem('access_token')
+							router.push('/login')
+						}
 						reject(err);
 					});
 				});
@@ -133,6 +142,10 @@ const vuex=new Vuex.Store({
 					axios.get('http://localhost:8000/api/city').then(res=>{
 						resolve(res);
 					}).catch(err=>{
+						if(err.response.status==401){
+							localStorage.removeItem('access_token')
+							router.push('/login')
+						}
 						reject(err);
 					});
 				 });
@@ -149,6 +162,10 @@ const vuex=new Vuex.Store({
 					context.commit('getUser',res.data.user);
 					resolve(res);
 				}).catch(err=>{
+					if(err.response.status==401){
+						localStorage.removeItem('access_token')
+						router.push('/login')
+					}
 					reject(err);
 				});
 			 });
@@ -165,7 +182,12 @@ const vuex=new Vuex.Store({
 				axios.get('http://localhost:8000/api/cats',config).then(resp=>{
 					// console.log(resp);
 					resolve(resp);
-				}).catch(err=>reject(err)
+				}).catch(err=>{
+					if(err.response.status==401){
+						localStorage.removeItem('access_token')
+						router.push('/login')
+					}
+					reject(err)}
 				)
 			});
 		}
@@ -193,6 +215,33 @@ const vuex=new Vuex.Store({
 					resolve(res)
 				})
 				.catch(err=>{
+					if(err.response.status==401){
+						localStorage.removeItem('access_token')
+						router.push('/login')
+					}
+					reject(err)
+				});
+			 });
+		
+			}
+	},
+	getUserBooks(context,url){
+		if(context.getters.logedIn){
+			const config = {
+				headers: {
+				   Authorization: "Bearer " + context.state.token,
+				}
+			 };
+			 return new Promise((resolve,reject)=>{
+				axios.get(url || 'http://localhost:8000/api/exemp',config)
+				.then(res=>{
+					resolve(res)
+				})
+				.catch(err=>{
+					if(err.response.status==401){
+						localStorage.removeItem('access_token')
+						router.push('/login')
+					}
 					reject(err)
 				});
 			 });

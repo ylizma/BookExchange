@@ -2362,20 +2362,41 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      books: [],
+      pagination: {}
+    };
+  },
+  methods: {
+    getBooks: function getBooks() {
+      var _this = this;
+
+      this.$store.dispatch('getUserBooks').then(function (res) {
+        _this.books = res.data.data;
+
+        _this.makepagination(res.data);
+
+        console.log(_this.pagination);
+      })["catch"](function (err) {
+        console.error(err);
+      });
+    },
+    makepagination: function makepagination(links) {
+      var pagination = {
+        current_page: links.current_page,
+        last_page: links.last_page,
+        next_page_url: links.next_page_url,
+        prev_page_url: links.prev_page_url
+      };
+      this.pagination = pagination;
+    }
+  },
+  mounted: function mounted() {
+    this.getBooks();
+  }
+});
 
 /***/ }),
 
@@ -21593,9 +21614,45 @@ var render = function() {
             [_vm._v("Add a new book")]
           ),
           _vm._v(" "),
-          _vm._m(0),
+          _c("div", { staticClass: "table-responsive" }, [
+            _c("table", { staticClass: "table" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.books, function(book) {
+                  return _c("tr", { key: book.id }, [
+                    _c("td", { staticClass: "table-light" }, [
+                      _c("img", {
+                        attrs: {
+                          width: "128",
+                          height: "200",
+                          src: book.photos[0]
+                            ? "/images/books/" + book.photos[0].image
+                            : "https://dummyimage.com/128x200/000000/ffffff"
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(" " + _vm._s(book.livre.titre) + " ")]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "table-light" }, [
+                      _vm._v(" " + _vm._s(book.created_at) + " ")
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "table-light" }, [
+                      _vm._v("Available")
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(1, true)
+                  ])
+                }),
+                0
+              )
+            ])
+          ]),
           _vm._v(" "),
-          _vm._m(1)
+          _vm._m(2)
         ],
         1
       )
@@ -21607,95 +21664,35 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "table-responsive" }, [
-      _c("table", { staticClass: "table" }, [
-        _c("thead", [
-          _c("tr", [
-            _c("th", { staticClass: "table-secondary" }, [_vm._v("Book")]),
-            _vm._v(" "),
-            _c("th", { staticClass: "table-secondary" }, [_vm._v("date")]),
-            _vm._v(" "),
-            _c("th", { staticClass: "table-secondary" }, [_vm._v("Status")]),
-            _vm._v(" "),
-            _c("th", { staticClass: "table-secondary" })
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { staticClass: "table-secondary" }),
+        _vm._v(" "),
+        _c("th", { staticClass: "table-secondary" }, [_vm._v("title")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "table-secondary" }, [_vm._v("date")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "table-secondary" }, [_vm._v("Status")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "table-secondary" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "table-light" }, [
+      _c("div", { staticClass: "row", staticStyle: { width: "120px" } }, [
+        _c("div", { staticClass: "col-auto" }, [
+          _c("a", { staticClass: "action-link", attrs: { href: "#" } }, [
+            _c("i", { staticClass: "fa fa-edit mr-3" })
           ])
         ]),
         _vm._v(" "),
-        _c("tbody", [
-          _c("tr", [
-            _c("td", { staticClass: "table-light" }, [
-              _c("img", {
-                attrs: { src: "https://dummyimage.com/128x200/000000/ffffff" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("td", { staticClass: "table-light" }, [
-              _vm._v("22-02-2020 19:34")
-            ]),
-            _vm._v(" "),
-            _c("td", { staticClass: "table-light" }, [_vm._v("Available")]),
-            _vm._v(" "),
-            _c("td", { staticClass: "table-light" }, [
-              _c(
-                "div",
-                { staticClass: "row", staticStyle: { width: "120px" } },
-                [
-                  _c("div", { staticClass: "col-auto" }, [
-                    _c(
-                      "a",
-                      { staticClass: "action-link", attrs: { href: "#" } },
-                      [_c("i", { staticClass: "fa fa-edit mr-3" })]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-auto" }, [
-                    _c(
-                      "a",
-                      { staticClass: "action-link", attrs: { href: "#" } },
-                      [_c("i", { staticClass: "fa fa-remove" })]
-                    )
-                  ])
-                ]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("tr", [
-            _c("td", { staticClass: "table-light" }, [
-              _c("img", {
-                attrs: { src: "https://dummyimage.com/128x200/000000/ffffff" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("td", { staticClass: "table-light" }, [
-              _vm._v("26-02-2020 15:44")
-            ]),
-            _vm._v(" "),
-            _c("td", { staticClass: "table-light" }, [_vm._v("Not available")]),
-            _vm._v(" "),
-            _c("td", { staticClass: "table-light" }, [
-              _c(
-                "div",
-                { staticClass: "row", staticStyle: { width: "120px" } },
-                [
-                  _c("div", { staticClass: "col-auto" }, [
-                    _c(
-                      "a",
-                      { staticClass: "action-link", attrs: { href: "#" } },
-                      [_c("i", { staticClass: "fa fa-edit mr-3" })]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-auto" }, [
-                    _c(
-                      "a",
-                      { staticClass: "action-link", attrs: { href: "#" } },
-                      [_c("i", { staticClass: "fa fa-remove" })]
-                    )
-                  ])
-                ]
-              )
-            ])
+        _c("div", { staticClass: "col-auto" }, [
+          _c("a", { staticClass: "action-link", attrs: { href: "#" } }, [
+            _c("i", { staticClass: "fa fa-remove" })
           ])
         ])
       ])
@@ -21721,30 +21718,6 @@ var staticRenderFns = [
         _c("li", { staticClass: "page-item" }, [
           _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
             _vm._v("1")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "page-item" }, [
-          _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-            _vm._v("2")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "page-item" }, [
-          _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-            _vm._v("3")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "page-item" }, [
-          _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-            _vm._v("4")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "page-item" }, [
-          _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-            _vm._v("5")
           ])
         ]),
         _vm._v(" "),
@@ -39835,13 +39808,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var vue_jsonp__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-jsonp */ "./node_modules/vue-jsonp/dist/vue-jsonp.umd.js");
-/* harmony import */ var vue_jsonp__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_jsonp__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _router_routes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../router/routes.js */ "./resources/js/router/routes.js");
+/* harmony import */ var vue_jsonp__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-jsonp */ "./node_modules/vue-jsonp/dist/vue-jsonp.umd.js");
+/* harmony import */ var vue_jsonp__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_jsonp__WEBPACK_IMPORTED_MODULE_4__);
 
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_jsonp__WEBPACK_IMPORTED_MODULE_3___default.a);
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_jsonp__WEBPACK_IMPORTED_MODULE_4___default.a);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
@@ -39883,13 +39858,15 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
           email: user.email,
           password: user.password
         }).then(function (response) {
-          if (response.status == 403) {} else {
-            var token = response.data.access_token;
-            localStorage.setItem('access_token', token);
-            context.commit('retreiveToken', token);
-            resolve(response);
-          }
+          var token = response.data.access_token;
+          localStorage.setItem('access_token', token);
+          context.commit('retreiveToken', token);
+          resolve(response);
         })["catch"](function (error) {
+          if (response.status == 401) {
+            localStorage.removeItem('access_token');
+          }
+
           console.log(error);
           reject(error);
         });
@@ -39917,8 +39894,8 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
             context.commit('destroyToken');
             resolve(response);
           })["catch"](function (error) {
-            // localStorage.removeItem('access_token');
-            // context.commit('destroyToken');
+            localStorage.removeItem('access_token');
+            context.commit('destroyToken');
             console.error(error);
             reject(error);
           });
@@ -39937,7 +39914,12 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
           axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('http://localhost:8000/api/profile', config).then(function (resp) {
             resolve(resp);
           })["catch"](function (err) {
-            console.error(err);
+            if (err.response.status == 401) {
+              localStorage.removeItem('access_token');
+              _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push('/login');
+            } // console.error(err);
+
+
             reject(err);
           });
         });
@@ -39959,6 +39941,12 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
             resolve(resp);
           })["catch"](function (err) {
             console.error(err);
+
+            if (err.response.status == 401) {
+              localStorage.removeItem('access_token');
+              _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push('/login');
+            }
+
             reject(err);
           });
         });
@@ -39969,6 +39957,11 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
         axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('http://localhost:8000/api/city').then(function (res) {
           resolve(res);
         })["catch"](function (err) {
+          if (err.response.status == 401) {
+            localStorage.removeItem('access_token');
+            _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push('/login');
+          }
+
           reject(err);
         });
       });
@@ -39985,6 +39978,11 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
             context.commit('getUser', res.data.user);
             resolve(res);
           })["catch"](function (err) {
+            if (err.response.status == 401) {
+              localStorage.removeItem('access_token');
+              _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push('/login');
+            }
+
             reject(err);
           });
         });
@@ -40002,7 +40000,12 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
             // console.log(resp);
             resolve(resp);
           })["catch"](function (err) {
-            return reject(err);
+            if (err.response.status == 401) {
+              localStorage.removeItem('access_token');
+              _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push('/login');
+            }
+
+            reject(err);
           });
         });
       }
@@ -40028,6 +40031,32 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
           axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('http://localhost:8000/api/exemp', book, config).then(function (res) {
             resolve(res);
           })["catch"](function (err) {
+            if (err.response.status == 401) {
+              localStorage.removeItem('access_token');
+              _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push('/login');
+            }
+
+            reject(err);
+          });
+        });
+      }
+    },
+    getUserBooks: function getUserBooks(context, url) {
+      if (context.getters.logedIn) {
+        var config = {
+          headers: {
+            Authorization: "Bearer " + context.state.token
+          }
+        };
+        return new Promise(function (resolve, reject) {
+          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(url || 'http://localhost:8000/api/exemp', config).then(function (res) {
+            resolve(res);
+          })["catch"](function (err) {
+            if (err.response.status == 401) {
+              localStorage.removeItem('access_token');
+              _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push('/login');
+            }
+
             reject(err);
           });
         });
