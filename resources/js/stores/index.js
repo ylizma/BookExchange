@@ -11,7 +11,8 @@ const vuex=new Vuex.Store({
 		token:  localStorage.getItem('access_token') || null,
 		user:{},
 		bookStatus:["new","old"],
-		langs:['frensh','arabic','english']
+		langs:['frensh','arabic','english'],
+		base:process.env('AXIOS_BASE_URL') || 'http://localhost:8000/api'
 	},
 	mutations:{
         // login stuff
@@ -34,7 +35,10 @@ const vuex=new Vuex.Store({
 		bookStatus(state){
 			return state.bookStatus
 		},
-		langs(state){return state.langs}
+		langs(state){return state.langs},
+		getBaseUrl(state){
+			return state.base
+		}
 	},
 	actions:{
 		//login
@@ -97,7 +101,7 @@ const vuex=new Vuex.Store({
 					}
 				 };
 				return new Promise((resolve,reject)=>{
-					 axios.get('http://localhost:8000/api/profile',config).then(resp=>{
+					 axios.get(context.state.base+'/profile',config).then(resp=>{
 						resolve(resp);
 					}).catch(err=>{
 						if(err.response.status==401){
@@ -120,7 +124,7 @@ const vuex=new Vuex.Store({
 					}
 				 };
 				return new Promise((resolve,reject)=>{
-					 axios.post('http://localhost:8000/api/update',user,config).then(resp=>{
+					 axios.post(context.state.base+'/update',user,config).then(resp=>{
 						 context.commit('getUser',resp.data.user)
 						 console.log(resp.data);
 						 
@@ -139,7 +143,8 @@ const vuex=new Vuex.Store({
 		fetchCities(context){
 				 
 				 return new Promise((resolve,reject)=>{
-					axios.get('http://localhost:8000/api/city').then(res=>{
+					axios.get(context.state.base+'/city')
+					.then(res=>{
 						resolve(res);
 					}).catch(err=>{
 						if(err.response.status==401){
@@ -158,10 +163,11 @@ const vuex=new Vuex.Store({
 				}
 			 };
 			 return new Promise((resolve,reject)=>{
-				axios.get('http://localhost:8000/api/user',config).then(res=>{
+				axios.get(context.state.base+'/user',config)
+				.then(res=>{
 					context.commit('getUser',res.data.user);
-					resolve(res);
-				}).catch(err=>{
+					resolve(res)})
+				.catch(err=>{
 					if(err.response.status==401){
 						localStorage.removeItem('access_token')
 						router.push('/login')
@@ -179,7 +185,7 @@ const vuex=new Vuex.Store({
 				}
 			 };
 			return new Promise((resolve,reject)=>{
-				axios.get('http://localhost:8000/api/cats',config).then(resp=>{
+				axios.get(context.state.base+'/cats',config).then(resp=>{
 					// console.log(resp);
 					resolve(resp);
 				}).catch(err=>{
@@ -210,7 +216,7 @@ const vuex=new Vuex.Store({
 				}
 			 };
 			 return new Promise((resolve,reject)=>{
-				axios.post('http://localhost:8000/api/exemp',book,config)
+				axios.post(context.state.base+'/exemp',book,config)
 				.then(res=>{
 					resolve(res)
 				})
@@ -233,7 +239,7 @@ const vuex=new Vuex.Store({
 				}
 			 };
 			 return new Promise((resolve,reject)=>{
-				axios.get(url || 'http://localhost:8000/api/exemp',config)
+				axios.get(url || context.state.base+'/exemp',config)
 				.then(res=>{
 					resolve(res)
 				})

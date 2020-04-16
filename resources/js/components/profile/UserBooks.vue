@@ -16,13 +16,13 @@
                                 </thead>
                                 <tbody>
                                     <tr v-for="book in books" :key="book.id">
-                                        <td class="table-light"><img width="128" height="200" :src="(book.photos[0])?'/images/books/'+book.photos[0].image:'https://dummyimage.com/128x200/000000/ffffff'"></td>
-                                        <td> {{book.livre.titre}} </td>
+                                        <td class="table-light"><img width="128" height="160" :src="(book.photos[0])?'/images/books/'+book.photos[0].image:'https://dummyimage.com/128x200/000000/ffffff'"></td>
+                                        <td class="table-light"> {{book.livre.titre}} </td>
                                         <td class="table-light"> {{book.created_at}} </td>
                                         <td class="table-light">Available</td>
                                         <td class="table-light">
                                             <div class="row" style="width: 120px;">
-                                                <div class="col-auto"><a class="action-link" href="#"><i class="fa fa-edit mr-3"></i></a></div>
+                                                <div class="col-auto"><router-link class="action-link" :to="{name:'editBook',params:{id:book.id}}"><i class="fa fa-edit mr-3"></i></router-link></div>
                                                 <div class="col-auto"><a class="action-link" href="#"><i class="fa fa-remove"></i></a></div>
                                             </div>
                                         </td>
@@ -32,9 +32,9 @@
                         </div>
                         <nav class="mt-2">
                             <ul class="pagination">
-                                <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+                                <li v-for="i in pagination.last_page" :key="i" class="page-item" :class="(i==pagination.current_page?'active':'')">
+                                    <a  class="page-link" href="#" @click="getBooks(pagination.path+'?page='+i)">{{i}}</a>
+                                </li>
                             </ul>
                         </nav>
                     </div>
@@ -51,8 +51,8 @@ data(){
     }
 },
 methods:{
-    getBooks(){
-        this.$store.dispatch('getUserBooks')
+    getBooks(url){
+        this.$store.dispatch('getUserBooks',url)
         .then(res=>{
             this.books=res.data.data;
             this.makepagination(res.data);
@@ -67,8 +67,7 @@ methods:{
         let pagination={
             current_page:links.current_page,
             last_page:links.last_page,
-            next_page_url:links.next_page_url,
-            prev_page_url:links.prev_page_url
+            path:links.path
         }
         this.pagination=pagination;
     },

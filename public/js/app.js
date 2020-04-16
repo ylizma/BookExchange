@@ -2126,7 +2126,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {};
+  }
+});
 
 /***/ }),
 
@@ -2370,10 +2374,10 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    getBooks: function getBooks() {
+    getBooks: function getBooks(url) {
       var _this = this;
 
-      this.$store.dispatch('getUserBooks').then(function (res) {
+      this.$store.dispatch('getUserBooks', url).then(function (res) {
         _this.books = res.data.data;
 
         _this.makepagination(res.data);
@@ -2387,8 +2391,7 @@ __webpack_require__.r(__webpack_exports__);
       var pagination = {
         current_page: links.current_page,
         last_page: links.last_page,
-        next_page_url: links.next_page_url,
-        prev_page_url: links.prev_page_url
+        path: links.path
       };
       this.pagination = pagination;
     }
@@ -21626,7 +21629,7 @@ var render = function() {
                       _c("img", {
                         attrs: {
                           width: "128",
-                          height: "200",
+                          height: "160",
                           src: book.photos[0]
                             ? "/images/books/" + book.photos[0].image
                             : "https://dummyimage.com/128x200/000000/ffffff"
@@ -21634,7 +21637,9 @@ var render = function() {
                       })
                     ]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(" " + _vm._s(book.livre.titre) + " ")]),
+                    _c("td", { staticClass: "table-light" }, [
+                      _vm._v(" " + _vm._s(book.livre.titre) + " ")
+                    ]),
                     _vm._v(" "),
                     _c("td", { staticClass: "table-light" }, [
                       _vm._v(" " + _vm._s(book.created_at) + " ")
@@ -21644,7 +21649,36 @@ var render = function() {
                       _vm._v("Available")
                     ]),
                     _vm._v(" "),
-                    _vm._m(1, true)
+                    _c("td", { staticClass: "table-light" }, [
+                      _c(
+                        "div",
+                        { staticClass: "row", staticStyle: { width: "120px" } },
+                        [
+                          _c(
+                            "div",
+                            { staticClass: "col-auto" },
+                            [
+                              _c(
+                                "router-link",
+                                {
+                                  staticClass: "action-link",
+                                  attrs: {
+                                    to: {
+                                      name: "editBook",
+                                      params: { id: book.id }
+                                    }
+                                  }
+                                },
+                                [_c("i", { staticClass: "fa fa-edit mr-3" })]
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _vm._m(1, true)
+                        ]
+                      )
+                    ])
                   ])
                 }),
                 0
@@ -21652,7 +21686,40 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm._m(2)
+          _c("nav", { staticClass: "mt-2" }, [
+            _c(
+              "ul",
+              { staticClass: "pagination" },
+              _vm._l(_vm.pagination.last_page, function(i) {
+                return _c(
+                  "li",
+                  {
+                    key: i,
+                    staticClass: "page-item",
+                    class: i == _vm.pagination.current_page ? "active" : ""
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "page-link",
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            return _vm.getBooks(
+                              _vm.pagination.path + "?page=" + i
+                            )
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(i))]
+                    )
+                  ]
+                )
+              }),
+              0
+            )
+          ])
         ],
         1
       )
@@ -21682,55 +21749,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { staticClass: "table-light" }, [
-      _c("div", { staticClass: "row", staticStyle: { width: "120px" } }, [
-        _c("div", { staticClass: "col-auto" }, [
-          _c("a", { staticClass: "action-link", attrs: { href: "#" } }, [
-            _c("i", { staticClass: "fa fa-edit mr-3" })
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-auto" }, [
-          _c("a", { staticClass: "action-link", attrs: { href: "#" } }, [
-            _c("i", { staticClass: "fa fa-remove" })
-          ])
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("nav", { staticClass: "mt-2" }, [
-      _c("ul", { staticClass: "pagination" }, [
-        _c("li", { staticClass: "page-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "page-link",
-              attrs: { href: "#", "aria-label": "Previous" }
-            },
-            [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("«")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "page-item" }, [
-          _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-            _vm._v("1")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "page-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "page-link",
-              attrs: { href: "#", "aria-label": "Next" }
-            },
-            [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("»")])]
-          )
-        ])
+    return _c("div", { staticClass: "col-auto" }, [
+      _c("a", { staticClass: "action-link", attrs: { href: "#" } }, [
+        _c("i", { staticClass: "fa fa-remove" })
       ])
     ])
   }
@@ -39803,7 +39824,7 @@ router.beforeEach(function (to, from, next) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
@@ -39823,7 +39844,8 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     token: localStorage.getItem('access_token') || null,
     user: {},
     bookStatus: ["new", "old"],
-    langs: ['frensh', 'arabic', 'english']
+    langs: ['frensh', 'arabic', 'english'],
+    base: process.env('AXIOS_BASE_URL') || 'http://localhost:8000/api'
   },
   mutations: {
     // login stuff
@@ -39848,6 +39870,9 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     },
     langs: function langs(state) {
       return state.langs;
+    },
+    getBaseUrl: function getBaseUrl(state) {
+      return state.base;
     }
   },
   actions: {
@@ -39911,7 +39936,7 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
           }
         };
         return new Promise(function (resolve, reject) {
-          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('http://localhost:8000/api/profile', config).then(function (resp) {
+          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(context.state.base + '/profile', config).then(function (resp) {
             resolve(resp);
           })["catch"](function (err) {
             if (err.response.status == 401) {
@@ -39935,7 +39960,7 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
           }
         };
         return new Promise(function (resolve, reject) {
-          axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('http://localhost:8000/api/update', user, config).then(function (resp) {
+          axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(context.state.base + '/update', user, config).then(function (resp) {
             context.commit('getUser', resp.data.user);
             console.log(resp.data);
             resolve(resp);
@@ -39954,7 +39979,7 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     },
     fetchCities: function fetchCities(context) {
       return new Promise(function (resolve, reject) {
-        axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('http://localhost:8000/api/city').then(function (res) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(context.state.base + '/city').then(function (res) {
           resolve(res);
         })["catch"](function (err) {
           if (err.response.status == 401) {
@@ -39974,7 +39999,7 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
           }
         };
         return new Promise(function (resolve, reject) {
-          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('http://localhost:8000/api/user', config).then(function (res) {
+          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(context.state.base + '/user', config).then(function (res) {
             context.commit('getUser', res.data.user);
             resolve(res);
           })["catch"](function (err) {
@@ -39996,7 +40021,7 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
           }
         };
         return new Promise(function (resolve, reject) {
-          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('http://localhost:8000/api/cats', config).then(function (resp) {
+          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(context.state.base + '/cats', config).then(function (resp) {
             // console.log(resp);
             resolve(resp);
           })["catch"](function (err) {
@@ -40028,7 +40053,7 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
           }
         };
         return new Promise(function (resolve, reject) {
-          axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('http://localhost:8000/api/exemp', book, config).then(function (res) {
+          axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(context.state.base + '/exemp', book, config).then(function (res) {
             resolve(res);
           })["catch"](function (err) {
             if (err.response.status == 401) {
@@ -40049,7 +40074,7 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
           }
         };
         return new Promise(function (resolve, reject) {
-          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(url || 'http://localhost:8000/api/exemp', config).then(function (res) {
+          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(url || context.state.base + '/exemp', config).then(function (res) {
             resolve(res);
           })["catch"](function (err) {
             if (err.response.status == 401) {
@@ -40065,6 +40090,7 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   }
 });
 /* harmony default export */ __webpack_exports__["default"] = (vuex);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../node_modules/process/browser.js */ "./node_modules/process/browser.js")))
 
 /***/ }),
 
