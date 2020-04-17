@@ -3,10 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Exemplaire extends Model
 {
-    //Uncompleted
+
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
