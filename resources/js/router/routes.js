@@ -110,16 +110,31 @@ const router=new VueRouter({
 		path:'/book',
 		name:'book',
 		component:Book,
+		meta:{
+			middleware:[
+				auth
+			]
+		},
 		children:[
 			{
 				path:'/newBook',
 				name:'newBook',
-				component:NewBook
+				component:NewBook,
+				meta:{
+					middleware:[
+						auth
+					]
+				}
 			},
 			{
 				path:'/editBook/:id',
 				name:'editBook',
-				component:EditBook
+				component:EditBook,
+				meta:{
+					middleware:[
+						auth
+					]
+				}
 			}
 		]
 	}

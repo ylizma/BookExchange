@@ -2,36 +2,27 @@
               <div class="col-md-9">
                 <div>
                     <h3>My books</h3>
-                    <div class="bg-white p-3"><button class="btn btn-info mb-3 float-right" type="button">Add a new book</button>
+                    <div class="bg-white p-3"><router-link to="/newBook" class="btn btn-info mb-3 float-right" type="button">Add a new book</router-link>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th class="table-secondary">Book</th>
+                                        <th class="table-secondary"></th>
+                                        <th class="table-secondary">title</th>
                                         <th class="table-secondary">date</th>
                                         <th class="table-secondary">Status</th>
                                         <th class="table-secondary"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td class="table-light"><img src="https://dummyimage.com/128x200/000000/ffffff"></td>
-                                        <td class="table-light">22-02-2020 19:34</td>
+                                    <tr v-for="book in books" :key="book.id">
+                                        <td class="table-light"><img width="128" height="160" :src="(book.photos[0])?'/images/books/'+book.photos[0].image:'https://dummyimage.com/128x200/000000/ffffff'"></td>
+                                        <td class="table-light"> {{book.livre.titre}} </td>
+                                        <td class="table-light"> {{book.created_at}} </td>
                                         <td class="table-light">Available</td>
                                         <td class="table-light">
                                             <div class="row" style="width: 120px;">
-                                                <div class="col-auto"><a class="action-link" href="#"><i class="fa fa-edit mr-3"></i></a></div>
-                                                <div class="col-auto"><a class="action-link" href="#"><i class="fa fa-remove"></i></a></div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="table-light"><img src="https://dummyimage.com/128x200/000000/ffffff"></td>
-                                        <td class="table-light">26-02-2020 15:44</td>
-                                        <td class="table-light">Not available</td>
-                                        <td class="table-light">
-                                            <div class="row" style="width: 120px;">
-                                                <div class="col-auto"><a class="action-link" href="#"><i class="fa fa-edit mr-3"></i></a></div>
+                                                <div class="col-auto"><router-link class="action-link" :to="{name:'editBook',params:{id:book.id}}"><i class="fa fa-edit mr-3"></i></router-link></div>
                                                 <div class="col-auto"><a class="action-link" href="#"><i class="fa fa-remove"></i></a></div>
                                             </div>
                                         </td>
@@ -41,13 +32,9 @@
                         </div>
                         <nav class="mt-2">
                             <ul class="pagination">
-                                <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                                <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+                                <li v-for="i in pagination.last_page" :key="i" class="page-item" :class="(i==pagination.current_page?'active':'')">
+                                    <a  class="page-link" href="#" @click="getBooks(pagination.path+'?page='+i)">{{i}}</a>
+                                </li>
                             </ul>
                         </nav>
                     </div>
@@ -57,7 +44,38 @@
 
 <script>
 export default {
-
+data(){
+    return{
+        books:[],
+        pagination:{}
+    }
+},
+methods:{
+    getBooks(url){
+        this.$store.dispatch('getUserBooks',url)
+        .then(res=>{
+            this.books=res.data.data;
+            this.makepagination(res.data);
+            console.log(this.pagination);
+        })
+        .catch(err=>{
+            console.error(err);
+        });
+        
+    },
+     makepagination(links){
+        let pagination={
+            current_page:links.current_page,
+            last_page:links.last_page,
+            path:links.path
+        }
+        this.pagination=pagination;
+    },
+},
+   
+mounted(){
+    this.getBooks()
+}
 }
 </script>
 

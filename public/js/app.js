@@ -2126,7 +2126,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {};
+  }
+});
 
 /***/ }),
 
@@ -2199,24 +2203,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       book: {
         title: '',
-        type: '',
         categorie_id: '',
         author: '',
         resume: '',
         isbn: '',
         status: '',
-        imgs: []
+        imgs: [3],
+        lang: ''
       },
       showBooks: false,
       categories: [],
       apiresult: [],
       status: [],
-      url: []
+      url: [],
+      langs: [],
+      saved: false
     };
   },
   methods: {
@@ -2252,7 +2268,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     choosedOne: function choosedOne(index) {
       var cbook = this.apiresult[index];
-      this.book.title = cbook.title, this.book.author = cbook.authors;
+      this.book.title = cbook.title, this.book.author = cbook.authors.join(',');
       this.book.resume = cbook.resume;
       this.book.isbn = cbook.isbn[0].identifier;
       this.showBooks = false;
@@ -2268,23 +2284,30 @@ __webpack_require__.r(__webpack_exports__);
       this.$delete(this.url, index);
     },
     saveBook: function saveBook() {
+      var _this3 = this;
+
       var fd = new FormData();
       fd.append('title', this.book.title);
-      fd.append('type', this.book.type);
       fd.append('author', this.book.author);
       fd.append('resume', this.book.resume);
       fd.append('isbn', this.book.isbn);
+      fd.append('lang', this.book.lang);
       fd.append('status', this.book.status);
       fd.append('categorie_id', this.book.categorie_id);
 
       for (var i = 0; i < this.book.imgs.length; i++) {
-        fd.append('imgs[' + i + ']', this.book.imgs[i], this.book.imgs[i].name);
+        fd.append('imgs[' + i + ']', this.book.imgs[i]);
       }
+
+      this.$store.dispatch('addNewBook', fd).then(function (res) {
+        _this3.saved = true;
+      })["catch"](function (err) {});
     }
   },
   mounted: function mounted() {
     this.getCategories();
     this.status = this.$store.getters.bookStatus;
+    this.langs = this.$store.getters.langs;
   }
 });
 
@@ -2343,20 +2366,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      books: [],
+      pagination: {}
+    };
+  },
+  methods: {
+    getBooks: function getBooks(url) {
+      var _this = this;
+
+      this.$store.dispatch('getUserBooks', url).then(function (res) {
+        _this.books = res.data.data;
+
+        _this.makepagination(res.data);
+
+        console.log(_this.pagination);
+      })["catch"](function (err) {
+        console.error(err);
+      });
+    },
+    makepagination: function makepagination(links) {
+      var pagination = {
+        current_page: links.current_page,
+        last_page: links.last_page,
+        path: links.path
+      };
+      this.pagination = pagination;
+    }
+  },
+  mounted: function mounted() {
+    this.getBooks();
+  }
+});
 
 /***/ }),
 
@@ -21123,6 +21166,31 @@ var render = function() {
       _c("h3", [_vm._v("Add a new book")]),
       _vm._v(" "),
       _c("div", { staticClass: "bg-white p-3" }, [
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.saved,
+                expression: "saved"
+              }
+            ],
+            staticClass: "alert alert-success",
+            attrs: { role: "alert" }
+          },
+          [
+            _vm._v(
+              "\r\n            your book is saved succesfully !!\r\n            "
+            ),
+            _c("router-link", { attrs: { to: "/profile/books" } }, [
+              _vm._v("click here to preview it ")
+            ])
+          ],
+          1
+        ),
+        _vm._v(" "),
         _c("div", [
           _c(
             "form",
@@ -21283,8 +21351,8 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.book.category,
-                        expression: "book.category"
+                        value: _vm.book.categorie_id,
+                        expression: "book.categorie_id"
                       }
                     ],
                     staticClass: "form-control",
@@ -21302,7 +21370,7 @@ var render = function() {
                           })
                         _vm.$set(
                           _vm.book,
-                          "category",
+                          "categorie_id",
                           $event.target.multiple
                             ? $$selectedVal
                             : $$selectedVal[0]
@@ -21313,7 +21381,11 @@ var render = function() {
                   _vm._l(_vm.categories, function(cat) {
                     return _c(
                       "option",
-                      { key: cat.id, attrs: { selected: "" } },
+                      {
+                        key: cat.id,
+                        attrs: { selected: "" },
+                        domProps: { value: cat.id }
+                      },
                       [_vm._v(" " + _vm._s(cat.nom) + " ")]
                     )
                   }),
@@ -21359,9 +21431,59 @@ var render = function() {
                     }
                   },
                   _vm._l(_vm.status, function(st, index) {
-                    return _c("option", { key: index }, [
-                      _vm._v(" " + _vm._s(st) + " ")
-                    ])
+                    return _c(
+                      "option",
+                      { key: index, domProps: { value: st } },
+                      [_vm._v(" " + _vm._s(st) + " ")]
+                    )
+                  }),
+                  0
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", [_vm._v("language")]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.book.lang,
+                        expression: "book.lang"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    staticStyle: { height: "42px" },
+                    attrs: { required: "" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.book,
+                          "lang",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
+                    }
+                  },
+                  _vm._l(_vm.langs, function(l, index) {
+                    return _c(
+                      "option",
+                      { key: index, domProps: { value: l } },
+                      [_vm._v(" " + _vm._s(l) + " ")]
+                    )
                   }),
                   0
                 )
@@ -21478,211 +21600,158 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-9" }, [
-      _c("div", [
-        _c("h3", [_vm._v("My books")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "bg-white p-3" }, [
+  return _c("div", { staticClass: "col-md-9" }, [
+    _c("div", [
+      _c("h3", [_vm._v("My books")]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "bg-white p-3" },
+        [
           _c(
-            "button",
+            "router-link",
             {
               staticClass: "btn btn-info mb-3 float-right",
-              attrs: { type: "button" }
+              attrs: { to: "/newBook", type: "button" }
             },
             [_vm._v("Add a new book")]
           ),
           _vm._v(" "),
           _c("div", { staticClass: "table-responsive" }, [
             _c("table", { staticClass: "table" }, [
-              _c("thead", [
-                _c("tr", [
-                  _c("th", { staticClass: "table-secondary" }, [
-                    _vm._v("Book")
-                  ]),
-                  _vm._v(" "),
-                  _c("th", { staticClass: "table-secondary" }, [
-                    _vm._v("date")
-                  ]),
-                  _vm._v(" "),
-                  _c("th", { staticClass: "table-secondary" }, [
-                    _vm._v("Status")
-                  ]),
-                  _vm._v(" "),
-                  _c("th", { staticClass: "table-secondary" })
-                ])
-              ]),
+              _vm._m(0),
               _vm._v(" "),
-              _c("tbody", [
-                _c("tr", [
-                  _c("td", { staticClass: "table-light" }, [
-                    _c("img", {
-                      attrs: {
-                        src: "https://dummyimage.com/128x200/000000/ffffff"
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "table-light" }, [
-                    _vm._v("22-02-2020 19:34")
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "table-light" }, [
-                    _vm._v("Available")
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "table-light" }, [
-                    _c(
-                      "div",
-                      { staticClass: "row", staticStyle: { width: "120px" } },
-                      [
-                        _c("div", { staticClass: "col-auto" }, [
+              _c(
+                "tbody",
+                _vm._l(_vm.books, function(book) {
+                  return _c("tr", { key: book.id }, [
+                    _c("td", { staticClass: "table-light" }, [
+                      _c("img", {
+                        attrs: {
+                          width: "128",
+                          height: "160",
+                          src: book.photos[0]
+                            ? "/images/books/" + book.photos[0].image
+                            : "https://dummyimage.com/128x200/000000/ffffff"
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "table-light" }, [
+                      _vm._v(" " + _vm._s(book.livre.titre) + " ")
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "table-light" }, [
+                      _vm._v(" " + _vm._s(book.created_at) + " ")
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "table-light" }, [
+                      _vm._v("Available")
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "table-light" }, [
+                      _c(
+                        "div",
+                        { staticClass: "row", staticStyle: { width: "120px" } },
+                        [
                           _c(
-                            "a",
-                            {
-                              staticClass: "action-link",
-                              attrs: { href: "#" }
-                            },
-                            [_c("i", { staticClass: "fa fa-edit mr-3" })]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-auto" }, [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "action-link",
-                              attrs: { href: "#" }
-                            },
-                            [_c("i", { staticClass: "fa fa-remove" })]
-                          )
-                        ])
-                      ]
-                    )
+                            "div",
+                            { staticClass: "col-auto" },
+                            [
+                              _c(
+                                "router-link",
+                                {
+                                  staticClass: "action-link",
+                                  attrs: {
+                                    to: {
+                                      name: "editBook",
+                                      params: { id: book.id }
+                                    }
+                                  }
+                                },
+                                [_c("i", { staticClass: "fa fa-edit mr-3" })]
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _vm._m(1, true)
+                        ]
+                      )
+                    ])
                   ])
-                ]),
-                _vm._v(" "),
-                _c("tr", [
-                  _c("td", { staticClass: "table-light" }, [
-                    _c("img", {
-                      attrs: {
-                        src: "https://dummyimage.com/128x200/000000/ffffff"
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "table-light" }, [
-                    _vm._v("26-02-2020 15:44")
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "table-light" }, [
-                    _vm._v("Not available")
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "table-light" }, [
-                    _c(
-                      "div",
-                      { staticClass: "row", staticStyle: { width: "120px" } },
-                      [
-                        _c("div", { staticClass: "col-auto" }, [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "action-link",
-                              attrs: { href: "#" }
-                            },
-                            [_c("i", { staticClass: "fa fa-edit mr-3" })]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-auto" }, [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "action-link",
-                              attrs: { href: "#" }
-                            },
-                            [_c("i", { staticClass: "fa fa-remove" })]
-                          )
-                        ])
-                      ]
-                    )
-                  ])
-                ])
-              ])
+                }),
+                0
+              )
             ])
           ]),
           _vm._v(" "),
           _c("nav", { staticClass: "mt-2" }, [
-            _c("ul", { staticClass: "pagination" }, [
-              _c("li", { staticClass: "page-item" }, [
-                _c(
-                  "a",
+            _c(
+              "ul",
+              { staticClass: "pagination" },
+              _vm._l(_vm.pagination.last_page, function(i) {
+                return _c(
+                  "li",
                   {
-                    staticClass: "page-link",
-                    attrs: { href: "#", "aria-label": "Previous" }
+                    key: i,
+                    staticClass: "page-item",
+                    class: i == _vm.pagination.current_page ? "active" : ""
                   },
                   [
-                    _c("span", { attrs: { "aria-hidden": "true" } }, [
-                      _vm._v("«")
-                    ])
+                    _c(
+                      "a",
+                      {
+                        staticClass: "page-link",
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            return _vm.getBooks(
+                              _vm.pagination.path + "?page=" + i
+                            )
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(i))]
+                    )
                   ]
                 )
-              ]),
-              _vm._v(" "),
-              _c("li", { staticClass: "page-item" }, [
-                _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-                  _vm._v("1")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("li", { staticClass: "page-item" }, [
-                _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-                  _vm._v("2")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("li", { staticClass: "page-item" }, [
-                _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-                  _vm._v("3")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("li", { staticClass: "page-item" }, [
-                _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-                  _vm._v("4")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("li", { staticClass: "page-item" }, [
-                _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-                  _vm._v("5")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("li", { staticClass: "page-item" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "page-link",
-                    attrs: { href: "#", "aria-label": "Next" }
-                  },
-                  [
-                    _c("span", { attrs: { "aria-hidden": "true" } }, [
-                      _vm._v("»")
-                    ])
-                  ]
-                )
-              ])
-            ])
+              }),
+              0
+            )
           ])
-        ])
+        ],
+        1
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { staticClass: "table-secondary" }),
+        _vm._v(" "),
+        _c("th", { staticClass: "table-secondary" }, [_vm._v("title")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "table-secondary" }, [_vm._v("date")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "table-secondary" }, [_vm._v("Status")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "table-secondary" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-auto" }, [
+      _c("a", { staticClass: "action-link", attrs: { href: "#" } }, [
+        _c("i", { staticClass: "fa fa-remove" })
       ])
     ])
   }
@@ -39706,14 +39775,23 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     path: '/book',
     name: 'book',
     component: _js_pages_book_UserBookPage_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
+    meta: {
+      middleware: [_js_router_middleware_auth__WEBPACK_IMPORTED_MODULE_4__["default"]]
+    },
     children: [{
       path: '/newBook',
       name: 'newBook',
-      component: _js_components_book_NewBook_vue__WEBPACK_IMPORTED_MODULE_14__["default"]
+      component: _js_components_book_NewBook_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
+      meta: {
+        middleware: [_js_router_middleware_auth__WEBPACK_IMPORTED_MODULE_4__["default"]]
+      }
     }, {
       path: '/editBook/:id',
       name: 'editBook',
-      component: _js_components_book_EditBook_vue__WEBPACK_IMPORTED_MODULE_15__["default"]
+      component: _js_components_book_EditBook_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
+      meta: {
+        middleware: [_js_router_middleware_auth__WEBPACK_IMPORTED_MODULE_4__["default"]]
+      }
     }]
   }]
 });
@@ -39746,24 +39824,28 @@ router.beforeEach(function (to, from, next) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var vue_jsonp__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-jsonp */ "./node_modules/vue-jsonp/dist/vue-jsonp.umd.js");
-/* harmony import */ var vue_jsonp__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_jsonp__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _router_routes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../router/routes.js */ "./resources/js/router/routes.js");
+/* harmony import */ var vue_jsonp__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-jsonp */ "./node_modules/vue-jsonp/dist/vue-jsonp.umd.js");
+/* harmony import */ var vue_jsonp__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_jsonp__WEBPACK_IMPORTED_MODULE_4__);
 
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_jsonp__WEBPACK_IMPORTED_MODULE_3___default.a);
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_jsonp__WEBPACK_IMPORTED_MODULE_4___default.a);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
     token: localStorage.getItem('access_token') || null,
     user: {},
-    bookStatus: ["new", "old"]
+    bookStatus: ["new", "old"],
+    langs: ['frensh', 'arabic', 'english'],
+    base: process.env('AXIOS_BASE_URL') || 'http://localhost:8000/api'
   },
   mutations: {
     // login stuff
@@ -39785,6 +39867,12 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     },
     bookStatus: function bookStatus(state) {
       return state.bookStatus;
+    },
+    langs: function langs(state) {
+      return state.langs;
+    },
+    getBaseUrl: function getBaseUrl(state) {
+      return state.base;
     }
   },
   actions: {
@@ -39800,6 +39888,10 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
           context.commit('retreiveToken', token);
           resolve(response);
         })["catch"](function (error) {
+          if (response.status == 401) {
+            localStorage.removeItem('access_token');
+          }
+
           console.log(error);
           reject(error);
         });
@@ -39827,8 +39919,8 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
             context.commit('destroyToken');
             resolve(response);
           })["catch"](function (error) {
-            // localStorage.removeItem('access_token');
-            // context.commit('destroyToken');
+            localStorage.removeItem('access_token');
+            context.commit('destroyToken');
             console.error(error);
             reject(error);
           });
@@ -39844,10 +39936,15 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
           }
         };
         return new Promise(function (resolve, reject) {
-          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('http://localhost:8000/api/profile', config).then(function (resp) {
+          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(context.state.base + '/profile', config).then(function (resp) {
             resolve(resp);
           })["catch"](function (err) {
-            console.error(err);
+            if (err.response.status == 401) {
+              localStorage.removeItem('access_token');
+              _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push('/login');
+            } // console.error(err);
+
+
             reject(err);
           });
         });
@@ -39863,12 +39960,18 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
           }
         };
         return new Promise(function (resolve, reject) {
-          axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('http://localhost:8000/api/update', user, config).then(function (resp) {
+          axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(context.state.base + '/update', user, config).then(function (resp) {
             context.commit('getUser', resp.data.user);
             console.log(resp.data);
             resolve(resp);
           })["catch"](function (err) {
             console.error(err);
+
+            if (err.response.status == 401) {
+              localStorage.removeItem('access_token');
+              _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push('/login');
+            }
+
             reject(err);
           });
         });
@@ -39876,9 +39979,14 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     },
     fetchCities: function fetchCities(context) {
       return new Promise(function (resolve, reject) {
-        axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('http://localhost:8000/api/city').then(function (res) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(context.state.base + '/city').then(function (res) {
           resolve(res);
         })["catch"](function (err) {
+          if (err.response.status == 401) {
+            localStorage.removeItem('access_token');
+            _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push('/login');
+          }
+
           reject(err);
         });
       });
@@ -39891,10 +39999,15 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
           }
         };
         return new Promise(function (resolve, reject) {
-          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('http://localhost:8000/api/user', config).then(function (res) {
+          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(context.state.base + '/user', config).then(function (res) {
             context.commit('getUser', res.data.user);
             resolve(res);
           })["catch"](function (err) {
+            if (err.response.status == 401) {
+              localStorage.removeItem('access_token');
+              _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push('/login');
+            }
+
             reject(err);
           });
         });
@@ -39908,11 +40021,16 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
           }
         };
         return new Promise(function (resolve, reject) {
-          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('http://localhost:8000/api/cats', config).then(function (resp) {
+          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(context.state.base + '/cats', config).then(function (resp) {
             // console.log(resp);
             resolve(resp);
           })["catch"](function (err) {
-            return reject(err);
+            if (err.response.status == 401) {
+              localStorage.removeItem('access_token');
+              _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push('/login');
+            }
+
+            reject(err);
           });
         });
       }
@@ -39925,10 +40043,54 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
           reject(err);
         });
       });
+    },
+    addNewBook: function addNewBook(context, book) {
+      if (context.getters.logedIn) {
+        var config = {
+          headers: {
+            Authorization: "Bearer " + context.state.token,
+            'content-type': 'multipart/form-data'
+          }
+        };
+        return new Promise(function (resolve, reject) {
+          axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(context.state.base + '/exemp', book, config).then(function (res) {
+            resolve(res);
+          })["catch"](function (err) {
+            if (err.response.status == 401) {
+              localStorage.removeItem('access_token');
+              _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push('/login');
+            }
+
+            reject(err);
+          });
+        });
+      }
+    },
+    getUserBooks: function getUserBooks(context, url) {
+      if (context.getters.logedIn) {
+        var config = {
+          headers: {
+            Authorization: "Bearer " + context.state.token
+          }
+        };
+        return new Promise(function (resolve, reject) {
+          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(url || context.state.base + '/exemp', config).then(function (res) {
+            resolve(res);
+          })["catch"](function (err) {
+            if (err.response.status == 401) {
+              localStorage.removeItem('access_token');
+              _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push('/login');
+            }
+
+            reject(err);
+          });
+        });
+      }
     }
   }
 });
 /* harmony default export */ __webpack_exports__["default"] = (vuex);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../node_modules/process/browser.js */ "./node_modules/process/browser.js")))
 
 /***/ }),
 

@@ -14,7 +14,7 @@ class Livre extends Model
      * @var array
     */
     protected $fillable = [
-        'titre', 'auteurs', 'isbn', 'date_publication', 'resume','categorie_id'
+        'titre', 'auteurs', 'isbn', 'resume','categorie_id'
     ];
 
     public function exemplaires()
