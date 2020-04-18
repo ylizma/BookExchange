@@ -109,10 +109,10 @@ class ExemplaireController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Exemplaire $exemplaire)
+    public function destroy($id)
     {
-        $exemplaire->delete();
-
-        return response()->json(null, 204);
+        $ex=Exemplaire::find($id);
+        $ex->delete();
+        return response()->json(['message'=>'the item is succesfully deleted'], 204);
     }
 }

@@ -2394,6 +2394,15 @@ __webpack_require__.r(__webpack_exports__);
         path: links.path
       };
       this.pagination = pagination;
+    },
+    deleteBook: function deleteBook(index) {
+      var book = this.books[index];
+      console.log(book);
+      var r = confirm("are you sure do u want to delete this ??");
+
+      if (r == true) {
+        this.$store.dispatch('deleteBook', book.id).then()["catch"]();
+      }
     }
   },
   mounted: function mounted() {
@@ -2462,12 +2471,13 @@ __webpack_require__.r(__webpack_exports__);
     updateProfile: function updateProfile() {
       var _this = this;
 
+      console.log(this.user.password);
       var fd = new FormData();
       if (this.user.image instanceof Blob) fd.append('img', this.user.image, this.user.image.name);
       fd.append('name', this.user.name);
       fd.append('email', this.user.email);
       fd.append('telephone', this.user.telephone);
-      fd.append('password', this.user.password);
+      if (this.user.password != undefined) fd.append('password', this.user.password);
       fd.append('ville_id', this.user.ville_id);
       this.$store.dispatch('updateProfile', fd).then(function (res) {
         _this.user = res.data.user;
@@ -20640,7 +20650,6 @@ var render = function() {
                 staticStyle: { "margin-top": "10px" },
                 attrs: {
                   type: "password",
-                  required: "",
                   placeholder: "Password",
                   minlength: ""
                 },
@@ -21623,8 +21632,8 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(_vm.books, function(book) {
-                  return _c("tr", { key: book.id }, [
+                _vm._l(_vm.books, function(book, index) {
+                  return _c("tr", { key: index }, [
                     _c("td", { staticClass: "table-light" }, [
                       _c("img", {
                         attrs: {
@@ -21675,7 +21684,21 @@ var render = function() {
                             1
                           ),
                           _vm._v(" "),
-                          _vm._m(1, true)
+                          _c("div", { staticClass: "col-auto" }, [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "action-link",
+                                attrs: { href: "#" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.deleteBook(index)
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fa fa-remove" })]
+                            )
+                          ])
                         ]
                       )
                     ])
@@ -21742,16 +21765,6 @@ var staticRenderFns = [
         _c("th", { staticClass: "table-secondary" }, [_vm._v("Status")]),
         _vm._v(" "),
         _c("th", { staticClass: "table-secondary" })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-auto" }, [
-      _c("a", { staticClass: "action-link", attrs: { href: "#" } }, [
-        _c("i", { staticClass: "fa fa-remove" })
       ])
     ])
   }
@@ -39845,7 +39858,7 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     user: {},
     bookStatus: ["new", "old"],
     langs: ['frensh', 'arabic', 'english'],
-    base: process.env('AXIOS_BASE_URL') || 'http://localhost:8000/api'
+    base: process.env.AXIOS_BASE_URL || 'http://localhost:8000/api'
   },
   mutations: {
     // login stuff
@@ -39888,10 +39901,6 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
           context.commit('retreiveToken', token);
           resolve(response);
         })["catch"](function (error) {
-          if (response.status == 401) {
-            localStorage.removeItem('access_token');
-          }
-
           console.log(error);
           reject(error);
         });
@@ -40075,6 +40084,28 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
         };
         return new Promise(function (resolve, reject) {
           axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(url || context.state.base + '/exemp', config).then(function (res) {
+            resolve(res);
+          })["catch"](function (err) {
+            if (err.response.status == 401) {
+              localStorage.removeItem('access_token');
+              _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push('/login');
+            }
+
+            reject(err);
+          });
+        });
+      }
+    },
+    deleteBook: function deleteBook(context, book) {
+      if (context.getters.logedIn) {
+        var config = {
+          headers: {
+            Authorization: "Bearer " + context.state.token
+          }
+        };
+        return new Promise(function (resolve, reject) {
+          axios__WEBPACK_IMPORTED_MODULE_2___default.a["delete"](context.state.base + '/exemp/' + book, config).then(function (res) {
+            console.log(res);
             resolve(res);
           })["catch"](function (err) {
             if (err.response.status == 401) {

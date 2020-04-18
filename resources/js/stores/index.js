@@ -12,7 +12,7 @@ const vuex=new Vuex.Store({
 		user:{},
 		bookStatus:["new","old"],
 		langs:['frensh','arabic','english'],
-		base:process.env('AXIOS_BASE_URL') || 'http://localhost:8000/api'
+		base:process.env.AXIOS_BASE_URL || 'http://localhost:8000/api'
 	},
 	mutations:{
         // login stuff
@@ -54,9 +54,6 @@ const vuex=new Vuex.Store({
 				context.commit('retreiveToken',token);
 	            resolve(response);
 	        }).catch(error=>{
-				if(response.status==401){
-					localStorage.removeItem('access_token')
-				}
 	            console.log(error);
 	            reject(error)
 	        })
@@ -231,7 +228,7 @@ const vuex=new Vuex.Store({
 		
 			}
 	},
-	getUserBooks(context,url){
+	getUserBooks(context,url){	
 		if(context.getters.logedIn){
 			const config = {
 				headers: {
@@ -241,6 +238,30 @@ const vuex=new Vuex.Store({
 			 return new Promise((resolve,reject)=>{
 				axios.get(url || context.state.base+'/exemp',config)
 				.then(res=>{
+					resolve(res)
+				})
+				.catch(err=>{
+					if(err.response.status==401){
+						localStorage.removeItem('access_token')
+						router.push('/login')
+					}
+					reject(err)
+				});
+			 });
+		
+			}
+	},
+	deleteBook(context,book){
+		if(context.getters.logedIn){
+			const config = {
+				headers: {
+				   Authorization: "Bearer " + context.state.token,
+				}
+			 };
+			 return new Promise((resolve,reject)=>{
+				axios.delete(context.state.base+'/exemp/'+book,config)
+				.then(res=>{
+					console.log(res);
 					resolve(res)
 				})
 				.catch(err=>{

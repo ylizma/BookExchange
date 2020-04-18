@@ -16,7 +16,7 @@
 
         <div class="email-login" style="background-color:#ffffff;">
             <input v-model="email" type="email" class="email-input form-control" style="margin-top:10px;" required="" placeholder="Email" minlength="">
-            <input v-model="password" type="password" class="password-input form-control" style="margin-top:10px;" required="" placeholder="Password" minlength="">
+            <input v-model="password" type="password" class="password-input form-control" style="margin-top:10px;"  placeholder="Password" minlength="">
         </div>
         <div class="submit-row" style="margin-bottom:8px;padding-top:0px;">
             <button class="btn btn-primary btn-block box-shadow" id="submit-id-submit" type="submit">Login</button>

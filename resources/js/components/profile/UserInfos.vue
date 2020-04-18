@@ -47,14 +47,16 @@ export default {
   },
   methods:{
      updateProfile(){
+       console.log(this.user.password);
+       
        const fd=new FormData();
        if(this.user.image instanceof Blob )
        fd.append('img',this.user.image,this.user.image.name);
        fd.append('name',this.user.name);
        fd.append('email',this.user.email);
        fd.append('telephone',this.user.telephone);
-       fd.append('password',this.user.password);
-       fd.append('ville_id',this.user.ville_id);        
+       if (this.user.password!=undefined)fd.append('password',this.user.password);
+       fd.append('ville_id',this.user.ville_id);                
        this.$store.dispatch('updateProfile',fd).then(res=>{
          this.user=res.data.user;
          this.url="/images/users/"+this.user.image;

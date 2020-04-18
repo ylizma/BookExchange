@@ -15,7 +15,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="book in books" :key="book.id">
+                                    <tr v-for="(book,index) in books" :key="index">
                                         <td class="table-light"><img width="128" height="160" :src="(book.photos[0])?'/images/books/'+book.photos[0].image:'https://dummyimage.com/128x200/000000/ffffff'"></td>
                                         <td class="table-light"> {{book.livre.titre}} </td>
                                         <td class="table-light"> {{book.created_at}} </td>
@@ -23,7 +23,7 @@
                                         <td class="table-light">
                                             <div class="row" style="width: 120px;">
                                                 <div class="col-auto"><router-link class="action-link" :to="{name:'editBook',params:{id:book.id}}"><i class="fa fa-edit mr-3"></i></router-link></div>
-                                                <div class="col-auto"><a class="action-link" href="#"><i class="fa fa-remove"></i></a></div>
+                                                <div class="col-auto"><a class="action-link" href="#" @click="deleteBook(index)"><i class="fa fa-remove"></i></a></div>
                                             </div>
                                         </td>
                                     </tr>
@@ -71,6 +71,17 @@ methods:{
         }
         this.pagination=pagination;
     },
+    deleteBook(index){
+        const book=this.books[index];
+        console.log(book);
+        
+        var r = confirm("are you sure do u want to delete this ??");
+        if (r == true) {
+        this.$store.dispatch('deleteBook',book.id)
+        .then()
+        .catch();
+        }
+    }
 },
    
 mounted(){

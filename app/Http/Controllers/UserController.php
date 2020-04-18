@@ -34,7 +34,8 @@ class UserController extends Controller
             'img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'name'=>'required|max:20',
             'telephone'=>'nullable|max:10',
-            'email'=>'required'
+            'email'=>'required',
+            'password'=>'nullable'
        ]);
 
        $user= auth()->user();
@@ -50,7 +51,7 @@ class UserController extends Controller
         $user->image=$profileImage;
         $files->move($destinationPath, $profileImage);
      }
-     if($req->password!=null){
+     if($req->password){
          $user->password=bcrypt($req->password);
      }
      if($user->save()){
@@ -58,6 +59,4 @@ class UserController extends Controller
      }
      else return response()->json(['message' => 'internal error some how'], 500);
     }
-
-
 }
