@@ -74,4 +74,15 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany('App\Exemplaire');
     }
+
+    public function exchanges()
+    {
+        return $this->belongsToMany(Exemplaire::class,'exchanges')
+                    ->using(Exchange::class)
+                    ->withPivot([
+                        'requested_at',
+                        'accepted_at',
+                        'desired_book'
+                    ]);
+    }
 }
