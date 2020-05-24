@@ -19,7 +19,6 @@ class ExemplaireController extends Controller
      */
     public function index()
     {
-
         $ex=Exemplaire::where('user_id','=',auth()->user()->id)
         ->with('livre','photos')
         ->orderBy('created_at','desc')

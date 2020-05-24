@@ -12,7 +12,7 @@ const vuex=new Vuex.Store({
 		user:{},
 		bookStatus:["new","old"],
 		langs:['frensh','arabic','english'],
-		base:process.env('AXIOS_BASE_URL') || 'http://localhost:8000/api'
+		base:'http://localhost:8000/api'
 	},
 	mutations:{
         // login stuff
