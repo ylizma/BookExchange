@@ -15,10 +15,11 @@ class HomeController extends Controller
     public function index()
     {
         if (auth()->user()) {
-            $exemplaire = Exemplaire::where('user_id','=',auth()->user()->id)
+            $exemplaire = Exemplaire::where('user_id','!=',auth()->user()->id)
             ->with('livre','photos')
             ->orderBy('created_at','desc')
             ->paginate(20);
+            // die("eeeeeeeeeeeeee");
             return ExemplaireResource::collection($exemplaire);
         }
         else{
