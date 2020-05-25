@@ -12,7 +12,7 @@ const vuex=new Vuex.Store({
 		user:{},
 		bookStatus:["new","old"],
 		langs:['frensh','arabic','english'],
-		base:process.env('AXIOS_BASE_URL') || 'http://localhost:8000/api'
+		base:'http://localhost:8000/api'
 	},
 	mutations:{
         // login stuff
@@ -253,6 +253,17 @@ const vuex=new Vuex.Store({
 			 });
 		
 			}
+	},
+	getHomeBooks(context,url){
+		return new Promise((resolve,reject)=>{
+			axios.get(url || context.state.base+'/home')
+			.then(res=>{
+				resolve(res.data)
+			})
+			.catch(err=>{
+				reject(err)
+			});
+		 });
 	}
 	}
 });

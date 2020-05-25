@@ -21,8 +21,15 @@ class ExemplaireResource extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'deleted_at' => $this->deleted_at,
-            'livre' => $this->livre,
-            'user' => $this->user,
+            'img' => $this->photos,
+            'livre' => [
+               'livre' => $this->livre,
+                'categorie' => $this->livre->categorie,
+            ],
+            'user' => [
+                'name'=> $this->user->name,
+                'id' => $this->user->id
+            ],
         ];
     }
 }

@@ -14,7 +14,7 @@ import AuthComponent from '@/js/pages/auth/Auth.vue';
 import Logout from '@/js/components/auth/Logout.vue';
 
 // components
-import Home from '@/js/pages/Home.vue';
+import Home from '@/js/pages/home/Home.vue';
 import UserProfile from '@/js/pages/profile/UserProfilePage.vue';
 import UserInfos from '@/js/components/profile/UserInfos.vue';
 import UserBooks from '@/js/components/profile/UserBooks.vue';
@@ -65,7 +65,7 @@ const router=new VueRouter({
 		]
 	},
 	{
-		path:'/home',
+		path:'/',
 		name:'home',
 		component:Home,
 		meta:{
