@@ -26,6 +26,15 @@ class ExemplaireController extends Controller
         return $ex;
     }
 
+    public function user_books()
+    {
+        return ExemplaireResource::collection(
+            Exemplaire::where('user_id','=',auth()->user()->id)
+            ->with('livre','photos')
+            ->get()
+        );
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -35,7 +44,7 @@ class ExemplaireController extends Controller
     public function store(Request $request)
     {
         $livre = Livre::where('isbn', $request->isbn)->first();
-        
+
         if ($livre === null) {
             // livre doesn't exist, so we will create it :D
             $livre = Livre::create([
@@ -46,7 +55,7 @@ class ExemplaireController extends Controller
                 'categorie_id' => $request->categorie_id
             ]);
         }
-        
+
         $userid=auth()->user()->id;
         $exemplaire = Exemplaire::create([
             'langue' => $request->lang,
@@ -80,9 +89,9 @@ class ExemplaireController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Exemplaire $exemplaire)
+    public function show($id)
     {
-        return new ExemplaireResource($exemplaire);
+        return new ExemplaireResource(Exemplaire::find($id));
     }
 
     /**

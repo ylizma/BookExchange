@@ -36,7 +36,7 @@ class Exemplaire extends Model
 
     public function exchanges()
     {
-        return $this->belongsToMany(User::class,'exchanges')
+        return $this->belongsToMany(User::class,'exchanges','desired_book', 'user_id')
                     ->using(Exchange::class)
                     ->withPivot([
                         'requested_at',

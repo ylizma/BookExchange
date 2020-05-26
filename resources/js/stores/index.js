@@ -43,7 +43,7 @@ const vuex=new Vuex.Store({
 	actions:{
 		//login
 		retreiveToken(context,user){
-			return new Promise((resolve,reject) => { 
+			return new Promise((resolve,reject) => {
 			       axios.post('/api/login',{
 	            email:user.email,
 	            password:user.password
@@ -78,7 +78,7 @@ const vuex=new Vuex.Store({
 					   Authorization: "Bearer " + context.state.token
 					}
 				 };
-				return new Promise((resolve,reject) => { 
+				return new Promise((resolve,reject) => {
 			    axios.get('/api/logout',config).then(response=>{
 	            localStorage.removeItem('access_token');
 	            context.commit('destroyToken');
@@ -120,14 +120,14 @@ const vuex=new Vuex.Store({
 				const config = {
 					headers: {
 					   Authorization: "Bearer " + context.state.token,
-					   'content-type': 'multipart/form-data' 
+					   'content-type': 'multipart/form-data'
 					}
 				 };
 				return new Promise((resolve,reject)=>{
 					 axios.post(context.state.base+'/update',user,config).then(resp=>{
 						 context.commit('getUser',resp.data.user)
 						 console.log(resp.data);
-						 
+
 						resolve(resp);
 					}).catch(err=>{
 						console.error(err);
@@ -141,7 +141,7 @@ const vuex=new Vuex.Store({
 			}
 		},
 		fetchCities(context){
-				 
+
 				 return new Promise((resolve,reject)=>{
 					axios.get(context.state.base+'/city')
 					.then(res=>{
@@ -212,7 +212,7 @@ const vuex=new Vuex.Store({
 			const config = {
 				headers: {
 				   Authorization: "Bearer " + context.state.token,
-				   'content-type': 'multipart/form-data' 
+				   'content-type': 'multipart/form-data'
 				}
 			 };
 			 return new Promise((resolve,reject)=>{
@@ -228,7 +228,7 @@ const vuex=new Vuex.Store({
 					reject(err)
 				});
 			 });
-		
+
 			}
 	},
 	getUserBooks(context,url){
@@ -251,7 +251,7 @@ const vuex=new Vuex.Store({
 					reject(err)
 				});
 			 });
-		
+
 			}
 	},
 	getHomeBooks(context,url){
@@ -264,7 +264,81 @@ const vuex=new Vuex.Store({
 				reject(err)
 			});
 		 });
-	}
+    },
+    getBookInfos(context,id){
+        console.log(id);
+		if(context.getters.logedIn){
+			const config = {
+				headers: {
+				   Authorization: "Bearer " + context.state.token,
+				}
+			 };
+			 return new Promise((resolve,reject)=>{
+				axios.get('/api/exemp/'+id,config)
+				.then(res=>{
+                    console.log(res.data);
+					resolve(res)
+				})
+				.catch(err=>{
+					if(err.response.status==401){
+						localStorage.removeItem('access_token')
+						router.push('/login')
+					}
+					reject(err)
+				});
+			 });
+
+			}
+    },
+    getUserActualBooks(context,url){
+        console.log('test');
+		if(context.getters.logedIn){
+			const config = {
+				headers: {
+				   Authorization: "Bearer " + context.state.token,
+				}
+			 };
+			 return new Promise((resolve,reject)=>{
+				axios.get(url || context.state.base+'/user_books',config)
+				.then(res=>{
+					resolve(res)
+				})
+				.catch(err=>{
+					if(err.response.status==401){
+						localStorage.removeItem('access_token')
+						router.push('/login')
+					}
+					reject(err)
+				});
+			 });
+
+			}
+    },
+    addExchangeRequest(context,data){
+        console.log('test');
+		if(context.getters.logedIn){
+			const config = {
+				headers: {
+				   Authorization: "Bearer " + context.state.token,
+				   'content-type': 'multipart/form-data'
+				}
+			 };
+			 return new Promise((resolve,reject)=>{
+				axios.post(context.state.base+'/exchange',data,config)
+				.then(res=>{
+					resolve(res)
+				})
+				.catch(err=>{
+					if(err.response.status==401){
+						localStorage.removeItem('access_token')
+						router.push('/login')
+					}
+					reject(err)
+				});
+			 });
+
+			}
+	},
 	}
 });
 
