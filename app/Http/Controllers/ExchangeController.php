@@ -18,7 +18,7 @@ class ExchangeController extends Controller
         $my_book = $request->my_book;
         $desired_book = $request->desired_book;
 
-        $user = auth()->user()->id;
+        $user = auth()->user();
 
         $user->exchanges()->attach($my_book);
 

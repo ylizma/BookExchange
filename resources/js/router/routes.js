@@ -20,6 +20,7 @@ import UserInfos from '@/js/components/profile/UserInfos.vue';
 import UserBooks from '@/js/components/profile/UserBooks.vue';
 import NewBook from "@/js/components/book/NewBook.vue";
 import EditBook from "@/js/components/book/EditBook.vue";
+import Exchange from "@/js/components/book/exchange.vue";
 import Book from "@/js/pages/book/UserBookPage.vue";
 
 
@@ -135,12 +136,22 @@ const router=new VueRouter({
 						auth
 					]
 				}
+            },
+            {
+				path:'/exchange/:id',
+				name:'exchange',
+				component:Exchange,
+				meta:{
+					middleware:[
+						auth
+					]
+				}
 			}
 		]
 	}
 
 	]
-});  
+});
 
 router.beforeEach((to, from, next) => {
     if (!to.meta.middleware) {

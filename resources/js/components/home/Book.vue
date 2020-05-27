@@ -4,11 +4,11 @@
 				<div class="card rounded shadow-sm border-0">
 					<div class="card-body">
 						<img @click="test" :src="(book.img.length>0)?book.img[0].image:''" alt="" class="img-fluid d-block mx-auto mb-3">
-						<h5> <a href="#" class="text-dark">{{book.livre.livre.titre}} </a></h5>
+						<h5><router-link :to="{ path: '/exchange/'+book.id}"> {{ book.livre.livre.titre }}  </router-link ></h5>
 						<p class="small text-muted font-italic">{{book.livre.livre.resume.substr(1,50)}}...</p>
                         <p class="small text-muted font-italic"> category : {{book.livre.categorie.nom}} </p>
 						<p class="small text-muted font-italic">By <a href="#">{{book.user.name}}</a></p>
-						<button class="btn btn-outline-danger">Exchange</button>
+						<router-link tag="button" class="btn btn-outline-danger" id="button" :to="{ path: '/exchange/'+book.id}">Exchange</router-link>
 					</div>
 				</div>
     </div>
@@ -20,7 +20,7 @@ export default {
 	methods: {
 		test(){
 			console.log('dd');
-			
+
 		}
 	},
 }

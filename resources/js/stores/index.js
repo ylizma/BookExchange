@@ -6,105 +6,105 @@ import VueJsonp from 'vue-jsonp'
 Vue.use(VueJsonp)
 Vue.use(Vuex)
 
-const vuex=new Vuex.Store({
-	state:{
-		token:  localStorage.getItem('access_token') || null,
-		user:{},
-		bookStatus:["new","old"],
-		langs:['frensh','arabic','english'],
-		base:'http://localhost:8000/api'
+const vuex = new Vuex.Store({
+	state: {
+		token: localStorage.getItem('access_token') || null,
+		user: {},
+		bookStatus: ["new", "old"],
+		langs: ['frensh', 'arabic', 'english'],
+		base: 'http://localhost:8000/api'
 	},
-	mutations:{
-        // login stuff
-		retreiveToken(state,token){
-			state.token=token
+	mutations: {
+		// login stuff
+		retreiveToken(state, token) {
+			state.token = token
 		},
-		destroyToken(state){
-			state.token=null
-        },
+		destroyToken(state) {
+			state.token = null
+		},
 		// --------------------------------------
-		getUser(state,user){
-			state.user=user
+		getUser(state, user) {
+			state.user = user
 		}
 	},
-	getters:{
-        //login
-		logedIn(state){
+	getters: {
+		//login
+		logedIn(state) {
 			return state.token != null
 		},
-		bookStatus(state){
+		bookStatus(state) {
 			return state.bookStatus
 		},
-		langs(state){return state.langs},
-		getBaseUrl(state){
+		langs(state) { return state.langs },
+		getBaseUrl(state) {
 			return state.base
 		}
 	},
-	actions:{
+	actions: {
 		//login
-		retreiveToken(context,user){
-			return new Promise((resolve,reject) => { 
-			       axios.post('/api/login',{
-	            email:user.email,
-	            password:user.password
-	        }).then(response=>{
+		retreiveToken(context, user) {
+			return new Promise((resolve, reject) => {
+				axios.post('/api/login', {
+					email: user.email,
+					password: user.password
+				}).then(response => {
 
-				const token=response.data.access_token;
-	            localStorage.setItem('access_token',token);
-				context.commit('retreiveToken',token);
-	            resolve(response);
-	        }).catch(error=>{
-				if(response.status==401){
-					localStorage.removeItem('access_token')
-				}
-	            console.log(error);
-	            reject(error)
-	        })
-	    })
+					const token = response.data.access_token;
+					localStorage.setItem('access_token', token);
+					context.commit('retreiveToken', token);
+					resolve(response);
+				}).catch(error => {
+					if (response.status == 401) {
+						localStorage.removeItem('access_token')
+					}
+					console.log(error);
+					reject(error)
+				})
+			})
 		},
-		register(context,user){
-			return new Promise((resolve,reject)=>{
-				axios.post('api/register',user).then(resp=>{
+		register(context, user) {
+			return new Promise((resolve, reject) => {
+				axios.post('api/register', user).then(resp => {
 					resolve(resp)
-				}).catch(err=>{
+				}).catch(err => {
 					reject(err)
 				});
 			});
 		},
-		destroyToken(context){
+		destroyToken(context) {
 			if (context.getters.logedIn) {
 				const config = {
 					headers: {
-					   Authorization: "Bearer " + context.state.token
+						Authorization: "Bearer " + context.state.token
 					}
-				 };
-				return new Promise((resolve,reject) => { 
-			    axios.get('/api/logout',config).then(response=>{
-	            localStorage.removeItem('access_token');
-	            context.commit('destroyToken');
-	            resolve(response);
-	        }).catch(error=>{
-	            localStorage.removeItem('access_token');
-				context.commit('destroyToken');
-				console.error(error);
-	            reject(error)
-	        })
-	    })
+				};
+				return new Promise((resolve, reject) => {
+					axios.get('/api/logout', config).then(response => {
+						localStorage.removeItem('access_token');
+						context.commit('destroyToken');
+						resolve(response);
+					}).catch(error => {
+						localStorage.removeItem('access_token');
+						context.commit('destroyToken');
+						console.error(error);
+						reject(error)
+					})
+				})
 			}
 		},
-		 getProfileInfo(context){
+		getProfileInfo(context) {
 			// axios.defaults.headers.common['Authrization'] = 'Bearer '+context.state.token;
-			if(context.getters.logedIn){
+			if (context.getters.logedIn) {
 				const config = {
 					headers: {
-					   Authorization: "Bearer " + context.state.token
+						Authorization: "Bearer " + context.state.token
 					}
-				 };
-				return new Promise((resolve,reject)=>{
-					 axios.get(context.state.base+'/profile',config).then(resp=>{
+				};
+				return new Promise((resolve, reject) => {
+					axios.get(context.state.base + '/profile', config).then(resp => {
 						resolve(resp);
-					}).catch(err=>{
-						if(err.response.status==401){
+					}).catch(err => {
+						if (err.response.status == 401) {
 							localStorage.removeItem('access_token')
 							router.push('/login')
 						}
@@ -114,24 +114,24 @@ const vuex=new Vuex.Store({
 				})
 			}
 		},
-		updateProfile(context,user){
+		updateProfile(context, user) {
 			// axios.defaults.headers.common['Authrization'] = 'Bearer '+context.state.token;
-			if(context.getters.logedIn){
+			if (context.getters.logedIn) {
 				const config = {
 					headers: {
-					   Authorization: "Bearer " + context.state.token,
-					   'content-type': 'multipart/form-data' 
+						Authorization: "Bearer " + context.state.token,
+						'content-type': 'multipart/form-data'
 					}
-				 };
-				return new Promise((resolve,reject)=>{
-					 axios.post(context.state.base+'/update',user,config).then(resp=>{
-						 context.commit('getUser',resp.data.user)
-						 console.log(resp.data);
-						 
+				};
+				return new Promise((resolve, reject) => {
+					axios.post(context.state.base + '/update', user, config).then(resp => {
+						context.commit('getUser', resp.data.user)
+						console.log(resp.data);
+
 						resolve(resp);
-					}).catch(err=>{
+					}).catch(err => {
 						console.error(err);
-						if(err.response.status==401){
+						if (err.response.status == 401) {
 							localStorage.removeItem('access_token')
 							router.push('/login')
 						}
@@ -140,142 +140,218 @@ const vuex=new Vuex.Store({
 				});
 			}
 		},
-		fetchCities(context){
-				 
-				 return new Promise((resolve,reject)=>{
-					axios.get(context.state.base+'/city')
-					.then(res=>{
+		fetchCities(context) {
+
+			return new Promise((resolve, reject) => {
+				axios.get(context.state.base + '/city')
+					.then(res => {
 						resolve(res);
-					}).catch(err=>{
-						if(err.response.status==401){
+					}).catch(err => {
+						if (err.response.status == 401) {
 							localStorage.removeItem('access_token')
 							router.push('/login')
 						}
 						reject(err);
 					});
-				 });
+			});
 		},
-		getCurrentUser(context){
-			if(context.getters.logedIn){
-			const config = {
-				headers: {
-				   Authorization: "Bearer " + context.state.token
-				}
-			 };
-			 return new Promise((resolve,reject)=>{
-				axios.get(context.state.base+'/user',config)
-				.then(res=>{
-					context.commit('getUser',res.data.user);
-					resolve(res)})
-				.catch(err=>{
-					if(err.response.status==401){
-						localStorage.removeItem('access_token')
-						router.push('/login')
+		getCurrentUser(context) {
+			if (context.getters.logedIn) {
+				const config = {
+					headers: {
+						Authorization: "Bearer " + context.state.token
 					}
-					reject(err);
+				};
+				return new Promise((resolve, reject) => {
+					axios.get(context.state.base + '/user', config)
+						.then(res => {
+							context.commit('getUser', res.data.user);
+							resolve(res)
+						})
+						.catch(err => {
+							if (err.response.status == 401) {
+								localStorage.removeItem('access_token')
+								router.push('/login')
+							}
+							reject(err);
+						});
 				});
-			 });
-				}
-	},
-	getCategories(context){
-		if(context.getters.logedIn){
-			const config = {
-				headers: {
-				   Authorization: "Bearer " + context.state.token
-				}
-			 };
-			return new Promise((resolve,reject)=>{
-				axios.get(context.state.base+'/cats',config).then(resp=>{
-					// console.log(resp);
-					resolve(resp);
-				}).catch(err=>{
-					if(err.response.status==401){
-						localStorage.removeItem('access_token')
-						router.push('/login')
+			}
+		},
+		getCategories(context) {
+			if (context.getters.logedIn) {
+				const config = {
+					headers: {
+						Authorization: "Bearer " + context.state.token
 					}
-					reject(err)}
-				)
+				};
+				return new Promise((resolve, reject) => {
+					axios.get(context.state.base + '/cats', config).then(resp => {
+						// console.log(resp);
+						resolve(resp);
+					}).catch(err => {
+						if (err.response.status == 401) {
+							localStorage.removeItem('access_token')
+							router.push('/login')
+						}
+						reject(err)
+					}
+					)
+				});
+			}
+		},
+		getInfoFromGoogleApi(context, title) {
+			return new Promise((resolve, reject) => {
+				Vue.jsonp('https://www.googleapis.com/books/v1/volumes?maxResults=5&q=' + title).then(json => {
+					resolve(json)
+				}).catch(err => {
+					reject(err)
+				});
 			});
+		},
+		addNewBook(context, book) {
+			if (context.getters.logedIn) {
+				const config = {
+					headers: {
+						Authorization: "Bearer " + context.state.token,
+						'content-type': 'multipart/form-data'
+					}
+				};
+				return new Promise((resolve, reject) => {
+					axios.post(context.state.base + '/exemp', book, config)
+						.then(res => {
+							resolve(res)
+						})
+						.catch(err => {
+							if (err.response.status == 401) {
+								localStorage.removeItem('access_token')
+								router.push('/login')
+							}
+							reject(err)
+						});
+				});
+
+			}
+		},
+		getUserBooks(context, url) {
+			if (context.getters.logedIn) {
+				const config = {
+					headers: {
+						Authorization: "Bearer " + context.state.token,
+					}
+				};
+				return new Promise((resolve, reject) => {
+					axios.get(url || context.state.base + '/exemp', config)
+						.then(res => {
+							resolve(res)
+						})
+						.catch(err => {
+							if (err.response.status == 401) {
+								localStorage.removeItem('access_token')
+								router.push('/login')
+							}
+							reject(err)
+						});
+				});
+
+			}
+		},
+		getHomeBooks(context, url) {
+			return new Promise((resolve, reject) => {
+				axios.get(url || context.state.base + '/home')
+					.then(res => {
+						resolve(res.data)
+					})
+					.catch(err => {
+						reject(err)
+					});
+			});
+		},
+		searchBook(context, data, url) {
+			return new Promise((resolve, reject) => {
+				axios.get(url || context.state.base + '/search?' + 'key=' + data.key + '&city=' + data.city + '&category=' + data.category)
+					.then(res => {
+						resolve(res)
+						// console.log(res.data);
+					})
+					.catch(err => reject(err)
+					);
+			})
+		},
+		getBookInfos(context, id) {
+			console.log(id);
+			if (context.getters.logedIn) {
+				const config = {
+					headers: {
+						Authorization: "Bearer " + context.state.token,
+					}
+				};
+				return new Promise((resolve, reject) => {
+					axios.get('/api/exemp/' + id, config)
+						.then(res => {
+							console.log(res.data);
+							resolve(res)
+						})
+						.catch(err => {
+							if (err.response.status == 401) {
+								localStorage.removeItem('access_token')
+								router.push('/login')
+							}
+							reject(err)
+						});
+				});
+
+			}
+		},
+		getUserActualBooks(context, url) {
+			console.log('test');
+			if (context.getters.logedIn) {
+				const config = {
+					headers: {
+						Authorization: "Bearer " + context.state.token,
+					}
+				};
+				return new Promise((resolve, reject) => {
+					axios.get(url || context.state.base + '/user_books', config)
+						.then(res => {
+							resolve(res)
+						})
+						.catch(err => {
+							if (err.response.status == 401) {
+								localStorage.removeItem('access_token')
+								router.push('/login')
+							}
+							reject(err)
+						});
+				});
+
+			}
+		},
+		addExchangeRequest(context, data) {
+			console.log('test');
+			if (context.getters.logedIn) {
+				const config = {
+					headers: {
+						Authorization: "Bearer " + context.state.token,
+						'content-type': 'multipart/form-data'
+					}
+				};
+				return new Promise((resolve, reject) => {
+					axios.post(context.state.base + '/exchange', data, config)
+						.then(res => {
+							resolve(res)
+						})
+						.catch(err => {
+							if (err.response.status == 401) {
+								localStorage.removeItem('access_token')
+								router.push('/login')
+							}
+							reject(err)
+						});
+				});
+
+			}
 		}
-	},
-	getInfoFromGoogleApi(context,title){
-		return new Promise((resolve,reject)=>{
-			Vue.jsonp('https://www.googleapis.com/books/v1/volumes?maxResults=5&q='+title).then(json => {
-			resolve(json)
-      }).catch(err => {
-        reject(err)
-      });
-		});
-	},
-	addNewBook(context,book){
-		if(context.getters.logedIn){
-			const config = {
-				headers: {
-				   Authorization: "Bearer " + context.state.token,
-				   'content-type': 'multipart/form-data' 
-				}
-			 };
-			 return new Promise((resolve,reject)=>{
-				axios.post(context.state.base+'/exemp',book,config)
-				.then(res=>{
-					resolve(res)
-				})
-				.catch(err=>{
-					if(err.response.status==401){
-						localStorage.removeItem('access_token')
-						router.push('/login')
-					}
-					reject(err)
-				});
-			 });
-		
-			}
-	},
-	getUserBooks(context,url){
-		if(context.getters.logedIn){
-			const config = {
-				headers: {
-				   Authorization: "Bearer " + context.state.token,
-				}
-			 };
-			 return new Promise((resolve,reject)=>{
-				axios.get(url || context.state.base+'/exemp',config)
-				.then(res=>{
-					resolve(res)
-				})
-				.catch(err=>{
-					if(err.response.status==401){
-						localStorage.removeItem('access_token')
-						router.push('/login')
-					}
-					reject(err)
-				});
-			 });
-		
-			}
-	},
-	getHomeBooks(context,url){
-		return new Promise((resolve,reject)=>{
-			axios.get(url || context.state.base+'/home')
-			.then(res=>{
-				resolve(res.data)
-			})
-			.catch(err=>{
-				reject(err)
-			});
-		 });
-	},
-	searchBook(context,data,url){
-		return new Promise((resolve,reject)=>{
-			axios.get(url || context.state.base+'/search?'+'key='+data.key+'&city='+data.city+'&category='+data.category)
-			.then(res=>{
-				resolve(res)
-				// console.log(res.data);
-			})
-			.catch(err=> reject(err)
-			);
-		})
-	}
 	}
 });
 
