@@ -264,6 +264,17 @@ const vuex=new Vuex.Store({
 				reject(err)
 			});
 		 });
+	},
+	searchBook(context,data,url){
+		return new Promise((resolve,reject)=>{
+			axios.get(url || context.state.base+'/search?'+'key='+data.key+'&city='+data.city+'&category='+data.category)
+			.then(res=>{
+				resolve(res)
+				// console.log(res.data);
+			})
+			.catch(err=> reject(err)
+			);
+		})
 	}
 	}
 });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Exemplaire;
 use App\Http\Resources\ExemplaireResource;
+
 class HomeController extends Controller
 {
     /**
@@ -15,29 +16,80 @@ class HomeController extends Controller
     public function index()
     {
         if (auth()->user()) {
-            $exemplaire = Exemplaire::where('user_id','!=',auth()->user()->id)
-            ->with('livre','photos')
-            ->orderBy('created_at','desc')
-            ->paginate(20);
+            $exemplaire = Exemplaire::where('user_id', '!=', auth()->user()->id)
+                ->with('livre', 'photos')
+                ->orderBy('created_at', 'desc')
+                ->paginate(20);
             // die("eeeeeeeeeeeeee");
             return ExemplaireResource::collection($exemplaire);
-        }
-        else{
-            $exemplaire = Exemplaire::with('livre','photos')
-            ->orderBy('created_at','desc')
-            ->paginate(20);
+        } else {
+            $exemplaire = Exemplaire::with('livre', 'photos')
+                ->orderBy('created_at', 'desc')
+                ->paginate(20);
             return ExemplaireResource::collection($exemplaire);
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function search(Request $request)
     {
-        //
+
+        if (auth()->user()) {
+            $exemplaire = Exemplaire::where('user_id', '!=', auth()->user()->id)
+                ->andWhere('livre.titre', 'LIKE', '%' . $request->title . '%')
+                ->andWhere('user.city.id', '=', $request->city)
+                ->andWhere('livre.category.id', '=', $request->category)
+                ->orderBy('created_at', 'desc')
+                ->paginate(20);
+            // die("eeeeeeeeeeeeee");
+            return ExemplaireResource::collection($exemplaire);
+        } else {
+
+            // return $w;
+            if (!empty($request->city) && empty($request->category)) {
+                $exemplaire = Exemplaire::whereHas('livre', function ($q) use ($request) {
+                    $q->where('titre', 'LIKE', '%' . $request->key . '%');
+                })
+                    ->whereHas('user', function ($q) use ($request) {
+                        $q->where('ville_id', '=', $request->city);
+                    })
+                    // ->with('livre', 'user','photos')
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            } elseif (empty($request->city) && !empty($request->category)) {
+                $exemplaire = Exemplaire::whereHas('livre', function ($q) use ($request) {
+                    $q->where('titre', 'LIKE', '%' . $request->key . '%');
+                })
+                    ->whereHas('livre', function ($q) use ($request) {
+                        $q->where('categorie_id', '=', $request->category);
+                    })
+                    // ->with('livre', 'user','photos')
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            } else if (empty($request->city) && empty($request->category) && !empty($request->key)) {
+                $exemplaire = Exemplaire::whereHas('livre', function ($q) use ($request) {
+                    $q->where('titre', 'LIKE', '%' . $request->key . '%');
+                })
+                    // ->with('livre', 'user','photos')
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            } else if (empty($request->city) && empty($request->category) && empty($request->key)) {
+                return $this->index();
+            } else {
+                $exemplaire = Exemplaire::whereHas('livre', function ($q) use ($request) {
+                    $q->where('titre', 'LIKE', '%' . $request->key . '%');
+                })
+                    ->whereHas('livre', function ($q) use ($request) {
+                        $q->where('categorie_id', '=', $request->category);
+                    })
+                    ->whereHas('user', function ($q) use ($request) {
+                        $q->where('ville_id', '=', $request->city);
+                    })
+                    // ->with('livre', 'user','photos')
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            }
+            return ExemplaireResource::collection($exemplaire) ;
+        }
     }
 
     /**
