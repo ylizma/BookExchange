@@ -21,7 +21,7 @@ Route::get('city','VilleController@index');
 
 Route::group(['middleware' => ['jwt.auth']], function() {
     Route::get('city/{id}','VilleController@show');
-    Route::get('city/find/{s}','VilleController@find'); 
+    Route::get('city/find/{s}','VilleController@find');
     Route::get('user', 'AuthController@getAuthUser');
     Route::get('logout', 'AuthController@logout');
     Route::resource('rec','RecommandationUserController');
@@ -32,9 +32,16 @@ Route::group(['middleware' => ['jwt.auth']], function() {
     Route::post('update','UserController@update');
 
     Route::apiResource('exemp', 'ExemplaireController');
-    
+    Route::get('user_books','ExemplaireController@user_books');
+
+    Route::post('exchange','ExchangeController@exchange');
+
+
 });
 
-Route::get('cats','CategorieController@index');
+
+
+
+Route::apiResource('cats','CategorieController');
 Route::apiResource('livres', 'LivreController');
 Route::get('home','HomeController@index');

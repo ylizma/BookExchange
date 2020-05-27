@@ -50,9 +50,9 @@ class CategorieController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Categorie $categorie)
+    public function show($id)
     {
-        return new CategorieResource($categorie);
+        return new CategorieResource(Categorie::find($id));
     }
 
     /**
