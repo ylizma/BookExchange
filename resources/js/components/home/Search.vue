@@ -5,12 +5,6 @@
         <div class="col-lg-12">
           <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-              <select class="form-control search-slt" id="exampleFormControlSelect1" v-model="city">
-                <option  selected>select...</option>
-                <option v-for="(city, index) in cities" :key="index" :value="city.id">{{city.name}}</option>
-              </select>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-12 p-0">
               <input
                 type="text"
                 class="form-control search-slt"
@@ -24,12 +18,18 @@
                 id="exampleFormControlSelect1"
                 v-model="category"
               >
-                <option selected>select...</option>
+                <option value disabled hidden>Select Category</option>
                 <option
                   v-for="(category, index) in categories"
                   :key="index"
                   :value="category.id"
                 >{{category.nom}}</option>
+              </select>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+              <select class="form-control search-slt" id="exampleFormControlSelect1" v-model="city">
+                <option value disabled hidden>Select City</option>
+                <option v-for="(city, index) in cities" :key="index" :value="city.id">{{city.name}}</option>
               </select>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-12 pl-1">
@@ -46,9 +46,9 @@
 export default {
   data() {
     return {
-      title: '',
-      category: '',
-      city: '',
+      title: "",
+      category: "",
+      city: "",
       categories: [],
       cities: []
     };
@@ -75,11 +75,11 @@ export default {
         });
     },
     search() {
-      if (this.city == '' && this.title=='' && this.category=='') {
+      if (this.city == "" && this.title == "" && this.category == "") {
         console.log("empty");
       } else {
         console.log(this.title);
-        
+
         let data = {
           key: this.title,
           city: this.city,

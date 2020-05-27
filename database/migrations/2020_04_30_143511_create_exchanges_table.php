@@ -19,13 +19,13 @@ class CreateExchangesTable extends Migration
             $table->timestamp('accepted_at')->nullable();
             $table->timestamp('requested_at')->nullable();
 
-            $table->integer('user_id')->unsigned()->nullable();
+            $table->bigInteger('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
-            $table->integer('my_book')->unsigned()->nullable();
+            $table->bigInteger('my_book')->unsigned()->nullable();
             $table->foreign('my_book')->references('id')->on('exemplaires')->onDelete('cascade');
 
-            $table->integer('desired_book')->unsigned()->nullable();
+            $table->bigInteger('desired_book')->unsigned()->nullable();
             $table->foreign('desired_book')->references('id')->on('exemplaires')->onDelete('cascade');
 
         });
