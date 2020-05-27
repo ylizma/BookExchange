@@ -68,5 +68,6 @@ $factory->define(PhotoLivre::class, function (Faker $faker) {
     return [
         'image' => $faker->imageUrl(400, 240), 
         'exemplaire_id' => Exemplaire::all()->random()->id,
+        ''
     ];
 });

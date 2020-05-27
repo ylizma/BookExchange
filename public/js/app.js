@@ -2520,9 +2520,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      title: '',
-      category: '',
-      city: '',
+      title: "",
+      category: "",
+      city: "",
       categories: [],
       cities: []
     };
@@ -2549,7 +2549,7 @@ __webpack_require__.r(__webpack_exports__);
     search: function search() {
       var _this3 = this;
 
-      if (this.city == '' && this.title == '' && this.category == '') {
+      if (this.city == "" && this.title == "" && this.category == "") {
         console.log("empty");
       } else {
         console.log(this.title);
@@ -22242,53 +22242,6 @@ var render = function() {
           _c("div", { staticClass: "col-lg-12" }, [
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-lg-3 col-md-3 col-sm-12 p-0" }, [
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.city,
-                        expression: "city"
-                      }
-                    ],
-                    staticClass: "form-control search-slt",
-                    attrs: { id: "exampleFormControlSelect1" },
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.city = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      }
-                    }
-                  },
-                  [
-                    _c("option", { attrs: { selected: "" } }, [
-                      _vm._v("select...")
-                    ]),
-                    _vm._v(" "),
-                    _vm._l(_vm.cities, function(city, index) {
-                      return _c(
-                        "option",
-                        { key: index, domProps: { value: city.id } },
-                        [_vm._v(_vm._s(city.name))]
-                      )
-                    })
-                  ],
-                  2
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-lg-3 col-md-3 col-sm-12 p-0" }, [
                 _c("input", {
                   directives: [
                     {
@@ -22343,15 +22296,66 @@ var render = function() {
                     }
                   },
                   [
-                    _c("option", { attrs: { selected: "" } }, [
-                      _vm._v("select...")
-                    ]),
+                    _c(
+                      "option",
+                      { attrs: { value: "", disabled: "", hidden: "" } },
+                      [_vm._v("Select Category")]
+                    ),
                     _vm._v(" "),
                     _vm._l(_vm.categories, function(category, index) {
                       return _c(
                         "option",
                         { key: index, domProps: { value: category.id } },
                         [_vm._v(_vm._s(category.nom))]
+                      )
+                    })
+                  ],
+                  2
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-3 col-md-3 col-sm-12 p-0" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.city,
+                        expression: "city"
+                      }
+                    ],
+                    staticClass: "form-control search-slt",
+                    attrs: { id: "exampleFormControlSelect1" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.city = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  [
+                    _c(
+                      "option",
+                      { attrs: { value: "", disabled: "", hidden: "" } },
+                      [_vm._v("Select City")]
+                    ),
+                    _vm._v(" "),
+                    _vm._l(_vm.cities, function(city, index) {
+                      return _c(
+                        "option",
+                        { key: index, domProps: { value: city.id } },
+                        [_vm._v(_vm._s(city.name))]
                       )
                     })
                   ],
