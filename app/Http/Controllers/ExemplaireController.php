@@ -29,7 +29,7 @@ class ExemplaireController extends Controller
     public function user_books()
     {
         return ExemplaireResource::collection(
-            Exemplaire::where('user_id','=',auth()->user()->id)
+            Exemplaire::where(['user_id' => auth()->user()->id, 'disponible' => true])
             ->with('livre','photos')
             ->get()
         );

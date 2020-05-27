@@ -6,8 +6,8 @@
                     <h3>Exchange</h3>
 
                     <div class="bg-white p-3">
-                        <div v-show="submitted" class="alert alert-success" role="alert">
-                            Exchange request sent !!
+                        <div v-show="submitted || hasError" class="alert" v-bind:class="{ 'alert-danger': hasError, 'alert-success': !hasError }" role="alert">
+                            {{alert_message}}
                         </div>
                         <router-link tag="button" class="btn btn-danger mb-3" id="button" to="/">Go back!</router-link>
                         <div>
@@ -28,8 +28,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Select one of your books:</label>
-                                    <select v-model="exchange.selected_book_id" class="form-control" style="height: 42px;" required="">
-                                        <option v-for="book in user_books" :key="book.id"  :value="book.id" selected=""> {{book.livre.livre.titre}} </option>
+                                    <select v-model="selected_book" class="form-control" style="height: 42px;" required="">
+                                        <option v-for="book in user_books" :key="book.id"  :value="book" selected=""> {{book.livre.livre.titre}} </option>
                                     </select>
                                 </div>
                                 <div
@@ -48,13 +48,12 @@
 export default {
     data(){
         return {
-            exchange: {
-                desired_book_id: this.$route.params.id,
-                selected_book_id: '',
-            },
+            selected_book: {},
             desired_book:{},
             user_books:[],
             submitted: false,
+            hasError: false,
+            alert_message: '',
         }
     },
     methods:{
@@ -77,18 +76,24 @@ export default {
             });
         },
         submitExchangeRequest(){
-            console.log('submit');
-            const fd=new FormData();
-            fd.append('my_book',this.exchange.selected_book_id)
-            fd.append('desired_book',this.exchange.desired_book_id)
+            if(this.selected_book.livre.livre.id === this.desired_book.livre.livre.id){
+               this.alert_message = "you can't exchange with the same book";
+               this.hasError = true;
+            }else{
+                const fd=new FormData();
+                fd.append('my_book',this.selected_book.id)
+                fd.append('desired_book',this.desired_book.id)
 
-            this.$store.dispatch('addExchangeRequest',fd)
-            .then(res=>{
-                this.submitted=true;
-            })
-            .catch(err=>{
+                this.$store.dispatch('addExchangeRequest',fd)
+                .then(res=>{
+                    this.submitted=true;
+                    this.alert_message = "Exchange request sent !!";
+                    this.hasError = false;
+                })
+                .catch(err=>{
 
-            });
+                });
+            }
         }
     },
     mounted(){

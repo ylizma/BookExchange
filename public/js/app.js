@@ -2371,13 +2371,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      exchange: {
-        desired_book_id: this.$route.params.id,
-        selected_book_id: ''
-      },
+      selected_book: {},
       desired_book: {},
       user_books: [],
-      submitted: false
+      submitted: false,
+      hasError: false,
+      alert_message: ''
     };
   },
   methods: {
@@ -2406,13 +2405,19 @@ __webpack_require__.r(__webpack_exports__);
     submitExchangeRequest: function submitExchangeRequest() {
       var _this3 = this;
 
-      console.log('submit');
-      var fd = new FormData();
-      fd.append('my_book', this.exchange.selected_book_id);
-      fd.append('desired_book', this.exchange.desired_book_id);
-      this.$store.dispatch('addExchangeRequest', fd).then(function (res) {
-        _this3.submitted = true;
-      })["catch"](function (err) {});
+      if (this.selected_book.livre.livre.id === this.desired_book.livre.livre.id) {
+        this.alert_message = "you can't exchange with the same book";
+        this.hasError = true;
+      } else {
+        var fd = new FormData();
+        fd.append('my_book', this.selected_book.id);
+        fd.append('desired_book', this.desired_book.id);
+        this.$store.dispatch('addExchangeRequest', fd).then(function (res) {
+          _this3.submitted = true;
+          _this3.alert_message = "Exchange request sent !!";
+          _this3.hasError = false;
+        })["catch"](function (err) {});
+      }
     }
   },
   mounted: function mounted() {
@@ -21815,16 +21820,22 @@ var render = function() {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm.submitted,
-                      expression: "submitted"
+                      value: _vm.submitted || _vm.hasError,
+                      expression: "submitted || hasError"
                     }
                   ],
-                  staticClass: "alert alert-success",
+                  staticClass: "alert",
+                  class: {
+                    "alert-danger": _vm.hasError,
+                    "alert-success": !_vm.hasError
+                  },
                   attrs: { role: "alert" }
                 },
                 [
                   _vm._v(
-                    "\n                        Exchange request sent !!\n                    "
+                    "\n                        " +
+                      _vm._s(_vm.alert_message) +
+                      "\n                    "
                   )
                 ]
               ),
@@ -21918,8 +21929,8 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.exchange.selected_book_id,
-                              expression: "exchange.selected_book_id"
+                              value: _vm.selected_book,
+                              expression: "selected_book"
                             }
                           ],
                           staticClass: "form-control",
@@ -21935,13 +21946,9 @@ var render = function() {
                                   var val = "_value" in o ? o._value : o.value
                                   return val
                                 })
-                              _vm.$set(
-                                _vm.exchange,
-                                "selected_book_id",
-                                $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              )
+                              _vm.selected_book = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
                             }
                           }
                         },
@@ -21951,7 +21958,7 @@ var render = function() {
                             {
                               key: book.id,
                               attrs: { selected: "" },
-                              domProps: { value: book.id }
+                              domProps: { value: book }
                             },
                             [_vm._v(" " + _vm._s(book.livre.livre.titre) + " ")]
                           )
