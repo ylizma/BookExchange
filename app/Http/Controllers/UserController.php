@@ -32,9 +32,9 @@ class UserController extends Controller
         return Exchange::whereIn('desired_book', function ($query) use ($user) {
             $query->select('id')
                 ->from('exemplaires')
-                ->where('user_id', '=', 8);
+                ->where('user_id', '=', $user->id);
         })->with('userbook','desiredbook','user','user.ville','userbook.livre','desiredbook.livre')->get();
-     
+
     }
 
     /**
