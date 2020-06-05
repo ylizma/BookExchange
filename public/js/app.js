@@ -3224,6 +3224,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
@@ -23773,6 +23794,16 @@ var render = function() {
                     attrs: { to: "/profile/books" }
                   },
                   [_vm._v("My books")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "d-block profile-sidebar-link",
+                    staticStyle: { "font-size": "14px" },
+                    attrs: { to: "/profile/requests" }
+                  },
+                  [_vm._v("Requests")]
                 ),
                 _vm._v(" "),
                 _c(
