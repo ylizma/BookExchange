@@ -54,9 +54,9 @@ const vuex = new Vuex.Store({
 					context.commit('retreiveToken', token);
 					resolve(response);
 				}).catch(error => {
-					if (response.status == 401) {
-						localStorage.removeItem('access_token')
-					}
+					// if (response.status == 401) {
+					// 	localStorage.removeItem('access_token')
+					// }
 					console.log(error);
 					reject(error)
 				})
@@ -350,6 +350,20 @@ const vuex = new Vuex.Store({
 						});
 				});
 
+			}
+		},
+		getUserRequests(context){
+			if (context.getters.logedIn) {
+				const config = {
+					headers: {
+						Authorization: "Bearer " + context.state.token,
+					}
+				};
+				return new Promise((resolve,reject)=>{
+					axios.get(context.state.base+'/myrequests',config)
+					.then(res=> resolve(res))
+					.catch(err=>reject(err))
+				})
 			}
 		}
 	}
