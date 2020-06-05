@@ -41,7 +41,7 @@ Route::group(['middleware' => ['jwt.auth']], function() {
 
 
 
-
+Route::get('myrequests','UserController@bookRequests');
 Route::apiResource('cats','CategorieController');
 Route::apiResource('livres', 'LivreController');
 Route::get('home','HomeController@index');

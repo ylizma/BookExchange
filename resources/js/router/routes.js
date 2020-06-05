@@ -18,10 +18,12 @@ import Home from '@/js/pages/home/Home.vue';
 import UserProfile from '@/js/pages/profile/UserProfilePage.vue';
 import UserInfos from '@/js/components/profile/UserInfos.vue';
 import UserBooks from '@/js/components/profile/UserBooks.vue';
+import BookRequests from '@/js/components/profile/Requests.vue';
 import NewBook from "@/js/components/book/NewBook.vue";
 import EditBook from "@/js/components/book/EditBook.vue";
 import Exchange from "@/js/components/book/exchange.vue";
 import Book from "@/js/pages/book/UserBookPage.vue";
+
 
 
 
@@ -99,6 +101,16 @@ const router=new VueRouter({
 				path:'/profile/books',
 				name:'profilebook',
 				component:UserBooks,
+				meta:{
+					middleware:[
+						auth
+					]
+				}
+			},
+			{
+				path:'/profile/requests',
+				name:'bookRequests',
+				component:BookRequests,
 				meta:{
 					middleware:[
 						auth

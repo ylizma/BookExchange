@@ -19,10 +19,10 @@ class ExemplaireController extends Controller
      */
     public function index()
     {
-        $ex=Exemplaire::where('user_id','=',auth()->user()->id)
-        ->with('livre','photos')
-        ->orderBy('created_at','desc')
-        ->paginate(3);
+        $ex = Exemplaire::where('user_id', '=', auth()->user()->id)
+            ->with('livre', 'photos')
+            ->orderBy('created_at', 'desc')
+            ->paginate(3);
         return $ex;
     }
 
@@ -30,8 +30,8 @@ class ExemplaireController extends Controller
     {
         return ExemplaireResource::collection(
             Exemplaire::where(['user_id' => auth()->user()->id, 'disponible' => true])
-            ->with('livre','photos')
-            ->get()
+                ->with('livre', 'photos')
+                ->get()
         );
     }
 
@@ -56,7 +56,7 @@ class ExemplaireController extends Controller
             ]);
         }
 
-        $userid=auth()->user()->id;
+        $userid = auth()->user()->id;
         $exemplaire = Exemplaire::create([
             'langue' => $request->lang,
             'etat' => $request->status,
@@ -65,7 +65,7 @@ class ExemplaireController extends Controller
         ]);
 
         $i = 0;
-        foreach($request->file('imgs') as $file){
+        foreach ($request->file('imgs') as $file) {
             $photo = new PhotoLivre;
 
             $savePath = 'images/books'; // save path
@@ -75,7 +75,7 @@ class ExemplaireController extends Controller
             $file->move($savePath, $imageName);
             // assign the location of folder to the model
             $photo->image = $imageName;
-            $photo->exemplaire_id= $exemplaire->id;
+            $photo->exemplaire_id = $exemplaire->id;
             $photo->save();
             $i++;
         }
@@ -91,6 +91,7 @@ class ExemplaireController extends Controller
      */
     public function show($id)
     {
+        $exemplaire = Exemplaire::find($id);
         return new ExemplaireResource(Exemplaire::find($id));
     }
 
@@ -103,7 +104,7 @@ class ExemplaireController extends Controller
      */
     public function update(Request $request, Exemplaire $exemplaire)
     {
-        $exemplaire->update($request->only(['langue', 'etat','livre_id']));
+        $exemplaire->update($request->only(['langue', 'etat', 'livre_id']));
 
         //update images
 
