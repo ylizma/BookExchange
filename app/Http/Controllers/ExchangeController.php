@@ -30,4 +30,51 @@ class ExchangeController extends Controller
         return response()->json(['message' => 'success'], 200);
     }
 
+    /**
+     * Accept an exchange request
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function accept(Request $request)
+    {
+        $exchange_id = $request->id;
+        $exchange = Exchange::find($exchange_id);
+
+        $user_book = $exchange->userbook;
+        $desired_book = $exchange->desiredbook;
+
+        $exchange->accepted_at = now();
+        $exchange->status = "accepted";
+        $exchange->save();
+
+        $user_book->disponible = false;
+        $user_book->archived = true;
+        $user_book->save();
+
+        $desired_book->disponible = false;
+        $desired_book->archived = true;
+        $desired_book->save();
+
+        return response()->json(['message' => 'success'], 200);
+    }
+
+    /**
+     * Refuse an exchange request
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function refuse(Request $request)
+    {
+        $exchange_id = $request->id;
+        $exchange = Exchange::find($exchange_id);
+
+        $exchange->refused_at = now();
+        $exchange->status = "refused";
+        $exchange->save();
+
+        return response()->json(['message' => 'success'], 200);
+    }
+
 }

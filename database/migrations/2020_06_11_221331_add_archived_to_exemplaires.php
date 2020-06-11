@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddDisponibleToExemplairesTable extends Migration
+class AddArchivedToExemplaires extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddDisponibleToExemplairesTable extends Migration
     public function up()
     {
         Schema::table('exemplaires', function (Blueprint $table) {
-            $table->boolean('disponible')->default(true);
+            $table->boolean('archived')->default(false);
         });
     }
 
@@ -26,7 +26,7 @@ class AddDisponibleToExemplairesTable extends Migration
     public function down()
     {
         Schema::table('exemplaires', function (Blueprint $table) {
-            $table->dropColumn('disponible');
+            $table->dropColumn('archived');
         });
     }
 }

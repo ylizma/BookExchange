@@ -30,12 +30,15 @@ Route::group(['middleware' => ['jwt.auth']], function() {
     Route::get('profile','UserController@myprofile');
     Route::get('books','UserController@mybooks');
     Route::post('update','UserController@update');
+    Route::get('archived_books','UserController@archived_books');
 
     Route::apiResource('exemp', 'ExemplaireController');
     Route::get('user_books','ExemplaireController@user_books');
 
-    Route::post('exchange','ExchangeController@exchange');
 
+    Route::post('exchange','ExchangeController@exchange');
+    Route::post('accept','ExchangeController@accept');
+    Route::post('refuse','ExchangeController@refuse');
 
 });
 

@@ -26,6 +26,21 @@ class UserController extends Controller
         return $infos;
     }
 
+    public function archived_books()
+    {
+        return ExemplaireResource::collection(
+            Exemplaire::where(
+                [
+                'user_id' => auth()->user()->id,
+                'disponible' => false,
+                'archived' => true,
+                ]
+            )
+            ->with('livre', 'photos')
+            ->get()
+        );
+    }
+
     function bookRequests()
     {
         $user = auth()->user();
