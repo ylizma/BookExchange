@@ -9,6 +9,8 @@ use App\User;
 use App\Ville;
 use File;
 
+use App\Http\Resources\ExemplaireResource;
+
 class UserController extends Controller
 {
 

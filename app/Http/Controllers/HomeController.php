@@ -17,13 +17,15 @@ class HomeController extends Controller
     {
         if (auth()->user()) {
             $exemplaire = Exemplaire::where('user_id', '!=', auth()->user()->id)
+                ->where('disponible' , true)
                 ->with('livre', 'photos')
                 ->orderBy('created_at', 'desc')
                 ->paginate(20);
             // die("eeeeeeeeeeeeee");
             return ExemplaireResource::collection($exemplaire);
         } else {
-            $exemplaire = Exemplaire::with('livre', 'photos')
+            $exemplaire = Exemplaire::where('disponible' , true)
+                ->with('livre', 'photos')
                 ->orderBy('created_at', 'desc')
                 ->paginate(20);
             return ExemplaireResource::collection($exemplaire);
@@ -35,6 +37,7 @@ class HomeController extends Controller
 
         if (auth()->user()) {
             $exemplaire = Exemplaire::where('user_id', '!=', auth()->user()->id)
+                ->where('disponible' , true)
                 ->andWhere('livre.titre', 'LIKE', '%' . $request->title . '%')
                 ->andWhere('user.city.id', '=', $request->city)
                 ->andWhere('livre.category.id', '=', $request->category)
@@ -53,6 +56,7 @@ class HomeController extends Controller
                         $q->where('ville_id', '=', $request->city);
                     })
                     // ->with('livre', 'user','photos')
+                    ->where('disponible' , true)
                     ->orderBy('created_at', 'desc')
                     ->get();
             } elseif (empty($request->city) && !empty($request->category)) {
@@ -63,6 +67,7 @@ class HomeController extends Controller
                         $q->where('categorie_id', '=', $request->category);
                     })
                     // ->with('livre', 'user','photos')
+                    ->where('disponible' , true)
                     ->orderBy('created_at', 'desc')
                     ->get();
             } else if (empty($request->city) && empty($request->category) && !empty($request->key)) {
@@ -70,6 +75,7 @@ class HomeController extends Controller
                     $q->where('titre', 'LIKE', '%' . $request->key . '%');
                 })
                     // ->with('livre', 'user','photos')
+                    ->where('disponible' , true)
                     ->orderBy('created_at', 'desc')
                     ->get();
             } else if (empty($request->city) && empty($request->category) && empty($request->key)) {
@@ -85,6 +91,7 @@ class HomeController extends Controller
                         $q->where('ville_id', '=', $request->city);
                     })
                     // ->with('livre', 'user','photos')
+                    ->where('disponible' , true)
                     ->orderBy('created_at', 'desc')
                     ->get();
             }
