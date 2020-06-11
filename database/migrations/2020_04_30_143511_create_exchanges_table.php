@@ -18,6 +18,9 @@ class CreateExchangesTable extends Migration
 
             $table->timestamp('accepted_at')->nullable();
             $table->timestamp('requested_at')->nullable();
+            $table->timestamp('refused_at')->nullable();
+
+            $table->string('status')->default('pending');
 
             $table->bigInteger('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
