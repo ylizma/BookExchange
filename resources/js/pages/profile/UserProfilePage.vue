@@ -23,10 +23,11 @@
                         >Requests</router-link
                     >
 
-                    <a
+                    <router-link
+                        to="/profile/archived"
                         class="d-block profile-sidebar-link"
                         style="font-size: 14px;"
-                        >Exchange history</a
+                        >Archived Books</router-link
                     >
                 </div>
             </div>
