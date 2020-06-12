@@ -18,7 +18,8 @@ import Home from '@/js/pages/home/Home.vue';
 import UserProfile from '@/js/pages/profile/UserProfilePage.vue';
 import UserInfos from '@/js/components/profile/UserInfos.vue';
 import UserBooks from '@/js/components/profile/UserBooks.vue';
-import BookRequests from '@/js/components/profile/Requests.vue';
+import ReceivedRequests from '@/js/components/profile/RecievedRequests.vue';
+import SentRequests from '@/js/components/profile/SentRequests.vue';
 import ArchivedBooks from '@/js/components/profile/ArchivedBooks.vue';
 import NewBook from "@/js/components/book/NewBook.vue";
 import EditBook from "@/js/components/book/EditBook.vue";
@@ -109,9 +110,19 @@ const router=new VueRouter({
 				}
 			},
 			{
-				path:'/profile/requests',
+				path:'/profile/requests/received',
 				name:'bookRequests',
-				component:BookRequests,
+				component:ReceivedRequests,
+				meta:{
+					middleware:[
+						auth
+					]
+				}
+			},
+			{
+				path:'/profile/requests/sent',
+				name:'sentRequest',
+				component:SentRequests,
 				meta:{
 					middleware:[
 						auth
