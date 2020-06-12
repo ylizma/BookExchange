@@ -423,6 +423,27 @@ const vuex = new Vuex.Store({
                         .catch(err => reject(err));
                 });
             }
+		},
+		refuseUserRequest(context, id) {
+            if (context.getters.logedIn) {
+                const config = {
+                    headers: {
+                        Authorization: "Bearer " + context.state.token
+                    }
+                };
+                return new Promise((reslove, reject) => {
+                    axios
+                        .post(
+                            context.getters.getBaseUrl + "/refuse",
+                            id,
+                            config
+                        )
+                        .then(res => {
+                            reslove(res);
+                        })
+                        .catch(err => reject(err));
+                });
+            }
         }
     }
 });

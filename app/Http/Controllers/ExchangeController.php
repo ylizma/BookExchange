@@ -41,7 +41,6 @@ class ExchangeController extends Controller
     {
         $exchange_id = $request->id;
         $exchange = Exchange::find($exchange_id);
-
         $user_book = $exchange->userbook;
         $desired_book = $exchange->desiredbook;
 

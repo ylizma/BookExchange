@@ -1,5 +1,16 @@
 <template>
     <div class="">
+        <div
+            v-show="submitted || hasError"
+            class="alert"
+            v-bind:class="{
+                'alert-danger': hasError,
+                'alert-success': !hasError
+            }"
+            role="alert"
+        >
+            {{ alert_message }}
+        </div>
         <table class="table">
             <thead>
                 <tr>
@@ -50,7 +61,12 @@
                         >
                             accept
                         </button>
-                        <button class="btn btn-danger sm">reject</button>
+                        <button
+                            class="btn btn-danger sm"
+                            @click="refuseRequest(book.id)"
+                        >
+                            reject
+                        </button>
                     </td>
                 </tr>
             </tbody>
@@ -139,7 +155,10 @@ export default {
                 user: "",
                 language: "",
                 img: ""
-            }
+            },
+            submitted: false,
+            hasError: false,
+            alert_message: ""
         };
     },
     methods: {
@@ -150,14 +169,39 @@ export default {
                 .catch(err => console.error(err));
         },
         acceptRequest(id) {
+            const data = {
+                id: id
+            };
             this.$store
-                .dispatch("acceptUserRequest", id)
+                .dispatch("acceptUserRequest", data)
                 .then(res => {
-                    console.log(res);
+                    this.books = this.books.filter(book => book.id != data.id);
+                    this.submitted = true;
+                    this.alert_message = "the request is accepted";
                 })
-                .catch(error => console.error(err));
+                .catch(err => {
+                    this.hasError = true;
+                    this.alert_message = "error !!";
+                    console.error(err);
+                });
         },
-        refuseRequest() {}
+        refuseRequest(id) {
+            const data = {
+                id: id
+            };
+            this.$store
+                .dispatch("refuseUserRequest", data)
+                .then(res => {
+                    this.books = this.books.filter(book => book.id != data.id);
+                    this.submitted = true;
+                    this.alert_message = 'the request is refused'
+                })
+                .catch(err => {
+                    this.hasError = true;
+                    this.alert_message = 'error !!'
+                    console.error(err);
+                });
+        }
     },
     created() {
         this.$store

@@ -2575,6 +2575,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/profile/ArchivedBooks.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/profile/ArchivedBooks.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/profile/Requests.vue?vue&type=script&lang=js&":
 /*!***************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/profile/Requests.vue?vue&type=script&lang=js& ***!
@@ -2584,6 +2601,22 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2727,7 +2760,10 @@ __webpack_require__.r(__webpack_exports__);
         user: "",
         language: "",
         img: ""
-      }
+      },
+      submitted: false,
+      hasError: false,
+      alert_message: ""
     };
   },
   methods: {
@@ -2741,19 +2777,47 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     acceptRequest: function acceptRequest(id) {
-      this.$store.dispatch("acceptUserRequest", id).then(function (res) {
-        console.log(res);
-      })["catch"](function (error) {
-        return console.error(err);
+      var _this2 = this;
+
+      var data = {
+        id: id
+      };
+      this.$store.dispatch("acceptUserRequest", data).then(function (res) {
+        _this2.books = _this2.books.filter(function (book) {
+          return book.id != data.id;
+        });
+        _this2.submitted = true;
+        _this2.alert_message = "the request is accepted";
+      })["catch"](function (err) {
+        _this2.hasError = true;
+        _this2.alert_message = "error !!";
+        console.error(err);
       });
     },
-    refuseRequest: function refuseRequest() {}
+    refuseRequest: function refuseRequest(id) {
+      var _this3 = this;
+
+      var data = {
+        id: id
+      };
+      this.$store.dispatch("refuseUserRequest", data).then(function (res) {
+        _this3.books = _this3.books.filter(function (book) {
+          return book.id != data.id;
+        });
+        _this3.submitted = true;
+        _this3.alert_message = 'the request is refused';
+      })["catch"](function (err) {
+        _this3.hasError = true;
+        _this3.alert_message = 'error !!';
+        console.error(err);
+      });
+    }
   },
   created: function created() {
-    var _this2 = this;
+    var _this4 = this;
 
     this.$store.dispatch("getUserRequests").then(function (res) {
-      _this2.books = res.data;
+      _this4.books = res.data;
       console.log(res.data);
     })["catch"](function (err) {
       return console.error(err);
@@ -3225,6 +3289,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -22600,6 +22665,30 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/profile/ArchivedBooks.vue?vue&type=template&id=011857a7&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/profile/ArchivedBooks.vue?vue&type=template&id=011857a7& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div")
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/profile/Requests.vue?vue&type=template&id=2d64f2d5&":
 /*!*******************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/profile/Requests.vue?vue&type=template&id=2d64f2d5& ***!
@@ -22616,6 +22705,27 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", {}, [
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.submitted || _vm.hasError,
+            expression: "submitted || hasError"
+          }
+        ],
+        staticClass: "alert",
+        class: {
+          "alert-danger": _vm.hasError,
+          "alert-success": !_vm.hasError
+        },
+        attrs: { role: "alert" }
+      },
+      [_vm._v("\n        " + _vm._s(_vm.alert_message) + "\n    ")]
+    ),
+    _vm._v(" "),
     _c("table", { staticClass: "table" }, [
       _vm._m(0),
       _vm._v(" "),
@@ -22706,9 +22816,22 @@ var render = function() {
                 ]
               ),
               _vm._v(" "),
-              _c("button", { staticClass: "btn btn-danger sm" }, [
-                _vm._v("reject")
-              ])
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-danger sm",
+                  on: {
+                    click: function($event) {
+                      return _vm.refuseRequest(book.id)
+                    }
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n                        reject\n                    "
+                  )
+                ]
+              )
             ])
           ])
         }),
@@ -23835,12 +23958,13 @@ var render = function() {
                 ),
                 _vm._v(" "),
                 _c(
-                  "a",
+                  "router-link",
                   {
                     staticClass: "d-block profile-sidebar-link",
-                    staticStyle: { "font-size": "14px" }
+                    staticStyle: { "font-size": "14px" },
+                    attrs: { to: "/profile/archived" }
                   },
-                  [_vm._v("Exchange history")]
+                  [_vm._v("Archived Books")]
                 )
               ],
               1
@@ -40676,6 +40800,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/profile/ArchivedBooks.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/profile/ArchivedBooks.vue ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ArchivedBooks_vue_vue_type_template_id_011857a7___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ArchivedBooks.vue?vue&type=template&id=011857a7& */ "./resources/js/components/profile/ArchivedBooks.vue?vue&type=template&id=011857a7&");
+/* harmony import */ var _ArchivedBooks_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ArchivedBooks.vue?vue&type=script&lang=js& */ "./resources/js/components/profile/ArchivedBooks.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ArchivedBooks_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ArchivedBooks_vue_vue_type_template_id_011857a7___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ArchivedBooks_vue_vue_type_template_id_011857a7___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/profile/ArchivedBooks.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/profile/ArchivedBooks.vue?vue&type=script&lang=js&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/profile/ArchivedBooks.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ArchivedBooks_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ArchivedBooks.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/profile/ArchivedBooks.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ArchivedBooks_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/profile/ArchivedBooks.vue?vue&type=template&id=011857a7&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/profile/ArchivedBooks.vue?vue&type=template&id=011857a7& ***!
+  \******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ArchivedBooks_vue_vue_type_template_id_011857a7___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ArchivedBooks.vue?vue&type=template&id=011857a7& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/profile/ArchivedBooks.vue?vue&type=template&id=011857a7&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ArchivedBooks_vue_vue_type_template_id_011857a7___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ArchivedBooks_vue_vue_type_template_id_011857a7___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/profile/Requests.vue":
 /*!******************************************************!*\
   !*** ./resources/js/components/profile/Requests.vue ***!
@@ -41340,10 +41533,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_components_profile_UserInfos_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/js/components/profile/UserInfos.vue */ "./resources/js/components/profile/UserInfos.vue");
 /* harmony import */ var _js_components_profile_UserBooks_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/js/components/profile/UserBooks.vue */ "./resources/js/components/profile/UserBooks.vue");
 /* harmony import */ var _js_components_profile_Requests_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @/js/components/profile/Requests.vue */ "./resources/js/components/profile/Requests.vue");
-/* harmony import */ var _js_components_book_NewBook_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/js/components/book/NewBook.vue */ "./resources/js/components/book/NewBook.vue");
-/* harmony import */ var _js_components_book_EditBook_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/js/components/book/EditBook.vue */ "./resources/js/components/book/EditBook.vue");
-/* harmony import */ var _js_components_book_exchange_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @/js/components/book/exchange.vue */ "./resources/js/components/book/exchange.vue");
-/* harmony import */ var _js_pages_book_UserBookPage_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @/js/pages/book/UserBookPage.vue */ "./resources/js/pages/book/UserBookPage.vue");
+/* harmony import */ var _js_components_profile_ArchivedBooks_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @/js/components/profile/ArchivedBooks.vue */ "./resources/js/components/profile/ArchivedBooks.vue");
+/* harmony import */ var _js_components_book_NewBook_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @/js/components/book/NewBook.vue */ "./resources/js/components/book/NewBook.vue");
+/* harmony import */ var _js_components_book_EditBook_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @/js/components/book/EditBook.vue */ "./resources/js/components/book/EditBook.vue");
+/* harmony import */ var _js_components_book_exchange_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @/js/components/book/exchange.vue */ "./resources/js/components/book/exchange.vue");
+/* harmony import */ var _js_pages_book_UserBookPage_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @/js/pages/book/UserBookPage.vue */ "./resources/js/pages/book/UserBookPage.vue");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -41362,6 +41556,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
  // components
+
 
 
 
@@ -41433,32 +41628,39 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       meta: {
         middleware: [_js_router_middleware_auth__WEBPACK_IMPORTED_MODULE_4__["default"]]
       }
+    }, {
+      path: '/profile/archived',
+      name: 'ArchivedBooks',
+      component: _js_components_profile_ArchivedBooks_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
+      meta: {
+        middleware: [_js_router_middleware_auth__WEBPACK_IMPORTED_MODULE_4__["default"]]
+      }
     }]
   }, {
     path: '/book',
     name: 'book',
-    component: _js_pages_book_UserBookPage_vue__WEBPACK_IMPORTED_MODULE_18__["default"],
+    component: _js_pages_book_UserBookPage_vue__WEBPACK_IMPORTED_MODULE_19__["default"],
     meta: {
       middleware: [_js_router_middleware_auth__WEBPACK_IMPORTED_MODULE_4__["default"]]
     },
     children: [{
       path: '/newBook',
       name: 'newBook',
-      component: _js_components_book_NewBook_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
+      component: _js_components_book_NewBook_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
       meta: {
         middleware: [_js_router_middleware_auth__WEBPACK_IMPORTED_MODULE_4__["default"]]
       }
     }, {
       path: '/editBook/:id',
       name: 'editBook',
-      component: _js_components_book_EditBook_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
+      component: _js_components_book_EditBook_vue__WEBPACK_IMPORTED_MODULE_17__["default"],
       meta: {
         middleware: [_js_router_middleware_auth__WEBPACK_IMPORTED_MODULE_4__["default"]]
       }
     }, {
       path: '/exchange/:id',
       name: 'exchange',
-      component: _js_components_book_exchange_vue__WEBPACK_IMPORTED_MODULE_17__["default"],
+      component: _js_components_book_exchange_vue__WEBPACK_IMPORTED_MODULE_18__["default"],
       meta: {
         middleware: [_js_router_middleware_auth__WEBPACK_IMPORTED_MODULE_4__["default"]]
       }
@@ -41870,6 +42072,22 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
         };
         return new Promise(function (reslove, reject) {
           axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(context.getters.getBaseUrl + "/accept", id, config).then(function (res) {
+            reslove(res);
+          })["catch"](function (err) {
+            return reject(err);
+          });
+        });
+      }
+    },
+    refuseUserRequest: function refuseUserRequest(context, id) {
+      if (context.getters.logedIn) {
+        var config = {
+          headers: {
+            Authorization: "Bearer " + context.state.token
+          }
+        };
+        return new Promise(function (reslove, reject) {
+          axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(context.getters.getBaseUrl + "/refuse", id, config).then(function (res) {
             reslove(res);
           })["catch"](function (err) {
             return reject(err);

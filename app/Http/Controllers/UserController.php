@@ -33,13 +33,13 @@ class UserController extends Controller
         return ExemplaireResource::collection(
             Exemplaire::where(
                 [
-                'user_id' => auth()->user()->id,
-                'disponible' => false,
-                'archived' => true,
+                    'user_id' => auth()->user()->id,
+                    'disponible' => false,
+                    'archived' => true,
                 ]
             )
-            ->with('livre', 'photos')
-            ->get()
+                ->with('livre', 'photos')
+                ->get()
         );
     }
 
@@ -50,8 +50,7 @@ class UserController extends Controller
             $query->select('id')
                 ->from('exemplaires')
                 ->where('user_id', '=', $user->id);
-        })->with('userbook','desiredbook','user','user.ville','userbook.livre','desiredbook.livre')->get();
-
+        })->where('status', 'like', 'pending')->with('userbook', 'desiredbook', 'user', 'user.ville', 'userbook.livre', 'desiredbook.livre')->get();
     }
 
     /**
