@@ -11,6 +11,7 @@
         >
             {{ alert_message }}
         </div>
+        <div class="table-responsive">
         <table class="table">
             <thead>
                 <tr>
@@ -71,6 +72,7 @@
                 </tr>
             </tbody>
         </table>
+        </div>
         <div
             class="modal fade bd-example-modal-lg"
             tabindex="-1"
@@ -205,7 +207,7 @@ export default {
     },
     created() {
         this.$store
-            .dispatch("getUserRequests")
+            .dispatch("getUserRequests",'receive')
             .then(res => {
                 this.books = res.data;
                 console.log(res.data);

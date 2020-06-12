@@ -388,17 +388,23 @@ const vuex = new Vuex.Store({
                 });
             }
         },
-        getUserRequests(context) {
+        getUserRequests(context, data) {
             if (context.getters.logedIn) {
                 const config = {
                     headers: {
                         Authorization: "Bearer " + context.state.token
+                    },
+                    params:{
+                        type:data
                     }
                 };
                 return new Promise((resolve, reject) => {
                     axios
-                        .get(context.state.base + "/myrequests", config)
-                        .then(res => resolve(res))
+                        .get(context.getters.getBaseUrl + '/myrequests', config)
+                        .then(res => {
+                            resolve(res);
+                            // console.log(res);
+                        })
                         .catch(err => reject(err));
                 });
             }
@@ -454,7 +460,10 @@ const vuex = new Vuex.Store({
                 };
                 return new Promise((resolve, reject) => {
                     axios
-                        .get(context.getters.getBaseUrl + "/archived_books",config)
+                        .get(
+                            context.getters.getBaseUrl + "/archived_books",
+                            config
+                        )
                         .then(res => {
                             resolve(res.data);
                         })

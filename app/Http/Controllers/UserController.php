@@ -43,14 +43,22 @@ class UserController extends Controller
         );
     }
 
-    function bookRequests()
+    function bookRequests(Request $req)
     {
+        $type = $req->type;
         $user = auth()->user();
-        return Exchange::whereIn('desired_book', function ($query) use ($user) {
-            $query->select('id')
-                ->from('exemplaires')
-                ->where('user_id', '=', $user->id);
-        })->where('status', 'like', 'pending')->with('userbook', 'desiredbook', 'user', 'user.ville', 'userbook.livre', 'desiredbook.livre')->get();
+        if ($type == 'receive') {
+            // return 'receive';
+            // return $type;
+            return Exchange::whereIn('desired_book', function ($query) use ($user) {
+                $query->select('id')
+                    ->from('exemplaires')
+                    ->where('user_id', '=', $user->id);
+            })->where('status', 'like', 'pending')->with('userbook', 'desiredbook', 'user', 'user.ville', 'userbook.livre', 'desiredbook.livre')->get();
+        } else if ($type == 'sent') {
+            // return $type;
+            return Exchange::where('user_id', '=', $user->id)->with('userbook', 'desiredbook', 'user', 'user.ville', 'userbook.livre', 'desiredbook.livre')->get();
+        }
     }
 
     /**

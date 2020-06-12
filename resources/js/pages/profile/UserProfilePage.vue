@@ -17,10 +17,16 @@
                         >My books</router-link
                     >
                     <router-link
-                        to="/profile/requests"
+                        to="/profile/requests/sent"
                         class="d-block profile-sidebar-link"
                         style="font-size: 14px;"
-                        >Requests</router-link
+                        >Sent Requests</router-link
+                    >
+                    <router-link
+                        to="/profile/requests/received"
+                        class="d-block profile-sidebar-link"
+                        style="font-size: 14px;"
+                        >Received Requests</router-link
                     >
 
                     <router-link
