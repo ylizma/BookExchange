@@ -13,21 +13,27 @@
     <link rel="stylesheet" href="/app/assets/css/Login-Box-En.css">
     <link rel="stylesheet" href="/app/assets/css/Pretty-Footer.css">
     <link rel="stylesheet" href="/app/assets/css/styles.css">
+    <link rel="stylesheet" href="/app/assets/css/sidebar.css">
+
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 
         <title>Book exchange</title>
-      
+
     </head>
     <body>
-            
+
       <div id="app">
-            
+
       </div>
-        
+
     </body>
 
     <script src="{{ asset('/js/app.js') }}" ></script>
     <script>window.Laravel={csrfToken:'{{ csrf_token() }}'}</script>
     <script src="/app/assets/js/jquery.min.js"></script>
     <script src="/app/assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/app/assets/js/Navbar---Apple.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+	<script src="/app/assets/js/Sidebar.js"></script>
+	<script src="/app/assets/js/goTopBtn.js"></script>
 </html>
