@@ -1,6 +1,11 @@
 <template>
-    <nav class="navbar navbar-dark navbar-expand-md bg-dark mb-2">
-        <div class="container-fluid"><a class="navbar-brand" href="#">Brand</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-2"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+    <nav class="navbar navbar-dark navbar-expand-md sticky-top bg-dark mb-2">
+        <div class="container-fluid">
+            <button type="button" id="sidebarCollapse" class="btn btn-secondary d-inline d-md-none">
+                <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand" href="#">Brand</a>
+            <button data-toggle="collapse" class="navbar-toggler d-none" data-target="#navcol-2"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse d-md-flex justify-content-md-center align-items-md-center"
                 id="navcol-2">
                 <ul class="nav navbar-nav d-xl-flex">
