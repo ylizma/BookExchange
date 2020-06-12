@@ -2705,19 +2705,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       books: [],
       book: {
         livre: {
-          livre: '',
-          categorie: ''
+          livre: "",
+          categorie: ""
         },
-        state: '',
-        user: '',
-        language: '',
-        img: ''
+        state: "",
+        user: "",
+        language: "",
+        img: ""
       }
     };
   },
@@ -2730,7 +2739,15 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (err) {
         return console.error(err);
       });
-    }
+    },
+    acceptRequest: function acceptRequest(id) {
+      this.$store.dispatch("acceptUserRequest", id).then(function (res) {
+        console.log(res);
+      })["catch"](function (error) {
+        return console.error(err);
+      });
+    },
+    refuseRequest: function refuseRequest() {}
   },
   created: function created() {
     var _this2 = this;
@@ -22671,14 +22688,35 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _vm._m(1, true)
+            _c("td", [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary sm",
+                  on: {
+                    click: function($event) {
+                      return _vm.acceptRequest(book.id)
+                    }
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n                        accept\n                    "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c("button", { staticClass: "btn btn-danger sm" }, [
+                _vm._v("reject")
+              ])
+            ])
           ])
         }),
         0
       )
     ]),
     _vm._v(" "),
-    _vm._m(2),
+    _vm._m(1),
     _vm._v(" "),
     _c(
       "div",
@@ -22717,7 +22755,7 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
-                _vm._m(3)
+                _vm._m(2)
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
@@ -22760,7 +22798,7 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(4)
+              _vm._m(3)
             ])
           ]
         )
@@ -22791,16 +22829,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("accept/reject")])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("button", { staticClass: "btn btn-primary sm" }, [_vm._v("accept")]),
-      _vm._v(" "),
-      _c("button", { staticClass: "btn btn-danger sm" }, [_vm._v("reject")])
     ])
   },
   function() {
@@ -41483,11 +41511,11 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_jsonp__WEBPACK_IMPORTED_MODUL
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
-    token: localStorage.getItem('access_token') || null,
+    token: localStorage.getItem("access_token") || null,
     user: {},
     bookStatus: ["new", "old"],
-    langs: ['frensh', 'arabic', 'english'],
-    base: 'http://localhost:8000/api'
+    langs: ["frensh", "arabic", "english"],
+    base: "http://localhost:8000/api"
   },
   mutations: {
     // login stuff
@@ -41521,13 +41549,13 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     //login
     retreiveToken: function retreiveToken(context, user) {
       return new Promise(function (resolve, reject) {
-        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/api/login', {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post("/api/login", {
           email: user.email,
           password: user.password
         }).then(function (response) {
           var token = response.data.access_token;
-          localStorage.setItem('access_token', token);
-          context.commit('retreiveToken', token);
+          localStorage.setItem("access_token", token);
+          context.commit("retreiveToken", token);
           resolve(response);
         })["catch"](function (error) {
           // if (response.status == 401) {
@@ -41540,7 +41568,7 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     },
     register: function register(context, user) {
       return new Promise(function (resolve, reject) {
-        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('api/register', user).then(function (resp) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post("api/register", user).then(function (resp) {
           resolve(resp);
         })["catch"](function (err) {
           reject(err);
@@ -41555,13 +41583,13 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
           }
         };
         return new Promise(function (resolve, reject) {
-          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/api/logout', config).then(function (response) {
-            localStorage.removeItem('access_token');
-            context.commit('destroyToken');
+          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("/api/logout", config).then(function (response) {
+            localStorage.removeItem("access_token");
+            context.commit("destroyToken");
             resolve(response);
           })["catch"](function (error) {
-            localStorage.removeItem('access_token');
-            context.commit('destroyToken');
+            localStorage.removeItem("access_token");
+            context.commit("destroyToken");
             console.error(error);
             reject(error);
           });
@@ -41577,12 +41605,12 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
           }
         };
         return new Promise(function (resolve, reject) {
-          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(context.state.base + '/profile', config).then(function (resp) {
+          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(context.state.base + "/profile", config).then(function (resp) {
             resolve(resp);
           })["catch"](function (err) {
             if (err.response.status == 401) {
-              localStorage.removeItem('access_token');
-              _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push('/login');
+              localStorage.removeItem("access_token");
+              _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push("/login");
             } // console.error(err);
 
 
@@ -41597,20 +41625,20 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
         var config = {
           headers: {
             Authorization: "Bearer " + context.state.token,
-            'content-type': 'multipart/form-data'
+            "content-type": "multipart/form-data"
           }
         };
         return new Promise(function (resolve, reject) {
-          axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(context.state.base + '/update', user, config).then(function (resp) {
-            context.commit('getUser', resp.data.user);
+          axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(context.state.base + "/update", user, config).then(function (resp) {
+            context.commit("getUser", resp.data.user);
             console.log(resp.data);
             resolve(resp);
           })["catch"](function (err) {
             console.error(err);
 
             if (err.response.status == 401) {
-              localStorage.removeItem('access_token');
-              _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push('/login');
+              localStorage.removeItem("access_token");
+              _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push("/login");
             }
 
             reject(err);
@@ -41620,12 +41648,12 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     },
     fetchCities: function fetchCities(context) {
       return new Promise(function (resolve, reject) {
-        axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(context.state.base + '/city').then(function (res) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(context.state.base + "/city").then(function (res) {
           resolve(res);
         })["catch"](function (err) {
           if (err.response.status == 401) {
-            localStorage.removeItem('access_token');
-            _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push('/login');
+            localStorage.removeItem("access_token");
+            _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push("/login");
           }
 
           reject(err);
@@ -41640,13 +41668,13 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
           }
         };
         return new Promise(function (resolve, reject) {
-          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(context.state.base + '/user', config).then(function (res) {
-            context.commit('getUser', res.data.user);
+          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(context.state.base + "/user", config).then(function (res) {
+            context.commit("getUser", res.data.user);
             resolve(res);
           })["catch"](function (err) {
             if (err.response.status == 401) {
-              localStorage.removeItem('access_token');
-              _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push('/login');
+              localStorage.removeItem("access_token");
+              _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push("/login");
             }
 
             reject(err);
@@ -41662,13 +41690,13 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
           }
         };
         return new Promise(function (resolve, reject) {
-          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(context.state.base + '/cats', config).then(function (resp) {
+          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(context.state.base + "/cats", config).then(function (resp) {
             // console.log(resp);
             resolve(resp);
           })["catch"](function (err) {
             if (err.response.status == 401) {
-              localStorage.removeItem('access_token');
-              _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push('/login');
+              localStorage.removeItem("access_token");
+              _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push("/login");
             }
 
             reject(err);
@@ -41678,7 +41706,7 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     },
     getInfoFromGoogleApi: function getInfoFromGoogleApi(context, title) {
       return new Promise(function (resolve, reject) {
-        vue__WEBPACK_IMPORTED_MODULE_0___default.a.jsonp('https://www.googleapis.com/books/v1/volumes?maxResults=5&q=' + title).then(function (json) {
+        vue__WEBPACK_IMPORTED_MODULE_0___default.a.jsonp("https://www.googleapis.com/books/v1/volumes?maxResults=5&q=" + title).then(function (json) {
           resolve(json);
         })["catch"](function (err) {
           reject(err);
@@ -41690,16 +41718,16 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
         var config = {
           headers: {
             Authorization: "Bearer " + context.state.token,
-            'content-type': 'multipart/form-data'
+            "content-type": "multipart/form-data"
           }
         };
         return new Promise(function (resolve, reject) {
-          axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(context.state.base + '/exemp', book, config).then(function (res) {
+          axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(context.state.base + "/exemp", book, config).then(function (res) {
             resolve(res);
           })["catch"](function (err) {
             if (err.response.status == 401) {
-              localStorage.removeItem('access_token');
-              _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push('/login');
+              localStorage.removeItem("access_token");
+              _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push("/login");
             }
 
             reject(err);
@@ -41715,12 +41743,12 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
           }
         };
         return new Promise(function (resolve, reject) {
-          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(url || context.state.base + '/exemp', config).then(function (res) {
+          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(url || context.state.base + "/exemp", config).then(function (res) {
             resolve(res);
           })["catch"](function (err) {
             if (err.response.status == 401) {
-              localStorage.removeItem('access_token');
-              _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push('/login');
+              localStorage.removeItem("access_token");
+              _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push("/login");
             }
 
             reject(err);
@@ -41730,7 +41758,7 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     },
     getHomeBooks: function getHomeBooks(context, url) {
       return new Promise(function (resolve, reject) {
-        axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(url || context.state.base + '/home').then(function (res) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(url || context.state.base + "/home").then(function (res) {
           resolve(res.data);
         })["catch"](function (err) {
           reject(err);
@@ -41739,7 +41767,7 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     },
     searchBook: function searchBook(context, data, url) {
       return new Promise(function (resolve, reject) {
-        axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(url || context.state.base + '/search?' + 'key=' + data.key + '&city=' + data.city + '&category=' + data.category).then(function (res) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(url || context.state.base + "/search?" + "key=" + data.key + "&city=" + data.city + "&category=" + data.category).then(function (res) {
           resolve(res); // console.log(res.data);
         })["catch"](function (err) {
           return reject(err);
@@ -41756,13 +41784,13 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
           }
         };
         return new Promise(function (resolve, reject) {
-          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/api/exemp/' + id, config).then(function (res) {
+          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("/api/exemp/" + id, config).then(function (res) {
             console.log(res.data);
             resolve(res);
           })["catch"](function (err) {
             if (err.response.status == 401) {
-              localStorage.removeItem('access_token');
-              _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push('/login');
+              localStorage.removeItem("access_token");
+              _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push("/login");
             }
 
             reject(err);
@@ -41771,7 +41799,7 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
       }
     },
     getUserActualBooks: function getUserActualBooks(context, url) {
-      console.log('test');
+      console.log("test");
 
       if (context.getters.logedIn) {
         var config = {
@@ -41780,12 +41808,12 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
           }
         };
         return new Promise(function (resolve, reject) {
-          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(url || context.state.base + '/user_books', config).then(function (res) {
+          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(url || context.state.base + "/user_books", config).then(function (res) {
             resolve(res);
           })["catch"](function (err) {
             if (err.response.status == 401) {
-              localStorage.removeItem('access_token');
-              _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push('/login');
+              localStorage.removeItem("access_token");
+              _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push("/login");
             }
 
             reject(err);
@@ -41794,22 +41822,22 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
       }
     },
     addExchangeRequest: function addExchangeRequest(context, data) {
-      console.log('test');
+      console.log("test");
 
       if (context.getters.logedIn) {
         var config = {
           headers: {
             Authorization: "Bearer " + context.state.token,
-            'content-type': 'multipart/form-data'
+            "content-type": "multipart/form-data"
           }
         };
         return new Promise(function (resolve, reject) {
-          axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(context.state.base + '/exchange', data, config).then(function (res) {
+          axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(context.state.base + "/exchange", data, config).then(function (res) {
             resolve(res);
           })["catch"](function (err) {
             if (err.response.status == 401) {
-              localStorage.removeItem('access_token');
-              _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push('/login');
+              localStorage.removeItem("access_token");
+              _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"].push("/login");
             }
 
             reject(err);
@@ -41825,8 +41853,24 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
           }
         };
         return new Promise(function (resolve, reject) {
-          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(context.state.base + '/myrequests', config).then(function (res) {
+          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(context.state.base + "/myrequests", config).then(function (res) {
             return resolve(res);
+          })["catch"](function (err) {
+            return reject(err);
+          });
+        });
+      }
+    },
+    acceptUserRequest: function acceptUserRequest(context, id) {
+      if (context.getters.logedIn) {
+        var config = {
+          headers: {
+            Authorization: "Bearer " + context.state.token
+          }
+        };
+        return new Promise(function (reslove, reject) {
+          axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(context.getters.getBaseUrl + "/accept", id, config).then(function (res) {
+            reslove(res);
           })["catch"](function (err) {
             return reject(err);
           });
@@ -41926,8 +41970,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\yasser\Documents\PP\BookExchange\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\yasser\Documents\PP\BookExchange\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\ylizma\Documents\web-proj\BookExchange\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\ylizma\Documents\web-proj\BookExchange\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
