@@ -11,17 +11,17 @@
         </div>
       </div>
     </div>
-    <nav class="mt-2" v-if="!search">
-      <ul class="pagination mx-auto">
+    <nav class="mt-2 container" v-if="!search">
+    <ul class="pagination mx-auto justify-content-center">
         <li
-          v-for="i in pagination.last_page"
-          :key="i"
-          class="page-item"
-          :class="(i==pagination.current_page?'active':'')"
+        v-for="i in pagination.last_page"
+        :key="i"
+        class="page-item"
+        :class="(i==pagination.current_page?'active':'')"
         >
-          <a class="page-link" href="#" @click="getBooks(pagination.path+'?page='+i)">{{i}}</a>
+        <a class="page-link" href="#" @click="getBooks(pagination.path+'?page='+i)">{{i}}</a>
         </li>
-      </ul>
+    </ul>
     </nav>
   </div>
 </template>
