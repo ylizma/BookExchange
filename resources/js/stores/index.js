@@ -423,8 +423,8 @@ const vuex = new Vuex.Store({
                         .catch(err => reject(err));
                 });
             }
-		},
-		refuseUserRequest(context, id) {
+        },
+        refuseUserRequest(context, id) {
             if (context.getters.logedIn) {
                 const config = {
                     headers: {
@@ -442,6 +442,25 @@ const vuex = new Vuex.Store({
                             reslove(res);
                         })
                         .catch(err => reject(err));
+                });
+            }
+        },
+        getArchivedBooks(context) {
+            if (context.getters.logedIn) {
+                const config = {
+                    headers: {
+                        Authorization: "Bearer " + context.state.token
+                    }
+                };
+                return new Promise((resolve, reject) => {
+                    axios
+                        .get(context.getters.getBaseUrl + "/archived_books",config)
+                        .then(res => {
+                            resolve(res.data);
+                        })
+                        .catch(err => {
+                            reject(err);
+                        });
                 });
             }
         }

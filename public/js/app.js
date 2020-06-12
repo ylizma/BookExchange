@@ -2588,7 +2588,49 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      books: []
+    };
+  },
+  methods: {
+    getArchivedBooks: function getArchivedBooks() {
+      var _this = this;
+
+      this.$store.dispatch("getArchivedBooks").then(function (res) {
+        console.log(res);
+        _this.books = res;
+      })["catch"](function (err) {
+        console.error(err);
+      });
+    }
+  },
+  created: function created() {
+    this.getArchivedBooks();
+  }
+});
 
 /***/ }),
 
@@ -22680,9 +22722,57 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c("div", {}, [
+    _c("table", { staticClass: "table" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.books, function(book, index) {
+          return _c("tr", { key: index }, [
+            _c("td", [_vm._v(_vm._s(index))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(" " + _vm._s(book.livre.livre.titre) + " ")]),
+            _vm._v(" "),
+            _c("td", [
+              book.img[0]
+                ? _c("img", {
+                    attrs: {
+                      src: book.img[0].image,
+                      alt: "",
+                      width: "200",
+                      height: "150"
+                    }
+                  })
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(book.created_at) + " ")])
+          ])
+        }),
+        0
+      )
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("book title")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("image")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("date")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -42091,6 +42181,22 @@ var vuex = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
             reslove(res);
           })["catch"](function (err) {
             return reject(err);
+          });
+        });
+      }
+    },
+    getArchivedBooks: function getArchivedBooks(context) {
+      if (context.getters.logedIn) {
+        var config = {
+          headers: {
+            Authorization: "Bearer " + context.state.token
+          }
+        };
+        return new Promise(function (resolve, reject) {
+          axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(context.getters.getBaseUrl + "/archived_books", config).then(function (res) {
+            resolve(res.data);
+          })["catch"](function (err) {
+            reject(err);
           });
         });
       }
