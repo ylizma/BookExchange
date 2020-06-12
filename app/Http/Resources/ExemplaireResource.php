@@ -22,6 +22,7 @@ class ExemplaireResource extends JsonResource
             'updated_at' => $this->updated_at,
             'deleted_at' => $this->deleted_at,
             'disponible' => $this->disponible,
+            'archived' => $this->archived,
             'img' => $this->photos,
             'livre' => [
                'livre' => $this->livre,

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 class Exchange extends Pivot
 {
     protected $table = 'exchanges';
+    public $timestamps = false;
 
     public function userbook()
     {

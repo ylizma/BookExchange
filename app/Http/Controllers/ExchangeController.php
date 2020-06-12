@@ -45,19 +45,27 @@ class ExchangeController extends Controller
         $user_book = $exchange->userbook;
         $desired_book = $exchange->desiredbook;
 
-        $exchange->accepted_at = now();
-        $exchange->status = "accepted";
-        $exchange->save();
+        if(!$user_book->disponible || !$desired_book->disponible){
+            return response()->json(['message' => 'error'], 406);
+        }else{
+            if($exchange->status == "pending"){
+                $exchange->accepted_at = now();
+                $exchange->status = "accepted";
+                $exchange->save();
 
-        $user_book->disponible = false;
-        $user_book->archived = true;
-        $user_book->save();
+                $user_book->disponible = false;
+                $user_book->archived = true;
+                $user_book->save();
 
-        $desired_book->disponible = false;
-        $desired_book->archived = true;
-        $desired_book->save();
+                $desired_book->disponible = false;
+                $desired_book->archived = true;
+                $desired_book->save();
 
-        return response()->json(['message' => 'success'], 200);
+                return response()->json(['message' => 'success'], 200);
+            }else{
+                return response()->json(['message' => 'error'], 406);
+            }
+        }
     }
 
     /**
@@ -71,11 +79,15 @@ class ExchangeController extends Controller
         $exchange_id = $request->id;
         $exchange = Exchange::find($exchange_id);
 
-        $exchange->refused_at = now();
-        $exchange->status = "refused";
-        $exchange->save();
+        if($exchange->status == "pending"){
+            $exchange->refused_at = now();
+            $exchange->status = "refused";
+            $exchange->save();
 
-        return response()->json(['message' => 'success'], 200);
+            return response()->json(['message' => 'success'], 200);
+        }else{
+            return response()->json(['message' => 'error'], 406);
+        }
     }
 
 }
