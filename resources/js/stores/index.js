@@ -474,7 +474,6 @@ const vuex = new Vuex.Store({
             }
         },
         getuserNotifications(context){
-            console.log("testtt");
             if (context.getters.logedIn) {
                 const config = {
                     headers: {
