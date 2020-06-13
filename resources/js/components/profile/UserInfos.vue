@@ -1,31 +1,33 @@
 <template>
-  <div class="col-md-9">
-                <div>
-                    <h3>Profile</h3>
-                    <div class="bg-white p-3 ">
-                        <form class="form" @submit.prevent="updateProfile" enctype="multipart/form-data">
-                            <div class="text-center">
-                              <img  class="rounded-circle " width="200" height="200" :src="url" >
-                            </div>
-                            <input  name="img" type="file" ref="file" @change="Onselect">
+    <div class="col-md-9">
+        <div>
+            <div class="bg-white p-3 ">
+                <h3>Profile</h3>
+                <div class="container">
+                    <form class="form" @submit.prevent="updateProfile" enctype="multipart/form-data">
+                        <div class="text-center">
+                            <img  class="rounded-circle " width="200" height="200" :src="url" >
+                        </div>
+                        <input  name="img" type="file" ref="file" @change="Onselect">
 
-                            <div><label class="d-block">Username:</label><input v-model="user.name" class="form-control" type="text" required=""></div>
-                            <div><label class="d-block">Email:</label><input v-model="user.email" class="form-control" type="email" required=""></div>
-                            <div><label class="d-block">City</label>
-                              <select v-model="user.ville_id" class="custom-select" required="">
-                                <option v-for="city in villes" :key="city.id" v-bind:value="city.id">
-                                        {{city.name}}
-                                  </option>
-                              </select>
-                            </div>
-                            <div><label class="d-block">Tel:</label><input v-model="user.telephone" class="form-control" type="text"></div>
-                            <div><label class="d-block">Password:</label><input v-model="user.password" class="form-control" type="password"></div>
+                        <div><label class="d-block">Username:</label><input v-model="user.name" class="form-control" type="text" required=""></div>
+                        <div><label class="d-block">Email:</label><input v-model="user.email" class="form-control" type="email" required=""></div>
+                        <div><label class="d-block">City</label>
+                            <select v-model="user.ville_id" class="custom-select" required="">
+                            <option v-for="city in villes" :key="city.id" v-bind:value="city.id">
+                                    {{city.name}}
+                                </option>
+                            </select>
+                        </div>
+                        <div><label class="d-block">Tel:</label><input v-model="user.telephone" class="form-control" type="text"></div>
+                        <div><label class="d-block">Password:</label><input v-model="user.password" class="form-control" type="password"></div>
 
-                            <div class="mt-3"><button class="btn btn-success" type="submit">Save</button></div>
-                        </form>
-                    </div>
+                        <div class="mt-3"><button class="btn btn-success" type="submit">Save</button></div>
+                    </form>
                 </div>
             </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -36,7 +38,7 @@ export default {
     user:{
     name : '',
     email : '',
-    telephone : '',   
+    telephone : '',
     password:'',
     image:null,
     ville_id:''
@@ -54,7 +56,7 @@ export default {
        fd.append('email',this.user.email);
        fd.append('telephone',this.user.telephone);
        fd.append('password',this.user.password);
-       fd.append('ville_id',this.user.ville_id);        
+       fd.append('ville_id',this.user.ville_id);
        this.$store.dispatch('updateProfile',fd).then(res=>{
          this.user=res.data.user;
          this.url="/images/users/"+this.user.image;
