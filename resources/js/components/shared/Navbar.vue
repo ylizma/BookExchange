@@ -98,18 +98,18 @@
                                     </div>
                                     </ul>
                             </li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="#">Second Item</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="#">Third Item</a></li>
+
                 </ul>
                 <ul class="nav navbar-nav d-xl-flex ml-auto justify-content-xl-end">
-                    <li class="nav-item dropleft">
-                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">
+                    <li class="nav-item dropdown dropleft">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">
                             <i class="fa fa-user"></i>
                         </a>
-                        <div class="dropdown-menu" role="menu">
+                        <div class="dropdown-menu dropdown-menu-right" role="menu" style="postion:absolute;top:44px;right: -20px;">
                             <router-link v-if="!isLogged" to="/login" class="dropdown-item">Login</router-link>
                             <router-link v-if="!isLogged" to="/signup" class="dropdown-item">Register</router-link>
                             <router-link v-if="isLogged" to="/profile/infos" class="dropdown-item">Profile</router-link>
+                            <div v-if="isLogged" class="dropdown-divider"></div>
                             <router-link v-if="isLogged" to="/logout" class="dropdown-item">Logout</router-link>
                         </div>
                     </li>
