@@ -102,6 +102,11 @@
                 </ul>
                 <ul class="nav navbar-nav d-xl-flex ml-auto justify-content-xl-end">
                     <li class="nav-item dropdown dropleft">
+                        <a v-if="isLogged" class="nav-link dropdown-toggle" data-toggle="#" aria-expanded="false" href="#">
+                        <i class="fa fa-bell"><span class="badge badge-light" style="font-size: 10px">{{ notifications.count }}</span></i>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown dropleft">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">
                             <i class="fa fa-user"></i>
                         </a>
@@ -120,11 +125,31 @@
 </template>
 <script>
 export default {
+    data() {
+        return {
+            notifications: {}
+        };
+    },
     computed: {
         isLogged() {
             return this.$store.getters.logedIn;
         }
     },
+    methods: {
+        getNotifications(url){
+            this.$store
+                .dispatch("getuserNotifications", url)
+                .then(res => {
+                    this.notifications = res;
+                    console.log(res);
+                    console.log(this.notifications)
+                })
+                .catch(err => console.log(err));
+        }
+    },
+    created() {
+        this.getNotifications();
+    }
 }
 </script>
 <style>

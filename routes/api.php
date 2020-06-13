@@ -40,6 +40,9 @@ Route::group(['middleware' => ['jwt.auth']], function() {
     Route::post('accept','ExchangeController@accept');
     Route::post('refuse','ExchangeController@refuse');
 
+    //Notifications
+    Route::get('notification/index','NotificationController@index');
+    Route::patch('notification/update','NotificationController@update');
 });
 
 

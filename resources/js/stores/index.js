@@ -472,6 +472,29 @@ const vuex = new Vuex.Store({
                         });
                 });
             }
+        },
+        getuserNotifications(context){
+            console.log("testtt");
+            if (context.getters.logedIn) {
+                const config = {
+                    headers: {
+                        Authorization: "Bearer " + context.state.token
+                    }
+                };
+                return new Promise((resolve, reject) => {
+                    axios
+                        .get(
+                            context.getters.getBaseUrl + "/notification/index",
+                            config
+                        )
+                        .then(res => {
+                            resolve(res.data);
+                        })
+                        .catch(err => {
+                            reject(err);
+                        });
+                });
+            }
         }
     }
 });

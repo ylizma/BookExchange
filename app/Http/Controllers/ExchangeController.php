@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Exchange;
-
+use App\Exemplaire;
+use App\Notifications\ReceivedRequest;
 class ExchangeController extends Controller
 {
 
@@ -16,17 +17,19 @@ class ExchangeController extends Controller
      */
     public function exchange(Request $request)
     {
-        $my_book = $request->my_book;
-        $desired_book = $request->desired_book;
+        $proposal_book_id = $request->my_book;
+        $desired_book_id = $request->desired_book;
 
         $user = auth()->user();
 
-        $user->exchanges()->attach($my_book);
+        $user->exchanges()->attach($proposal_book_id);
 
-        $user->exchanges()->updateExistingPivot($my_book, [
-            'desired_book' => $desired_book,
+        $user->exchanges()->updateExistingPivot($proposal_book_id, [
+            'desired_book' => $desired_book_id,
             'requested_at' => date("Y-m-d H:i:s"),
         ], false);
+
+        Exemplaire::find($desired_book_id)->user->notify(new ReceivedRequest($user->id, $desired_book_id, $proposal_book_id));
 
         return response()->json(['message' => 'success'], 200);
     }
