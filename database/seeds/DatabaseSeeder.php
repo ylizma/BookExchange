@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-// use PopulateCategorieFromCSV;
+use NotificationsTableSeeder as NotificationsTableSeeder;
 
 
 class DatabaseSeeder extends Seeder

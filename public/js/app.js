@@ -3395,7 +3395,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.$store.dispatch('getCurrentUser').then(function (res) {
         _this3.user = res.data;
-        _this3.url = "/images/users/" + _this3.user.image;
+        _this3.url = _this3.user.image ? "/images/users/" + _this3.user.image : '/images/users/profile.png';
       })["catch"](function (err) {// console.error(err);
       });
     },
@@ -43840,8 +43840,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\yasser\Documents\PP\BookExchange\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\yasser\Documents\PP\BookExchange\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\ylizma\Documents\web-proj\BookExchange\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\ylizma\Documents\web-proj\BookExchange\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

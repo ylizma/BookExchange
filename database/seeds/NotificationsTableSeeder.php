@@ -11,7 +11,7 @@ class NotificationsTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('notifications')->insert([
+        DB::table('notifications')->insert([
             0 => [
                 'id' => '6bd79182-0d88-48b7-8e4e-59dbf3371763',
                 'type' => 'App\Notifications\ReceivedRequest',
