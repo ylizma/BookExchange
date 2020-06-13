@@ -75,7 +75,7 @@ export default {
     getUser(){
       this.$store.dispatch('getCurrentUser').then(res=>{
         this.user=res.data;
-        this.url="/images/users/"+this.user.image;
+        this.url=(this.user.image)?"/images/users/"+this.user.image:'/images/users/profile.png';
       }).catch(err=>{
         // console.error(err);
       })

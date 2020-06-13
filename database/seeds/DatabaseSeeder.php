@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-// use PopulateCategorieFromCSV;
+use NotificationsTableSeeder as NotificationsTableSeeder;
 
 
 class DatabaseSeeder extends Seeder
@@ -16,5 +16,6 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
         $this->call(PopulateCategorieFromCSV::class);
         $this->call(UserSeeder::class);
+        $this->call(NotificationsTableSeeder::class);
     }
 }
