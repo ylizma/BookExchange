@@ -25,12 +25,14 @@ class ExemplaireResource extends JsonResource
             'archived' => $this->archived,
             'img' => $this->photos,
             'livre' => [
-               'livre' => $this->livre,
+                'livre' => $this->livre,
                 'categorie' => $this->livre->categorie,
             ],
             'user' => [
-                'name'=> $this->user->name,
-                'id' => $this->user->id
+                'name' => $this->user->name,
+                'id' => $this->user->id,
+                'email' => $this->user->email,
+                'telephone' => $this->telephone
             ],
         ];
     }

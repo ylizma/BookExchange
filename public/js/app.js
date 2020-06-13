@@ -2791,6 +2791,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2827,9 +2838,8 @@ __webpack_require__.r(__webpack_exports__);
         id: id
       };
       this.$store.dispatch("acceptUserRequest", data).then(function (res) {
-        _this2.books = _this2.books.filter(function (book) {
-          return book.id != data.id;
-        });
+        _this2.getRequests();
+
         _this2.submitted = true;
         _this2.alert_message = "the request is accepted";
       })["catch"](function (err) {
@@ -2845,27 +2855,31 @@ __webpack_require__.r(__webpack_exports__);
         id: id
       };
       this.$store.dispatch("refuseUserRequest", data).then(function (res) {
-        _this3.books = _this3.books.filter(function (book) {
-          return book.id != data.id;
-        });
+        _this3.getRequests();
+
         _this3.submitted = true;
-        _this3.alert_message = 'the request is refused';
+        _this3.alert_message = "the request is refused";
       })["catch"](function (err) {
         _this3.hasError = true;
-        _this3.alert_message = 'error !!';
+        _this3.alert_message = "error !!";
         console.error(err);
+      });
+    },
+    getRequests: function getRequests() {
+      var _this4 = this;
+
+      this.$store.dispatch("getUserRequests", "receive").then(function (res) {
+        _this4.books = res.data.filter(function (res) {
+          return res.status != "refused";
+        });
+        console.log(res.data);
+      })["catch"](function (err) {
+        return console.error(err);
       });
     }
   },
   created: function created() {
-    var _this4 = this;
-
-    this.$store.dispatch("getUserRequests", 'receive').then(function (res) {
-      _this4.books = res.data;
-      console.log(res.data);
-    })["catch"](function (err) {
-      return console.error(err);
-    });
+    this.getRequests();
   }
 });
 
@@ -2880,6 +2894,29 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3047,7 +3084,7 @@ __webpack_require__.r(__webpack_exports__);
     getRequests: function getRequests() {
       var _this2 = this;
 
-      this.$store.dispatch("getUserRequests", 'sent').then(function (res) {
+      this.$store.dispatch("getUserRequests", "sent").then(function (res) {
         _this2.books = res.data;
         console.log(res.data);
       })["catch"](function (err) {
@@ -22758,7 +22795,10 @@ var render = function() {
           _c("img", {
             staticClass: "img-fluid d-block mx-auto mb-3",
             attrs: {
-              src: _vm.book.img.length > 0 ? _vm.book.img[0].image : "",
+              src:
+                _vm.book.img.length > 0
+                  ? "/images/books/" + _vm.book.img[0].image
+                  : "https://dummyimage.com/128x200/000000/ffffff",
               alt: ""
             },
             on: { click: _vm.test }
@@ -23141,7 +23181,7 @@ var render = function() {
                   [
                     _vm._v(
                       _vm._s(book.userbook.livre.titre) +
-                        " (click to\n                        preview)"
+                        " (click to\n                            preview)"
                     )
                   ]
                 )
@@ -23149,9 +23189,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", [
                 _vm._v(
-                  "\n                    " +
+                  "\n                        " +
                     _vm._s(book.userbook.etat) +
-                    "\n                "
+                    "\n                    "
                 )
               ]),
               _vm._v(" "),
@@ -23172,49 +23212,55 @@ var render = function() {
                   },
                   [
                     _vm._v(
-                      "\n                        " +
+                      "\n                            " +
                         _vm._s(book.desiredbook.livre.titre) +
-                        " (click to\n                        preview)\n                    "
+                        " (click to\n                            preview)\n                        "
                     )
                   ]
                 )
               ]),
               _vm._v(" "),
-              _c("td", [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-primary sm",
-                    on: {
-                      click: function($event) {
-                        return _vm.acceptRequest(book.id)
-                      }
-                    }
-                  },
-                  [
-                    _vm._v(
-                      "\n                        accept\n                    "
+              book.status != "accepted"
+                ? _c("td", [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary sm",
+                        on: {
+                          click: function($event) {
+                            return _vm.acceptRequest(book.id)
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                            accept\n                        "
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger sm",
+                        on: {
+                          click: function($event) {
+                            return _vm.refuseRequest(book.id)
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                            reject\n                        "
+                        )
+                      ]
                     )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-danger sm",
-                    on: {
-                      click: function($event) {
-                        return _vm.refuseRequest(book.id)
-                      }
-                    }
-                  },
-                  [
+                  ])
+                : _c("td", [
                     _vm._v(
-                      "\n                        reject\n                    "
+                      "\n                        ACCEPTED\n                    "
                     )
-                  ]
-                )
-              ])
+                  ])
             ])
           }),
           0
@@ -23271,7 +23317,9 @@ var render = function() {
                     return _c("img", {
                       key: index,
                       attrs: {
-                        src: img.image,
+                        src: img.image
+                          ? "/images/books/" + img.image
+                          : "https://dummyimage.com/128x200/000000/ffffff",
                         alt: " ",
                         width: "200",
                         height: "350"
@@ -23299,6 +23347,20 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("p", [
+                    _vm._v("Email : " + _vm._s(_vm.book.user.email || ""))
+                  ]),
+                  _vm._v(" "),
+                  _vm.book.user.telephone
+                    ? _c("p", [
+                        _vm._v(
+                          "\n                            Telephone : " +
+                            _vm._s(_vm.book.user.telephone || "") +
+                            "\n                        "
+                        )
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("p", [
                     _vm._v("language: " + _vm._s(_vm.book.langue || ""))
                   ])
                 ])
@@ -23321,7 +23383,7 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("name")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("sender")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("city")]),
         _vm._v(" "),
@@ -23446,9 +23508,28 @@ var render = function() {
           return _c("tr", { key: index }, [
             _c("th", { attrs: { scope: "row" } }, [_vm._v(_vm._s(index + 1))]),
             _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(book.user.name))]),
+            _c("td", [
+              _vm._v(
+                "\n                    " +
+                  _vm._s(book.desiredbook.user.name) +
+                  "\n                    "
+              ),
+              book.status == "accepted" && book.desiredbook.user.email != ""
+                ? _c("i", [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(book.desiredbook.user.email) +
+                        "\n                    "
+                    )
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              book.status == "accepted" && book.desiredbook.user.telephone != ""
+                ? _c("i", [_vm._v(_vm._s(book.desiredbook.user.telephone))])
+                : _vm._e()
+            ]),
             _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(book.user.ville.name))]),
+            _c("td", [_vm._v(_vm._s(book.desiredbook.user.ville.name))]),
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(book.requested_at))]),
             _vm._v(" "),
@@ -23571,7 +23652,9 @@ var render = function() {
                     return _c("img", {
                       key: index,
                       attrs: {
-                        src: img.image,
+                        src: img.image
+                          ? "/images/books/" + img.image
+                          : "https://dummyimage.com/128x200/000000/ffffff",
                         alt: " ",
                         width: "200",
                         height: "350"
@@ -23588,18 +23671,20 @@ var render = function() {
                   _vm._v(" "),
                   _c("p", [
                     _vm._v(
-                      "title: " + _vm._s(_vm.book.livre.categorie.nom || "")
+                      "\n                            category: " +
+                        _vm._s(_vm.book.livre.categorie.nom || "") +
+                        "\n                        "
                     )
+                  ]),
+                  _vm._v(" "),
+                  _c("p", [
+                    _vm._v("language: " + _vm._s(_vm.book.langue || ""))
                   ]),
                   _vm._v(" "),
                   _c("p", [_vm._v("state: " + _vm._s(_vm.book.etat || ""))]),
                   _vm._v(" "),
                   _c("p", [
                     _vm._v("Owner : " + _vm._s(_vm.book.user.name || ""))
-                  ]),
-                  _vm._v(" "),
-                  _c("p", [
-                    _vm._v("language: " + _vm._s(_vm.book.langue || ""))
                   ])
                 ])
               ]),
@@ -23621,7 +23706,7 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("name")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Owner")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("city")]),
         _vm._v(" "),

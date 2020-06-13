@@ -54,10 +54,10 @@ class UserController extends Controller
                 $query->select('id')
                     ->from('exemplaires')
                     ->where('user_id', '=', $user->id);
-            })->where('status', 'like', 'pending')->with('userbook', 'desiredbook', 'user', 'user.ville', 'userbook.livre', 'desiredbook.livre')->get();
+            })->with('userbook', 'desiredbook', 'user', 'user.ville', 'userbook.livre', 'desiredbook.livre','desiredbook.user','desiredbook.user.ville')->get();
         } else if ($type == 'sent') {
             // return $type;
-            return Exchange::where('user_id', '=', $user->id)->with('userbook', 'desiredbook', 'user', 'user.ville', 'userbook.livre', 'desiredbook.livre')->get();
+            return Exchange::where('user_id', '=', $user->id)->with('userbook', 'desiredbook', 'user', 'user.ville', 'userbook.livre', 'desiredbook.livre','desiredbook.user','desiredbook.user.ville')->get();
         }
     }
 

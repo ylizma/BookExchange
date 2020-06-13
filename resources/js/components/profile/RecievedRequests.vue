@@ -12,66 +12,69 @@
             {{ alert_message }}
         </div>
         <div class="table-responsive">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">name</th>
-                    <th scope="col">city</th>
-                    <th scope="col">date</th>
-                    <th scope="col">proposal book</th>
-                    <th>book state</th>
-                    <th scope="col">desired book</th>
-                    <th scope="col">accept/reject</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(book, index) in books" :key="index">
-                    <th scope="row">{{ index + 1 }}</th>
-                    <td>{{ book.user.name }}</td>
-                    <td>{{ book.user.ville.name }}</td>
-                    <td>{{ book.requested_at }}</td>
-                    <td>
-                        <a
-                            href="#"
-                            data-toggle="modal"
-                            data-target="#exampleModalCenter"
-                            @click="getBookById(book.userbook.id)"
-                            >{{ book.userbook.livre.titre }} (click to
-                            preview)</a
-                        >
-                    </td>
-                    <td>
-                        {{ book.userbook.etat }}
-                    </td>
-                    <td>
-                        <a
-                            href="#"
-                            @click="getBookById(book.desiredbook.id)"
-                            data-toggle="modal"
-                            data-target="#exampleModalCenter"
-                        >
-                            {{ book.desiredbook.livre.titre }} (click to
-                            preview)
-                        </a>
-                    </td>
-                    <td>
-                        <button
-                            class="btn btn-primary sm"
-                            @click="acceptRequest(book.id)"
-                        >
-                            accept
-                        </button>
-                        <button
-                            class="btn btn-danger sm"
-                            @click="refuseRequest(book.id)"
-                        >
-                            reject
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">sender</th>
+                        <th scope="col">city</th>
+                        <th scope="col">date</th>
+                        <th scope="col">proposal book</th>
+                        <th>book state</th>
+                        <th scope="col">desired book</th>
+                        <th scope="col">accept/reject</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(book, index) in books" :key="index">
+                        <th scope="row">{{ index + 1 }}</th>
+                        <td>{{ book.user.name }}</td>
+                        <td>{{ book.user.ville.name }}</td>
+                        <td>{{ book.requested_at }}</td>
+                        <td>
+                            <a
+                                href="#"
+                                data-toggle="modal"
+                                data-target="#exampleModalCenter"
+                                @click="getBookById(book.userbook.id)"
+                                >{{ book.userbook.livre.titre }} (click to
+                                preview)</a
+                            >
+                        </td>
+                        <td>
+                            {{ book.userbook.etat }}
+                        </td>
+                        <td>
+                            <a
+                                href="#"
+                                @click="getBookById(book.desiredbook.id)"
+                                data-toggle="modal"
+                                data-target="#exampleModalCenter"
+                            >
+                                {{ book.desiredbook.livre.titre }} (click to
+                                preview)
+                            </a>
+                        </td>
+                        <td v-if="book.status != 'accepted'">
+                            <button
+                                class="btn btn-primary sm"
+                                @click="acceptRequest(book.id)"
+                            >
+                                accept
+                            </button>
+                            <button
+                                class="btn btn-danger sm"
+                                @click="refuseRequest(book.id)"
+                            >
+                                reject
+                            </button>
+                        </td>
+                        <td v-else>
+                            ACCEPTED
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <div
             class="modal fade bd-example-modal-lg"
@@ -117,7 +120,11 @@
                             <img
                                 v-for="(img, index) in book.img"
                                 :key="index"
-                                :src="img.image"
+                                :src="
+                                    img.image
+                                        ? '/images/books/' + img.image
+                                        : 'https://dummyimage.com/128x200/000000/ffffff'
+                                "
                                 alt=" "
                                 width="200"
                                 height="350"
@@ -128,6 +135,10 @@
                             <p>title: {{ book.livre.categorie.nom || "" }}</p>
                             <p>state: {{ book.etat || "" }}</p>
                             <p>Owner : {{ book.user.name || "" }}</p>
+                            <p>Email : {{ book.user.email || "" }}</p>
+                            <p v-if="book.user.telephone">
+                                Telephone : {{ book.user.telephone || "" }}
+                            </p>
                             <p>language: {{ book.langue || "" }}</p>
                         </div>
                     </div>
@@ -177,7 +188,7 @@ export default {
             this.$store
                 .dispatch("acceptUserRequest", data)
                 .then(res => {
-                    this.books = this.books.filter(book => book.id != data.id);
+                    this.getRequests();
                     this.submitted = true;
                     this.alert_message = "the request is accepted";
                 })
@@ -194,25 +205,30 @@ export default {
             this.$store
                 .dispatch("refuseUserRequest", data)
                 .then(res => {
-                    this.books = this.books.filter(book => book.id != data.id);
+                    this.getRequests();
                     this.submitted = true;
-                    this.alert_message = 'the request is refused'
+                    this.alert_message = "the request is refused";
                 })
                 .catch(err => {
                     this.hasError = true;
-                    this.alert_message = 'error !!'
+                    this.alert_message = "error !!";
                     console.error(err);
                 });
+        },
+        getRequests() {
+            this.$store
+                .dispatch("getUserRequests", "receive")
+                .then(res => {
+                    this.books = res.data.filter(
+                        res => res.status != "refused"
+                    );
+                    console.log(res.data);
+                })
+                .catch(err => console.error(err));
         }
     },
     created() {
-        this.$store
-            .dispatch("getUserRequests",'receive')
-            .then(res => {
-                this.books = res.data;
-                console.log(res.data);
-            })
-            .catch(err => console.error(err));
+        this.getRequests();
     }
 };
 </script>

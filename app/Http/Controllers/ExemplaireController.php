@@ -91,8 +91,8 @@ class ExemplaireController extends Controller
      */
     public function show($id)
     {
-        $exemplaire = Exemplaire::find($id);
-        return new ExemplaireResource(Exemplaire::find($id));
+        $exemplaire = Exemplaire::with('user')->find($id);
+        return new ExemplaireResource($exemplaire);
     }
 
     /**

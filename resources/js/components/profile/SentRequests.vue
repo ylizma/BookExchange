@@ -15,7 +15,7 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">name</th>
+                    <th scope="col">Owner</th>
                     <th scope="col">city</th>
                     <th scope="col">date</th>
                     <th scope="col">proposal book</th>
@@ -27,8 +27,25 @@
             <tbody>
                 <tr v-for="(book, index) in books" :key="index">
                     <th scope="row">{{ index + 1 }}</th>
-                    <td>{{ book.user.name }}</td>
-                    <td>{{ book.user.ville.name }}</td>
+                    <td>
+                        {{ book.desiredbook.user.name }}
+                        <i
+                            v-if="
+                                book.status == 'accepted' &&
+                                    book.desiredbook.user.email != ''
+                            "
+                        >
+                            {{ book.desiredbook.user.email }}
+                        </i>
+                        <i
+                            v-if="
+                                book.status == 'accepted' &&
+                                    book.desiredbook.user.telephone != ''
+                            "
+                            >{{ book.desiredbook.user.telephone }}</i
+                        >
+                    </td>
+                    <td>{{ book.desiredbook.user.ville.name }}</td>
                     <td>{{ book.requested_at }}</td>
                     <td>
                         <a
@@ -55,7 +72,7 @@
                         </a>
                     </td>
                     <td>
-                        {{book.status}}
+                        {{ book.status }}
                     </td>
                 </tr>
             </tbody>
@@ -104,7 +121,11 @@
                             <img
                                 v-for="(img, index) in book.img"
                                 :key="index"
-                                :src="img.image"
+                                :src="
+                                    img.image
+                                        ? '/images/books/' + img.image
+                                        : 'https://dummyimage.com/128x200/000000/ffffff'
+                                "
                                 alt=" "
                                 width="200"
                                 height="350"
@@ -112,10 +133,12 @@
                         </div>
                         <div class="book-info">
                             <p>title: {{ book.livre.livre.titre || "" }}</p>
-                            <p>title: {{ book.livre.categorie.nom || "" }}</p>
+                            <p>
+                                category: {{ book.livre.categorie.nom || "" }}
+                            </p>
+                            <p>language: {{ book.langue || "" }}</p>
                             <p>state: {{ book.etat || "" }}</p>
                             <p>Owner : {{ book.user.name || "" }}</p>
-                            <p>language: {{ book.langue || "" }}</p>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -159,7 +182,7 @@ export default {
         },
         getRequests() {
             this.$store
-                .dispatch("getUserRequests", 'sent')
+                .dispatch("getUserRequests", "sent")
                 .then(res => {
                     this.books = res.data;
                     console.log(res.data);
