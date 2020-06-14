@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
+use App\Notification;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -84,5 +85,11 @@ class User extends Authenticatable implements JWTSubject
                         'accepted_at',
                         'desired_book'
                     ]);
+    }
+
+    public function notifications()
+    {
+        return $this->morphMany(Notification::class, 'notifiable')
+                            ->orderBy('created_at', 'desc');
     }
 }
