@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\ {
+use Illuminate\{
     Http\Request,
     Notifications\DatabaseNotification
 };
@@ -20,23 +20,21 @@ class NotificationController extends Controller
     {
         $user = auth()->user();
 
-        return NotificationResource::collection($user->notifications);
+        return NotificationResource::collection($user->unreadUserNotifications);
     }
 
     public function update(Request $request)
     {
-        $notificationId = request('notification_id');
-
+        $notificationId = $request->notification_id;
+        // return $request ;
         $userUnreadNotification = auth()->user()
-                                    ->notifications
-                                    ->where('id', $notificationId)
-                                    ->first();
-
-        if($userUnreadNotification) {
+            ->notifications
+            ->where('id', $notificationId)
+            ->first();
+        // return $userUnreadNotification;
+        if ($userUnreadNotification) {
             $userUnreadNotification->markAsRead();
-        }
-
-        return response()->json('Notification marked as read', 200);
+            return response()->json('Notification marked as read', 200);
+        } else return response()->json('error 500', 500);
     }
-
 }

@@ -90,6 +90,11 @@ class User extends Authenticatable implements JWTSubject
     public function notifications()
     {
         return $this->morphMany(Notification::class, 'notifiable')
+                            ->orderBy('created_at', 'desc')    ;
+    }
+    public function unreadUserNotifications()
+    {
+        return $this->morphMany(Notification::class, 'notifiable')->where('read_at',null)
                             ->orderBy('created_at', 'desc');
     }
 }

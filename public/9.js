@@ -1,183 +1,14 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[9],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/profile/RecievedRequests.vue?vue&type=script&lang=js&":
-/*!***********************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/profile/RecievedRequests.vue?vue&type=script&lang=js& ***!
-  \***********************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/profile/UserBooks.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/profile/UserBooks.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -227,89 +58,43 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       books: [],
-      book: {
-        livre: {
-          livre: "",
-          categorie: ""
-        },
-        state: "",
-        user: "",
-        language: "",
-        img: ""
-      },
-      submitted: false,
-      hasError: false,
-      alert_message: ""
+      pagination: {}
     };
   },
   methods: {
-    getBookById: function getBookById(id) {
+    getBooks: function getBooks(url) {
       var _this = this;
 
-      this.$store.dispatch("getBookInfos", id).then(function (res) {
-        return _this.book = res.data;
-      })["catch"](function (err) {
-        return console.error(err);
-      });
-    },
-    acceptRequest: function acceptRequest(id) {
-      var _this2 = this;
+      this.$store.dispatch('getUserBooks', url).then(function (res) {
+        _this.books = res.data.data;
 
-      var data = {
-        id: id
-      };
-      this.$store.dispatch("acceptUserRequest", data).then(function (res) {
-        _this2.getRequests();
+        _this.makepagination(res.data);
 
-        _this2.submitted = true;
-        _this2.alert_message = "the request is accepted";
+        console.log(_this.pagination);
       })["catch"](function (err) {
-        _this2.hasError = true;
-        _this2.alert_message = "error !!";
         console.error(err);
       });
     },
-    refuseRequest: function refuseRequest(id) {
-      var _this3 = this;
-
-      var data = {
-        id: id
+    makepagination: function makepagination(links) {
+      var pagination = {
+        current_page: links.current_page,
+        last_page: links.last_page,
+        path: links.path
       };
-      this.$store.dispatch("refuseUserRequest", data).then(function (res) {
-        _this3.getRequests();
-
-        _this3.submitted = true;
-        _this3.alert_message = "the request is refused";
-      })["catch"](function (err) {
-        _this3.hasError = true;
-        _this3.alert_message = "error !!";
-        console.error(err);
-      });
-    },
-    getRequests: function getRequests() {
-      var _this4 = this;
-
-      this.$store.dispatch("getUserRequests", "receive").then(function (res) {
-        _this4.books = res.data.filter(function (res) {
-          return res.status != "refused";
-        });
-        console.log(res.data);
-      })["catch"](function (err) {
-        return console.error(err);
-      });
+      this.pagination = pagination;
     }
   },
-  created: function created() {
-    this.getRequests();
+  mounted: function mounted() {
+    this.getBooks();
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/profile/RecievedRequests.vue?vue&type=template&id=17c5dede&":
-/*!***************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/profile/RecievedRequests.vue?vue&type=template&id=17c5dede& ***!
-  \***************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/profile/UserBooks.vue?vue&type=template&id=30eab544&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/profile/UserBooks.vue?vue&type=template&id=30eab544& ***!
+  \********************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -323,35 +108,19 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "col-md-9" }, [
     _c("div", [
-      _c("div", { staticClass: "bg-white p-3" }, [
-        _c("h3", [_vm._v("Received Requests")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "table-responsive mt-5" }, [
+      _c(
+        "div",
+        { staticClass: "bg-white p-3" },
+        [
+          _c("h3", [_vm._v("My books")]),
+          _vm._v(" "),
           _c(
-            "div",
+            "router-link",
             {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.submitted || _vm.hasError,
-                  expression: "submitted || hasError"
-                }
-              ],
-              staticClass: "alert",
-              class: {
-                "alert-danger": _vm.hasError,
-                "alert-success": !_vm.hasError
-              },
-              attrs: { role: "alert" }
+              staticClass: "btn btn-info mb-3 float-right",
+              attrs: { to: "/newBook", type: "button" }
             },
-            [
-              _vm._v(
-                "\n                        " +
-                  _vm._s(_vm.alert_message) +
-                  "\n                    "
-              )
-            ]
+            [_vm._v("Add a new book")]
           ),
           _vm._v(" "),
           _c("div", { staticClass: "table-responsive" }, [
@@ -360,116 +129,62 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(_vm.books, function(book, index) {
-                  return _c("tr", { key: index }, [
-                    _c("th", { attrs: { scope: "row" } }, [
-                      _vm._v(_vm._s(index + 1))
+                _vm._l(_vm.books, function(book) {
+                  return _c("tr", { key: book.id }, [
+                    _c("td", { staticClass: "table-light" }, [
+                      _c("img", {
+                        attrs: {
+                          width: "128",
+                          height: "160",
+                          src: book.photos[0]
+                            ? "/images/books/" + book.photos[0].image
+                            : "https://dummyimage.com/128x200/000000/ffffff"
+                        }
+                      })
                     ]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(book.user.name))]),
+                    _c("td", { staticClass: "table-light" }, [
+                      _vm._v(" " + _vm._s(book.livre.titre) + " ")
+                    ]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(book.user.ville.name))]),
+                    _c("td", { staticClass: "table-light" }, [
+                      _vm._v(" " + _vm._s(book.created_at) + " ")
+                    ]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(book.requested_at))]),
+                    _c("td", { staticClass: "table-light" }, [
+                      _vm._v("Available")
+                    ]),
                     _vm._v(" "),
-                    _c("td", [
+                    _c("td", { staticClass: "table-light" }, [
                       _c(
-                        "a",
-                        {
-                          attrs: {
-                            href: "#",
-                            "data-toggle": "modal",
-                            "data-target": "#exampleModalCenter"
-                          },
-                          on: {
-                            click: function($event) {
-                              return _vm.getBookById(book.userbook.id)
-                            }
-                          }
-                        },
+                        "div",
+                        { staticClass: "row", staticStyle: { width: "120px" } },
                         [
-                          _vm._v(
-                            _vm._s(book.userbook.livre.titre) +
-                              " (click to\n                                            preview)"
-                          )
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(
-                        "\n                                        " +
-                          _vm._s(book.userbook.etat) +
-                          "\n                                    "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "a",
-                        {
-                          attrs: {
-                            href: "#",
-                            "data-toggle": "modal",
-                            "data-target": "#exampleModalCenter"
-                          },
-                          on: {
-                            click: function($event) {
-                              return _vm.getBookById(book.desiredbook.id)
-                            }
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                                            " +
-                              _vm._s(book.desiredbook.livre.titre) +
-                              " (click to\n                                            preview)\n                                        "
-                          )
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    book.status != "accepted"
-                      ? _c("td", [
                           _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-primary sm",
-                              on: {
-                                click: function($event) {
-                                  return _vm.acceptRequest(book.id)
-                                }
-                              }
-                            },
+                            "div",
+                            { staticClass: "col-auto" },
                             [
-                              _vm._v(
-                                "\n                                            accept\n                                        "
+                              _c(
+                                "router-link",
+                                {
+                                  staticClass: "action-link",
+                                  attrs: {
+                                    to: {
+                                      name: "editBook",
+                                      params: { id: book.id }
+                                    }
+                                  }
+                                },
+                                [_c("i", { staticClass: "fa fa-edit mr-3" })]
                               )
-                            ]
+                            ],
+                            1
                           ),
                           _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-danger sm",
-                              on: {
-                                click: function($event) {
-                                  return _vm.refuseRequest(book.id)
-                                }
-                              }
-                            },
-                            [
-                              _vm._v(
-                                "\n                                            reject\n                                        "
-                              )
-                            ]
-                          )
-                        ])
-                      : _c("td", [
-                          _vm._v(
-                            "\n                                        ACCEPTED\n                                    "
-                          )
-                        ])
+                          _vm._m(1, true)
+                        ]
+                      )
+                    ])
                   ])
                 }),
                 0
@@ -477,221 +192,43 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm._m(1),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "modal fade bd-example-modal-lg",
-              attrs: {
-                id: "exampleModalCenter",
-                tabindex: "-1",
-                role: "dialog",
-                "aria-labelledby": "exampleModalCenterTitle",
-                "aria-hidden": "true"
-              }
-            },
-            [
-              _c(
-                "div",
-                {
-                  staticClass: "modal-dialog modal-dialog-centered modal-lg",
-                  attrs: { role: "document" }
-                },
-                [
-                  _c("div", { staticClass: "modal-content" }, [
-                    _c("div", { staticClass: "modal-header" }, [
-                      _c(
-                        "h5",
-                        {
-                          staticClass: "modal-title",
-                          attrs: { id: "exampleModalCenterTitle" }
-                        },
-                        [
-                          _vm._v(
-                            "\n                                        " +
-                              _vm._s(_vm.book.livre.livre.titre || "") +
-                              "\n                                    "
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _vm._m(2)
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "modal-body" }, [
-                      _c(
-                        "div",
-                        _vm._l(_vm.book.img, function(img, index) {
-                          return _c("img", {
-                            key: index,
-                            attrs: {
-                              src: img.image
-                                ? "/images/books/" + img.image
-                                : "https://dummyimage.com/128x200/000000/ffffff",
-                              alt: " ",
-                              width: "200",
-                              height: "350"
-                            }
-                          })
-                        }),
-                        0
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "book-info" }, [
-                        _c("p", [
-                          _vm._v(
-                            "title: " + _vm._s(_vm.book.livre.livre.titre || "")
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("p", [
-                          _vm._v(
-                            "title: " +
-                              _vm._s(_vm.book.livre.categorie.nom || "")
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("p", [
-                          _vm._v("state: " + _vm._s(_vm.book.etat || ""))
-                        ]),
-                        _vm._v(" "),
-                        _c("p", [
-                          _vm._v("Owner : " + _vm._s(_vm.book.user.name || ""))
-                        ]),
-                        _vm._v(" "),
-                        _c("p", [
-                          _vm._v("Email : " + _vm._s(_vm.book.user.email || ""))
-                        ]),
-                        _vm._v(" "),
-                        _vm.book.user.telephone
-                          ? _c("p", [
-                              _vm._v(
-                                "\n                                            Telephone : " +
-                                  _vm._s(_vm.book.user.telephone || "") +
-                                  "\n                                        "
-                              )
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _c("p", [
-                          _vm._v("language: " + _vm._s(_vm.book.langue || ""))
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
+          _c("nav", { staticClass: "mt-2" }, [
+            _c(
+              "ul",
+              { staticClass: "pagination" },
+              _vm._l(_vm.pagination.last_page, function(i) {
+                return _c(
+                  "li",
+                  {
+                    key: i,
+                    staticClass: "page-item",
+                    class: i == _vm.pagination.current_page ? "active" : ""
+                  },
+                  [
                     _c(
-                      "div",
+                      "a",
                       {
-                        staticClass: "modal fade bd-example-modal-lg",
-                        attrs: {
-                          id: "exampleModalCenter",
-                          tabindex: "-1",
-                          role: "dialog",
-                          "aria-labelledby": "exampleModalCenterTitle",
-                          "aria-hidden": "true"
+                        staticClass: "page-link",
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            return _vm.getBooks(
+                              _vm.pagination.path + "?page=" + i
+                            )
+                          }
                         }
                       },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "modal-dialog modal-dialog-centered modal-lg",
-                            attrs: { role: "document" }
-                          },
-                          [
-                            _c("div", { staticClass: "modal-content" }, [
-                              _c("div", { staticClass: "modal-header" }, [
-                                _c(
-                                  "h5",
-                                  {
-                                    staticClass: "modal-title",
-                                    attrs: { id: "exampleModalCenterTitle" }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                                                    " +
-                                        _vm._s(
-                                          _vm.book.livre.livre.titre || ""
-                                        ) +
-                                        "\n                                                "
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _vm._m(3)
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "modal-body" }, [
-                                _c(
-                                  "div",
-                                  _vm._l(_vm.book.img, function(img, index) {
-                                    return _c("img", {
-                                      key: index,
-                                      attrs: {
-                                        src: img.image,
-                                        alt: " ",
-                                        width: "200",
-                                        height: "350"
-                                      }
-                                    })
-                                  }),
-                                  0
-                                ),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "book-info" }, [
-                                  _c("p", [
-                                    _vm._v(
-                                      "title: " +
-                                        _vm._s(_vm.book.livre.livre.titre || "")
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("p", [
-                                    _vm._v(
-                                      "title: " +
-                                        _vm._s(
-                                          _vm.book.livre.categorie.nom || ""
-                                        )
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("p", [
-                                    _vm._v(
-                                      "state: " + _vm._s(_vm.book.etat || "")
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("p", [
-                                    _vm._v(
-                                      "Owner : " +
-                                        _vm._s(_vm.book.user.name || "")
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("p", [
-                                    _vm._v(
-                                      "language: " +
-                                        _vm._s(_vm.book.langue || "")
-                                    )
-                                  ])
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _vm._m(4)
-                            ])
-                          ]
-                        )
-                      ]
+                      [_vm._v(_vm._s(i))]
                     )
-                  ])
-                ]
-              )
-            ]
-          )
-        ])
-      ])
+                  ]
+                )
+              }),
+              0
+            )
+          ])
+        ],
+        1
+      )
     ])
   ])
 }
@@ -702,21 +239,15 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", { staticClass: "table-secondary" }, [_vm._v("#")]),
+        _c("th", { staticClass: "table-secondary" }),
         _vm._v(" "),
-        _c("th", { staticClass: "table-secondary" }, [_vm._v("sender")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "table-secondary" }, [_vm._v("city")]),
+        _c("th", { staticClass: "table-secondary" }, [_vm._v("title")]),
         _vm._v(" "),
         _c("th", { staticClass: "table-secondary" }, [_vm._v("date")]),
         _vm._v(" "),
-        _c("th", { staticClass: "table-secondary" }, [_vm._v("proposal book")]),
+        _c("th", { staticClass: "table-secondary" }, [_vm._v("Status")]),
         _vm._v(" "),
-        _c("th", { staticClass: "table-secondary" }, [_vm._v("book state")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "table-secondary" }, [_vm._v("desired book")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "table-secondary" }, [_vm._v("accept/reject")])
+        _c("th", { staticClass: "table-secondary" })
       ])
     ])
   },
@@ -724,79 +255,10 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "modal fade bd-example-modal-lg",
-        attrs: {
-          tabindex: "-1",
-          role: "dialog",
-          "aria-labelledby": "myLargeModalLabel",
-          "aria-hidden": "true"
-        }
-      },
-      [
-        _c("div", { staticClass: "modal-dialog modal-lg" }, [
-          _c("div", { staticClass: "modal-content" }, [
-            _vm._v(
-              "\n                                ...\n                            "
-            )
-          ])
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "close",
-        attrs: {
-          type: "button",
-          "data-dismiss": "modal",
-          "aria-label": "Close"
-        }
-      },
-      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "close",
-        attrs: {
-          type: "button",
-          "data-dismiss": "modal",
-          "aria-label": "Close"
-        }
-      },
-      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [
-          _vm._v(
-            "\n                                                    Close\n                                                "
-          )
-        ]
-      )
+    return _c("div", { staticClass: "col-auto" }, [
+      _c("a", { staticClass: "action-link", attrs: { href: "#" } }, [
+        _c("i", { staticClass: "fa fa-remove" })
+      ])
     ])
   }
 ]
@@ -806,17 +268,17 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./resources/js/components/profile/RecievedRequests.vue":
-/*!**************************************************************!*\
-  !*** ./resources/js/components/profile/RecievedRequests.vue ***!
-  \**************************************************************/
+/***/ "./resources/js/components/profile/UserBooks.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/profile/UserBooks.vue ***!
+  \*******************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _RecievedRequests_vue_vue_type_template_id_17c5dede___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RecievedRequests.vue?vue&type=template&id=17c5dede& */ "./resources/js/components/profile/RecievedRequests.vue?vue&type=template&id=17c5dede&");
-/* harmony import */ var _RecievedRequests_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RecievedRequests.vue?vue&type=script&lang=js& */ "./resources/js/components/profile/RecievedRequests.vue?vue&type=script&lang=js&");
+/* harmony import */ var _UserBooks_vue_vue_type_template_id_30eab544___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UserBooks.vue?vue&type=template&id=30eab544& */ "./resources/js/components/profile/UserBooks.vue?vue&type=template&id=30eab544&");
+/* harmony import */ var _UserBooks_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UserBooks.vue?vue&type=script&lang=js& */ "./resources/js/components/profile/UserBooks.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -826,9 +288,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _RecievedRequests_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _RecievedRequests_vue_vue_type_template_id_17c5dede___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _RecievedRequests_vue_vue_type_template_id_17c5dede___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _UserBooks_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _UserBooks_vue_vue_type_template_id_30eab544___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _UserBooks_vue_vue_type_template_id_30eab544___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -838,38 +300,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/profile/RecievedRequests.vue"
+component.options.__file = "resources/js/components/profile/UserBooks.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/profile/RecievedRequests.vue?vue&type=script&lang=js&":
-/*!***************************************************************************************!*\
-  !*** ./resources/js/components/profile/RecievedRequests.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************************/
+/***/ "./resources/js/components/profile/UserBooks.vue?vue&type=script&lang=js&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/profile/UserBooks.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RecievedRequests_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./RecievedRequests.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/profile/RecievedRequests.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RecievedRequests_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UserBooks_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./UserBooks.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/profile/UserBooks.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UserBooks_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/profile/RecievedRequests.vue?vue&type=template&id=17c5dede&":
-/*!*********************************************************************************************!*\
-  !*** ./resources/js/components/profile/RecievedRequests.vue?vue&type=template&id=17c5dede& ***!
-  \*********************************************************************************************/
+/***/ "./resources/js/components/profile/UserBooks.vue?vue&type=template&id=30eab544&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/profile/UserBooks.vue?vue&type=template&id=30eab544& ***!
+  \**************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RecievedRequests_vue_vue_type_template_id_17c5dede___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./RecievedRequests.vue?vue&type=template&id=17c5dede& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/profile/RecievedRequests.vue?vue&type=template&id=17c5dede&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RecievedRequests_vue_vue_type_template_id_17c5dede___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserBooks_vue_vue_type_template_id_30eab544___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./UserBooks.vue?vue&type=template&id=30eab544& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/profile/UserBooks.vue?vue&type=template&id=30eab544&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserBooks_vue_vue_type_template_id_30eab544___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RecievedRequests_vue_vue_type_template_id_17c5dede___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserBooks_vue_vue_type_template_id_30eab544___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
