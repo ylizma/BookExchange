@@ -394,13 +394,13 @@ const vuex = new Vuex.Store({
                     headers: {
                         Authorization: "Bearer " + context.state.token
                     },
-                    params:{
-                        type:data
+                    params: {
+                        type: data
                     }
                 };
                 return new Promise((resolve, reject) => {
                     axios
-                        .get(context.getters.getBaseUrl + '/myrequests', config)
+                        .get(context.getters.getBaseUrl + "/myrequests", config)
                         .then(res => {
                             resolve(res);
                             // console.log(res);
@@ -473,7 +473,7 @@ const vuex = new Vuex.Store({
                 });
             }
         },
-        getuserNotifications(context){
+        getuserNotifications(context) {
             if (context.getters.logedIn) {
                 const config = {
                     headers: {
@@ -488,6 +488,29 @@ const vuex = new Vuex.Store({
                         )
                         .then(res => {
                             resolve(res.data);
+                        })
+                        .catch(err => {
+                            reject(err);
+                        });
+                });
+            }
+        },
+        readNotification(context, notif) {
+            if (context.getters.logedIn) {
+                const config = {
+                    headers: {
+                        Authorization: "Bearer " + context.state.token
+                    }
+                };
+                return new Promise((resolve, reject) => {
+                    axios
+                        .patch(
+                            context.getters.getBaseUrl + "/notification/update",
+                            notif,
+                            config
+                        )
+                        .then(res => {
+                            resolve(res);
                         })
                         .catch(err => {
                             reject(err);
