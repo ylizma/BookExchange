@@ -8,6 +8,10 @@ use Illuminate\ {
 };
 
 use App\User;
+use App\Notification;
+
+use App\Http\Resources\NotificationResource;
+
 
 class NotificationController extends Controller
 {
@@ -15,9 +19,8 @@ class NotificationController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $unreadNotifications = $user->unreadNotifications;
 
-        return response()->json(['notifications' => $unreadNotifications, 'count' => $unreadNotifications->count()]);
+        return NotificationResource::collection($user->notifications);
     }
 
     public function update(Request $request)
@@ -25,7 +28,7 @@ class NotificationController extends Controller
         $notificationId = request('notification_id');
 
         $userUnreadNotification = auth()->user()
-                                    ->unreadNotifications
+                                    ->notifications
                                     ->where('id', $notificationId)
                                     ->first();
 
