@@ -123,8 +123,8 @@
                 <ul
                     class="nav navbar-nav d-xl-flex ml-auto justify-content-xl-end"
                 >
-
-                <notifications />
+                <SelectLocale />
+                <notifications v-if="isLogged" />
                     <li class="nav-item dropdown dropbottom">
                         <a
                             class="nav-link dropdown-toggle"
@@ -172,14 +172,15 @@
     </nav>
 </template>
 <script>
-import Notifications from './Notifications' 
+import Notifications from './Notifications';
+import SelectLocale from './SelectLocale';
 export default {
     components:{
-        Notifications
+        Notifications,
+        SelectLocale
     },
     data() {
         return {
-            notifications: {}
         };
     },
     computed: {
@@ -187,7 +188,6 @@ export default {
             return this.$store.getters.logedIn;
         }
     },
-    methods: {},
     created() {}
 };
 </script>
