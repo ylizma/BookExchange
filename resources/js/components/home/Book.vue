@@ -8,7 +8,7 @@
 						<p class="small text-muted font-italic">{{book.livre.livre.resume.substr(1,50)}}...</p>
                         <p class="small text-muted font-italic"> category : {{book.livre.categorie.nom}} </p>
 						<p class="small text-muted font-italic">By <a href="#">{{book.user.name}}</a></p>
-						<router-link tag="button" class="btn btn-outline-danger" id="button" :to="{ path: '/exchange/'+book.id}">Exchange</router-link>
+						<router-link tag="button" class="btn btn-outline-danger" id="button" :to="{ path: '/exchange/'+book.id}">{{ $t('home.book_items.exchange_btn') }}</router-link>
 					</div>
 				</div>
     </div>
