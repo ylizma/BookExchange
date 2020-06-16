@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import axios from "axios";
 import router from "../router/routes.js";
 import VueJsonp from "vue-jsonp";
+
 Vue.use(VueJsonp);
 Vue.use(Vuex);
 
@@ -517,7 +518,7 @@ const vuex = new Vuex.Store({
                         });
                 });
             }
-        }
+        },
     }
 });
 

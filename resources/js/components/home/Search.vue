@@ -8,7 +8,7 @@
               <input
                 type="text"
                 class="form-control search-slt"
-                placeholder="Title"
+                :placeholder="$t('home.search.title')"
                 v-model="title"
               />
             </div>
@@ -18,7 +18,7 @@
                 id="exampleFormControlSelect1"
                 v-model="category"
               >
-                <option value disabled hidden>Select Category</option>
+                <option value disabled>{{ $t('home.search.select_category') }}</option>
                 <option
                   v-for="(category, index) in categories"
                   :key="index"
@@ -28,12 +28,12 @@
             </div>
             <div class="col-lg-3 col-md-3 col-sm-12 p-0">
               <select class="form-control search-slt" id="exampleFormControlSelect1" v-model="city">
-                <option value disabled hidden>Select City</option>
+                <option value disabled>{{ $t('home.search.select_city') }}</option>
                 <option v-for="(city, index) in cities" :key="index" :value="city.id">{{city.name}}</option>
               </select>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-12 pl-1">
-              <button type="submit" class="btn btn-danger wrn-btn">Search</button>
+              <button type="submit" class="btn btn-danger wrn-btn">{{ $t('home.search.search_btn') }}</button>
             </div>
           </div>
         </div>
@@ -98,7 +98,7 @@ export default {
   created() {
     this.getCtaegories();
     this.getCities();
-  }
+  },
 };
 </script>
 
