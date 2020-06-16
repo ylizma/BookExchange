@@ -54,7 +54,7 @@ export default {
             this.$store
                 .dispatch("readNotification", data)
                 .then(res => {
-                    console.log(res);
+                    this.getNotifications(); //delete from notifications then push route 
                 })
                 .catch(err => {
                     console.error(err);

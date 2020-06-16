@@ -2424,11 +2424,14 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     readNotification: function readNotification(notif) {
+      var _this2 = this;
+
       var data = {
         notification_id: notif.id
       };
       this.$store.dispatch("readNotification", data).then(function (res) {
-        console.log(res);
+        _this2.getNotifications(); //delete from notifications then push route 
+
       })["catch"](function (err) {
         console.error(err);
       });
