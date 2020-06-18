@@ -24,7 +24,7 @@
                 request with the book {{ notification.proposal_book[0].id }}
             </a>
             <a href="" class="dropdown-item">
-                <small class="item-center">mark all as read</small>
+                <small class="item-center">{{ $t('notifications.mark_all_as_read') }}</small>
             </a>
         </div>
     </li>

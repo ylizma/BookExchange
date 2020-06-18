@@ -10,14 +10,17 @@
 
         <ul class="list-unstyled components">
             <li class="active">
-                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Home</a>
+                <router-link
+                    to="/"
+                    >{{ $t('navsidebar.home') }}</router-link
+                >
             </li>
             <li>
                 <span href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="float-right px-4" style="font-size:1.3em;position:relative;top:8px;">
                     <i class="fas fa-caret-down" style="cursor:pointer;"></i>
                 </span>
                 <a >
-                    Categories
+                    {{ $t('navsidebar.categories') }}
                 </a>
 
                 <ul class="collapse list-unstyled" id="pageSubmenu">
@@ -51,10 +54,36 @@
 
             </li>
             <li>
-                <a href="#">A Propos</a>
+                <a href="#">{{ $t('navsidebar.aboutus') }}</a>
             </li>
             <li>
-                <a href="#">Contact Us</a>
+                <a href="#">{{ $t('navsidebar.contactus') }}</a>
+            </li>
+            <SelectLocale onSidebar />
+            <li v-if="!isLogged">
+                <router-link
+                    to="/login"
+                    >{{ $t('navsidebar.user.login') }}</router-link
+                >
+            </li>
+            <li v-if="!isLogged">
+                <router-link
+                    to="/signup"
+                    >{{ $t('navsidebar.user.register') }}</router-link
+                >
+            </li>
+            <li v-if="isLogged">
+                <router-link
+                    to="/profile/infos"
+                    class="dropdown-item"
+                    >{{ $t('navsidebar.user.profile') }}</router-link
+                >
+            </li>
+            <li v-if="isLogged">
+                <router-link
+                    to="/logout"
+                    >{{ $t('navsidebar.user.logout') }}</router-link
+                >
             </li>
         </ul>
     </nav>
@@ -63,7 +92,15 @@
 
 </style>
 <script>
+import SelectLocale from './SelectLocale';
 export default {
-
+    components:{
+        SelectLocale
+    },
+    computed: {
+        isLogged() {
+            return this.$store.getters.logedIn;
+        }
+    },
 }
 </script>

@@ -8,7 +8,11 @@
             >
                 <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand" href="#">Brand</a>
+            <router-link
+                to="/"
+                class="navbar-brand"
+                >Brand</router-link
+            >
             <button
                 data-toggle="collapse"
                 class="navbar-toggler d-none"
@@ -28,7 +32,7 @@
                             href="#"
                             class="dropdown-toggle nav-link"
                             data-toggle="dropdown"
-                            >Categories
+                            >{{ $t('navsidebar.categories') }}
                         </a>
                         <ul class="dropdown-menu megamenu">
                             <div class="row">
@@ -143,26 +147,26 @@
                                 v-if="!isLogged"
                                 to="/login"
                                 class="dropdown-item"
-                                >Login</router-link
+                                >{{ $t('navsidebar.user.login') }}</router-link
                             >
                             <router-link
                                 v-if="!isLogged"
                                 to="/signup"
                                 class="dropdown-item"
-                                >Register</router-link
+                                >{{ $t('navsidebar.user.register') }}</router-link
                             >
                             <router-link
                                 v-if="isLogged"
                                 to="/profile/infos"
                                 class="dropdown-item"
-                                >Profile</router-link
+                                >{{ $t('navsidebar.user.profile') }}</router-link
                             >
                             <div v-if="isLogged" class="dropdown-divider"></div>
                             <router-link
                                 v-if="isLogged"
                                 to="/logout"
                                 class="dropdown-item"
-                                >Logout</router-link
+                                >{{ $t('navsidebar.user.logout') }}</router-link
                             >
                         </div>
                     </li>
