@@ -23,13 +23,8 @@
                 user {{ notification.user[0].name }} sent you an exchange
                 request with the book {{ notification.proposal_book[0].id }}
             </a>
-<<<<<<< HEAD
             <a href="" class="dropdown-item">
                 <small class="item-center">{{ $t('notifications.mark_all_as_read') }}</small>
-=======
-            <a href="" class="dropdown-item" >
-                <small class="item-center" >mark all as read</small>
->>>>>>> cda0600557f4e08ff1dfb571c369e8dbc1e02fca
             </a>
         </div>
     </li>
