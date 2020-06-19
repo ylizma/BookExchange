@@ -2,7 +2,7 @@
     <div class="col-md-9">
         <div>
             <div class="bg-white p-3">
-                <h3>Send Requests</h3>
+                <h3> {{ $t('usercp.requests.sent.header') }} </h3>
                     <div class="table-responsive mt-5">
                         <div
                             v-show="submitted || hasError"
@@ -19,13 +19,13 @@
                             <thead>
                                 <tr>
                                     <th class="table-secondary">#</th>
-                                    <th class="table-secondary">Owner</th>
-                                    <th class="table-secondary">city</th>
-                                    <th class="table-secondary">date</th>
-                                    <th class="table-secondary">proposal book</th>
-                                    <th class="table-secondary">book state</th>
-                                    <th class="table-secondary">desired book</th>
-                                    <th class="table-secondary">Request State</th>
+                                    <th class="table-secondary">{{ $t('usercp.requests.sent.owner') }}</th>
+                                    <th class="table-secondary">{{ $t('usercp.requests.shared.city') }}</th>
+                                    <th class="table-secondary">{{ $t('usercp.requests.shared.date') }}</th>
+                                    <th class="table-secondary">{{ $t('usercp.requests.shared.proposal_book') }}</th>
+                                    <th class="table-secondary">{{ $t('usercp.requests.shared.book_state') }}</th>
+                                    <th class="table-secondary">{{ $t('usercp.requests.shared.desired_book') }}</th>
+                                    <th class="table-secondary">{{ $t('usercp.requests.sent.request_state') }}</th>
                                 </tr>
                             </thead>
                             <tbody>

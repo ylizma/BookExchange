@@ -2,7 +2,7 @@
     <div class="col-md-9">
         <div>
             <div class="bg-white p-3">
-                <h3>Received Requests</h3>
+                <h3> {{ $t('usercp.requests.received.header') }} </h3>
                     <div class="table-responsive mt-5">
                         <div
                             v-show="submitted || hasError"
@@ -20,13 +20,13 @@
                                 <thead>
                                     <tr>
                                         <th class="table-secondary">#</th>
-                                        <th class="table-secondary">sender</th>
-                                        <th class="table-secondary">city</th>
-                                        <th class="table-secondary">date</th>
-                                        <th class="table-secondary">proposal book</th>
-                                        <th class="table-secondary">book state</th>
-                                        <th class="table-secondary">desired book</th>
-                                        <th class="table-secondary">accept/reject</th>
+                                        <th class="table-secondary">{{ $t('usercp.requests.received.sender') }}</th>
+                                        <th class="table-secondary">{{ $t('usercp.requests.shared.city') }}</th>
+                                        <th class="table-secondary">{{ $t('usercp.requests.shared.date') }}</th>
+                                        <th class="table-secondary">{{ $t('usercp.requests.shared.proposal_book') }}</th>
+                                        <th class="table-secondary">{{ $t('usercp.requests.shared.book_state') }}</th>
+                                        <th class="table-secondary">{{ $t('usercp.requests.shared.desired_book') }}</th>
+                                        <th class="table-secondary">{{ $t('usercp.requests.received.accept_reject') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>

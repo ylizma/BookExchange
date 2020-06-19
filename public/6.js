@@ -84,11 +84,31 @@ var render = function() {
   return _c("div", { staticClass: "col-md-9" }, [
     _c("div", [
       _c("div", { staticClass: "bg-white p-3" }, [
-        _c("h3", [_vm._v("Archived Books")]),
+        _c("h3", [
+          _vm._v(" " + _vm._s(_vm.$t("usercp.archived_books.header")) + " ")
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "table-responsive mt-5" }, [
           _c("table", { staticClass: "table" }, [
-            _vm._m(0),
+            _c("thead", [
+              _c("tr", [
+                _c("th", { staticClass: "table-secondary" }, [_vm._v("#")]),
+                _vm._v(" "),
+                _c("th", { staticClass: "table-secondary" }, [
+                  _vm._v(
+                    _vm._s(_vm.$t("usercp.archived_books.table.book_title"))
+                  )
+                ]),
+                _vm._v(" "),
+                _c("th", { staticClass: "table-secondary" }, [
+                  _vm._v(_vm._s(_vm.$t("usercp.archived_books.table.image")))
+                ]),
+                _vm._v(" "),
+                _c("th", { staticClass: "table-secondary" }, [
+                  _vm._v(_vm._s(_vm.$t("usercp.archived_books.table.date")))
+                ])
+              ])
+            ]),
             _vm._v(" "),
             _c(
               "tbody",
@@ -124,24 +144,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", { staticClass: "table-secondary" }, [_vm._v("#")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "table-secondary" }, [_vm._v("book title")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "table-secondary" }, [_vm._v("image")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "table-secondary" }, [_vm._v("date")])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

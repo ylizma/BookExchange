@@ -34,6 +34,84 @@ const messages = {
                 logout: 'Logout'
             }
         },
+        usercp: {
+            shortcuts: {
+                header: 'Links',
+                myprofile: 'My profile',
+                mybooks: 'My books',
+                sentrequests: 'Sent requests',
+                receivedrequests: 'Received requests',
+                archivedbooks: 'Archived books'
+            },
+            profile: {
+                header: 'Profile',
+                username: 'Username',
+                email: 'Email',
+                city: 'City',
+                tel: 'Tel',
+                password: 'Password',
+                save_btn: 'Save'
+            },
+            books: {
+                header: 'My books',
+                add_new_btn: 'Add a new book',
+                table: {
+                    title: 'Title',
+                    date: 'Date',
+                    status: 'Status'
+                }
+            },
+            requests: {
+                sent: {
+                    header: 'Sent requests',
+                    owner: 'Owner',
+                    request_state: 'Request state'
+                },
+                received: {
+                    header: 'Received requests',
+                    sender: 'Sender',
+                    accept_reject: 'Accept/Reject'
+                },
+                shared: {
+                    city: 'City',
+                    date: 'Date',
+                    proposal_book: 'Proposal book',
+                    book_state: 'Book state',
+                    desired_book: 'Desired book'
+                }
+            },
+            archived_books: {
+                header: 'Archived books',
+                table:{
+                    book_title: 'Book title',
+                    image: 'Image',
+                    date: 'Date'
+                }
+            }
+        },
+        newBook: {
+            header: 'Add a new book',
+            title: 'Title',
+            search_btn: 'Search',
+            isbn: 'ISBN',
+            authors: 'Authors',
+            category: 'Category',
+            status: 'Status',
+            language: 'Language',
+            summary: 'Summary',
+            add_btn: 'Add book',
+            success: 'Your book has been saved successfully',
+            preview: 'Click here to preview it!'
+        },
+        exchange: {
+            header: 'Exchange',
+            goback: 'Go Back!',
+            desired_book: 'Desired Book',
+            summary: 'Summary',
+            owner: 'Owner',
+            select_one_book: 'Select one of your books',
+            send_request: 'Send exchange request'
+        }
     },
     'fr': {
         home: {
@@ -64,6 +142,84 @@ const messages = {
                 profile: 'Profile',
                 logout: 'Se déconnecter'
             }
+        },
+        usercp: {
+            shortcuts: {
+                header: 'Liens',
+                myprofile: 'Mon profil',
+                mybooks: 'Mes livres',
+                sentrequests: 'Demandes envoyées',
+                receivedrequests: 'Demandes reçues',
+                archivedbooks: 'Livres archivés'
+            },
+            profile: {
+                header: 'Profil',
+                username: "Nom d'utilisateur",
+                email: 'Email',
+                city: 'Ville',
+                tel: 'Tél',
+                password: 'Mot de passe',
+                save_btn: 'Enregistrer'
+            },
+            books: {
+                header: 'Mes livres',
+                add_new_btn: 'Ajouter un nouveau livre',
+                table: {
+                    title: 'Titre',
+                    date: 'Date',
+                    status: 'Statut'
+                }
+            },
+            requests: {
+                sent: {
+                    header: 'Demandes envoyées',
+                    owner: 'Propriétaire',
+                    request_state: 'État de la demande'
+                },
+                received: {
+                    header: 'Demandes reçues',
+                    sender: 'Expéditeur',
+                    accept_reject: 'Accepter / rejeter'
+                },
+                shared: {
+                    city: 'Ville',
+                    date: 'Date',
+                    proposal_book: 'Livre de proposition',
+                    book_state: 'État du livre',
+                    desired_book: 'Livre souhaité'
+                }
+            },
+            archived_books: {
+                header: 'Livres archivés',
+                table:{
+                    book_title: 'Titre de livre',
+                    image: 'Image',
+                    date: 'Date'
+                }
+            }
+        },
+        newBook: {
+            header: 'Ajouter un nouveau livre',
+            title: 'Titre',
+            search_btn: 'Rechercher',
+            isbn: 'ISBN',
+            authors: 'Auteurs',
+            category: 'Categorie',
+            status: 'Statut',
+            language: 'Langage',
+            summary: 'Résumé',
+            add_btn: 'Ajouter le livre',
+            success: 'Votre livre a bien été enregistré',
+            preview: "Cliquez ici pour l'aperçu!"
+        },
+        exchange: {
+            header: 'Echange',
+            goback: 'Retourner!',
+            desired_book: 'Livre souhaité',
+            summary: 'Résumé',
+            owner: 'Propriétaire',
+            select_one_book: "Sélectionnez l'un de vos livres",
+            send_request: "Envoyer une demande d'échange"
         }
     },
     'ar': {
@@ -75,7 +231,7 @@ const messages = {
                 select_city: 'اختر المدينة',
             },
             book_items: {
-                exchange_btn: 'استبدال',
+                exchange_btn: 'تبادل',
                 category: 'الفئة',
                 by: 'منشور من طرف'
             }
@@ -95,6 +251,84 @@ const messages = {
                 profile: 'الملف الشخصي',
                 logout: 'تسجيل الخروج'
             }
+        },
+        usercp: {
+            shortcuts: {
+                header: 'روابط',
+                myprofile: 'ملفي الشخصي',
+                mybooks: 'كتبي',
+                sentrequests: 'الطلبات المرسلة',
+                receivedrequests: 'الطلبات الواردة',
+                archivedbooks: 'الكتب المؤرشفة'
+            },
+            profile: {
+                header: 'ملفي الشخصي',
+                username: "إسم المستخدم",
+                email: 'البريد الإلكتروني',
+                city: 'المدينة',
+                tel: 'رقم الهاتف',
+                password: 'كلمة السر',
+                save_btn: 'حفظ التغييرات'
+            },
+            books: {
+                header: 'كتبي',
+                add_new_btn: 'أضف كتابًا جديدًا',
+                table: {
+                    title: 'عنوان الكتاب',
+                    date: 'تاريخ النشر',
+                    status: 'الحالة'
+                }
+            },
+            requests: {
+                sent: {
+                    header: 'الطلبات المرسلة',
+                    owner: 'مالك الكتاب',
+                    request_state: 'حالة الطلب'
+                },
+                received: {
+                    header: 'الطلبات الواردة',
+                    sender: 'المرسل',
+                    accept_reject: 'اقبل / ارفض'
+                },
+                shared: {
+                    city: 'المدينة',
+                    date: 'تاريخ الطلب',
+                    proposal_book: 'الكتاب المقترح',
+                    book_state: 'حالة الكتاب',
+                    desired_book: 'الكتاب المرغوب'
+                }
+            },
+            archived_books: {
+                header: 'الكتب المؤرشفة',
+                table:{
+                    book_title: 'عنوان الكتاب',
+                    image: 'صورة الكتاب',
+                    date: 'تاريخ الأرشفة'
+                }
+            }
+        },
+        newBook: {
+            header: 'أضف كتابًا جديدًا',
+            title: 'عنوان الكتاب',
+            search_btn: 'ابحث',
+            isbn: 'ISBN رقم',
+            authors: 'المؤلفون',
+            category: 'الفئة',
+            status: 'الحالة',
+            language: 'لغة الكتاب',
+            summary: 'ملخص كتاب',
+            add_btn: 'أضف الكتاب',
+            success: 'تم حفظ كتابك بنجاح',
+            preview: "انقر هنا لمعاينته"
+        },
+        exchange: {
+            header: 'تبادل',
+            goback: '!العودة إلى الصفحة الرئيسية',
+            desired_book: 'الكتاب المرغوب',
+            summary: 'ملخص الكتاب',
+            owner: 'مالك الكتاب',
+            select_one_book: 'اختر كتاب من كتبك',
+            send_request: 'إرسال طلب تبادل كتاب'
         }
     }
 };

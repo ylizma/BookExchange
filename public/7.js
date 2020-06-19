@@ -324,7 +324,9 @@ var render = function() {
   return _c("div", { staticClass: "col-md-9" }, [
     _c("div", [
       _c("div", { staticClass: "bg-white p-3" }, [
-        _c("h3", [_vm._v("Received Requests")]),
+        _c("h3", [
+          _vm._v(" " + _vm._s(_vm.$t("usercp.requests.received.header")) + " ")
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "table-responsive mt-5" }, [
           _c(
@@ -356,7 +358,45 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "table-responsive" }, [
             _c("table", { staticClass: "table" }, [
-              _vm._m(0),
+              _c("thead", [
+                _c("tr", [
+                  _c("th", { staticClass: "table-secondary" }, [_vm._v("#")]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "table-secondary" }, [
+                    _vm._v(_vm._s(_vm.$t("usercp.requests.received.sender")))
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "table-secondary" }, [
+                    _vm._v(_vm._s(_vm.$t("usercp.requests.shared.city")))
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "table-secondary" }, [
+                    _vm._v(_vm._s(_vm.$t("usercp.requests.shared.date")))
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "table-secondary" }, [
+                    _vm._v(
+                      _vm._s(_vm.$t("usercp.requests.shared.proposal_book"))
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "table-secondary" }, [
+                    _vm._v(_vm._s(_vm.$t("usercp.requests.shared.book_state")))
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "table-secondary" }, [
+                    _vm._v(
+                      _vm._s(_vm.$t("usercp.requests.shared.desired_book"))
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "table-secondary" }, [
+                    _vm._v(
+                      _vm._s(_vm.$t("usercp.requests.received.accept_reject"))
+                    )
+                  ])
+                ])
+              ]),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -477,7 +517,7 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm._m(1),
+          _vm._m(0),
           _vm._v(" "),
           _c(
             "div",
@@ -516,7 +556,7 @@ var render = function() {
                         ]
                       ),
                       _vm._v(" "),
-                      _vm._m(2)
+                      _vm._m(1)
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "modal-body" }, [
@@ -620,7 +660,7 @@ var render = function() {
                                   ]
                                 ),
                                 _vm._v(" "),
-                                _vm._m(3)
+                                _vm._m(2)
                               ]),
                               _vm._v(" "),
                               _c("div", { staticClass: "modal-body" }, [
@@ -679,7 +719,7 @@ var render = function() {
                                 ])
                               ]),
                               _vm._v(" "),
-                              _vm._m(4)
+                              _vm._m(3)
                             ])
                           ]
                         )
@@ -696,30 +736,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", { staticClass: "table-secondary" }, [_vm._v("#")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "table-secondary" }, [_vm._v("sender")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "table-secondary" }, [_vm._v("city")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "table-secondary" }, [_vm._v("date")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "table-secondary" }, [_vm._v("proposal book")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "table-secondary" }, [_vm._v("book state")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "table-secondary" }, [_vm._v("desired book")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "table-secondary" }, [_vm._v("accept/reject")])
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

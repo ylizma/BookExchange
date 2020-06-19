@@ -2,15 +2,15 @@
     <div class="col-md-9">
         <div>
             <div class="bg-white p-3">
-                <h3>Archived Books</h3>
+                <h3> {{ $t('usercp.archived_books.header') }} </h3>
                 <div class="table-responsive mt-5">
                     <table class="table">
                         <thead>
                             <tr>
                                 <th class="table-secondary">#</th>
-                                <th class="table-secondary">book title</th>
-                                <th class="table-secondary">image</th>
-                                <th class="table-secondary">date</th>
+                                <th class="table-secondary">{{ $t('usercp.archived_books.table.book_title') }}</th>
+                                <th class="table-secondary">{{ $t('usercp.archived_books.table.image') }}</th>
+                                <th class="table-secondary">{{ $t('usercp.archived_books.table.date') }}</th>
                             </tr>
                         </thead>
                         <tbody>
