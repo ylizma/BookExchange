@@ -6,8 +6,14 @@
 						<img @click="test" :src="(book.img.length>0)?'/images/books/'+book.img[0].image:'https://dummyimage.com/128x200/000000/ffffff'"  alt="" class="img-fluid d-block mx-auto mb-3">
 						<h5><router-link :to="{ path: '/exchange/'+book.id}"> {{ book.livre.livre.titre }}  </router-link ></h5>
 						<p class="small text-muted font-italic">{{book.livre.livre.resume.substr(1,50)}}...</p>
-                        <p class="small text-muted font-italic"> category : {{book.livre.categorie.nom}} </p>
-						<p class="small text-muted font-italic">By <a href="#">{{book.user.name}}</a></p>
+                        <p class="small text-muted font-italic">
+                             <span v-if="this.$i18n.locale!=='ar'">{{ $t('home.book_items.category') }} : {{book.livre.categorie.nom}}</span>
+                             <span v-else>{{book.livre.categorie.nom}} : {{ $t('home.book_items.category') }}</span>
+                        </p>
+						<p class="small text-muted font-italic">
+                            <span v-if="this.$i18n.locale!=='ar'">{{ $t('home.book_items.by') }} <a href="#">{{book.user.name}}</a></span>
+                            <span v-else><a href="#">{{book.user.name}}</a> {{ $t('home.book_items.by') }}</span>
+                        </p>
 						<router-link tag="button" class="btn btn-outline-danger" id="button" :to="{ path: '/exchange/'+book.id}">{{ $t('home.book_items.exchange_btn') }}</router-link>
 					</div>
 				</div>
@@ -20,7 +26,6 @@ export default {
 	methods: {
 		test(){
 			console.log('dd');
-
 		}
 	},
 }

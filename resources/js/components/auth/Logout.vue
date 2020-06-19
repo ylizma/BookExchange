@@ -10,7 +10,7 @@ created(){
     .then(res=>{
         console.log(res.data);
         this.$router.push('/login');
-    }).catch(err=>console.error("nohjxbejhbcheb")
+    }).catch(err=>console.error(err)
     );
 }
 }

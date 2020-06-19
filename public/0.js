@@ -58,9 +58,9 @@ __webpack_require__.r(__webpack_exports__);
         password: this.password
       };
       this.$store.dispatch('retreiveToken', user).then(function (response) {
-        console.log('loged in');
+        console.log('logged in');
 
-        _this.$router.push('/profile/infos');
+        _this.$router.push('/');
       })["catch"](function (err) {
         _this.err = true;
         console.log("error");

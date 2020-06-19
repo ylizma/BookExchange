@@ -48,8 +48,8 @@ export default {
             this.$store
                 .dispatch('retreiveToken',user)
                 .then(response=>{
-                    console.log('loged in'); 
-                    this.$router.push('/profile/infos');
+                    console.log('logged in'); 
+                    this.$router.push('/');
                     })
                 .catch(err=>
                 {
