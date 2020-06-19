@@ -112,7 +112,7 @@ var render = function() {
         "div",
         { staticClass: "bg-white p-3" },
         [
-          _c("h3", [_vm._v("My books")]),
+          _c("h3", [_vm._v(_vm._s(_vm.$t("usercp.books.header")))]),
           _vm._v(" "),
           _c(
             "router-link",
@@ -120,12 +120,30 @@ var render = function() {
               staticClass: "btn btn-info mb-3 float-right",
               attrs: { to: "/newBook", type: "button" }
             },
-            [_vm._v("Add a new book")]
+            [_vm._v(_vm._s(_vm.$t("usercp.books.add_new_btn")))]
           ),
           _vm._v(" "),
           _c("div", { staticClass: "table-responsive" }, [
             _c("table", { staticClass: "table" }, [
-              _vm._m(0),
+              _c("thead", [
+                _c("tr", [
+                  _c("th", { staticClass: "table-secondary" }),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "table-secondary" }, [
+                    _vm._v(_vm._s(_vm.$t("usercp.books.table.title")))
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "table-secondary" }, [
+                    _vm._v(_vm._s(_vm.$t("usercp.books.table.date")))
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "table-secondary" }, [
+                    _vm._v(_vm._s(_vm.$t("usercp.books.table.status")))
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "table-secondary" })
+                ])
+              ]),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -181,7 +199,7 @@ var render = function() {
                             1
                           ),
                           _vm._v(" "),
-                          _vm._m(1, true)
+                          _vm._m(0, true)
                         ]
                       )
                     ])
@@ -233,24 +251,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", { staticClass: "table-secondary" }),
-        _vm._v(" "),
-        _c("th", { staticClass: "table-secondary" }, [_vm._v("title")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "table-secondary" }, [_vm._v("date")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "table-secondary" }, [_vm._v("Status")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "table-secondary" })
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

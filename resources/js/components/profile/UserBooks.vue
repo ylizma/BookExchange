@@ -2,16 +2,16 @@
     <div class="col-md-9">
     <div>
         <div class="bg-white p-3">
-            <h3>My books</h3>
-            <router-link to="/newBook" class="btn btn-info mb-3 float-right" type="button">Add a new book</router-link>
+            <h3>{{ $t('usercp.books.header') }}</h3>
+            <router-link to="/newBook" class="btn btn-info mb-3 float-right" type="button">{{ $t('usercp.books.add_new_btn') }}</router-link>
             <div class="table-responsive">
                 <table class="table">
                     <thead>
                         <tr>
                             <th class="table-secondary"></th>
-                            <th class="table-secondary">title</th>
-                            <th class="table-secondary">date</th>
-                            <th class="table-secondary">Status</th>
+                            <th class="table-secondary">{{ $t('usercp.books.table.title') }}</th>
+                            <th class="table-secondary">{{ $t('usercp.books.table.date') }}</th>
+                            <th class="table-secondary">{{ $t('usercp.books.table.status') }}</th>
                             <th class="table-secondary"></th>
                         </tr>
                     </thead>

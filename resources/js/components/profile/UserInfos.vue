@@ -2,7 +2,7 @@
     <div class="col-md-9">
         <div>
             <div class="bg-white p-3 ">
-                <h3>Profile</h3>
+                <h3>{{ $t('usercp.profile.header') }}</h3>
                 <div class="container">
                     <form class="form" @submit.prevent="updateProfile" enctype="multipart/form-data">
                         <div class="text-center">
@@ -10,19 +10,19 @@
                         </div>
                         <input  name="img" type="file" ref="file" @change="Onselect">
 
-                        <div><label class="d-block">Username:</label><input v-model="user.name" class="form-control" type="text" required=""></div>
-                        <div><label class="d-block">Email:</label><input v-model="user.email" class="form-control" type="email" required=""></div>
-                        <div><label class="d-block">City</label>
+                        <div><label class="d-block"> {{ $t('usercp.profile.username') }} </label><input v-model="user.name" class="form-control" type="text" required=""></div>
+                        <div><label class="d-block"> {{ $t('usercp.profile.email') }} </label><input v-model="user.email" class="form-control" type="email" required=""></div>
+                        <div><label class="d-block"> {{ $t('usercp.profile.city') }} </label>
                             <select v-model="user.ville_id" class="custom-select" required="">
                             <option v-for="city in villes" :key="city.id" v-bind:value="city.id">
                                     {{city.name}}
                                 </option>
                             </select>
                         </div>
-                        <div><label class="d-block">Tel:</label><input v-model="user.telephone" class="form-control" type="text"></div>
-                        <div><label class="d-block">Password:</label><input v-model="user.password" class="form-control" type="password"></div>
+                        <div><label class="d-block"> {{ $t('usercp.profile.tel') }} </label><input v-model="user.telephone" class="form-control" type="text"></div>
+                        <div><label class="d-block"> {{ $t('usercp.profile.password') }} </label><input v-model="user.password" class="form-control" type="password"></div>
 
-                        <div class="mt-3"><button class="btn btn-success" type="submit">Save</button></div>
+                        <div class="mt-3"><button class="btn btn-success" type="submit"> {{ $t('usercp.profile.save_btn') }} </button></div>
                     </form>
                 </div>
             </div>

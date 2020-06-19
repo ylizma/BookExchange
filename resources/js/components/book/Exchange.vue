@@ -3,16 +3,16 @@
         <div class="row">
             <div class="col">
                 <div>
-                    <h3>Exchange</h3>
+                    <h3> {{ $t('exchange.header') }} </h3>
 
                     <div class="bg-white p-3">
                         <div v-show="submitted || hasError" class="alert" v-bind:class="{ 'alert-danger': hasError, 'alert-success': !hasError }" role="alert">
                             {{alert_message}}
                         </div>
-                        <router-link tag="button" class="btn btn-danger mb-3" id="button" to="/">Go back!</router-link>
+                        <router-link tag="button" class="btn btn-danger mb-3" id="button" to="/">{{ $t('exchange.goback') }}</router-link>
                         <div>
                             <form @submit.prevent="submitExchangeRequest">
-                                <div class="form-group"><label>Desired book:</label>
+                                <div class="form-group"><label>{{ $t('exchange.desired_book') }}</label>
                                     <div>
                                         <div class="form-row" v-if="desired_book.livre !== undefined">
                                             <div class="col text-center">
@@ -20,21 +20,21 @@
                                             </div>
                                             <div class="col">
                                                 <h4 class="text-center"><strong> {{ desired_book.livre.livre.titre }} </strong></h4>
-                                                <p><strong>Resume:</strong> {{ desired_book.livre.livre.resume }}.<br /><br /><br /></p>
-                                                <p><strong>Owner:</strong> {{ desired_book.user.name }}</p>
+                                                <p><strong>{{ $t('exchange.summary') }} :</strong> {{ desired_book.livre.livre.resume }}.<br /><br /><br /></p>
+                                                <p><strong>{{ $t('exchange.owner') }} :</strong> {{ desired_book.user.name }}</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Select one of your books:</label>
+                                    <label>{{ $t('exchange.select_one_book') }}</label>
                                     <select v-model="selected_book" class="form-control" style="height: 42px;" required="">
                                         <option v-for="book in user_books" :key="book.id"  :value="book" selected=""> {{book.livre.livre.titre}} </option>
                                     </select>
                                 </div>
                                 <div
                                     class="form-row">
-                                    <div class="col offset-xl-10 text-right"><button class="btn btn-outline-success" type="submit">Send Exchange Request</button></div>
+                                    <div class="col offset-xl-10 text-right"><button class="btn btn-outline-success" type="submit">{{ $t('exchange.send_request') }}</button></div>
                                 </div>
                             </form>
                         </div>

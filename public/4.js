@@ -196,7 +196,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "col-md-9" }, [
     _c("div", [
-      _c("h3", [_vm._v("Add a new book")]),
+      _c("h3", [_vm._v(_vm._s(_vm.$t("newBook.header")))]),
       _vm._v(" "),
       _c("div", { staticClass: "bg-white p-3" }, [
         _c(
@@ -215,10 +215,12 @@ var render = function() {
           },
           [
             _vm._v(
-              "\r\n            your book is saved succesfully !!\r\n            "
+              "\n            " +
+                _vm._s(_vm.$t("newBook.success")) +
+                " !!\n            "
             ),
             _c("router-link", { attrs: { to: "/profile/books" } }, [
-              _vm._v("click here to preview it ")
+              _vm._v(_vm._s(_vm.$t("newBook.preview")))
             ])
           ],
           1
@@ -237,7 +239,7 @@ var render = function() {
             },
             [
               _c("div", { staticClass: "form-group" }, [
-                _c("label", [_vm._v("Title")]),
+                _c("label", [_vm._v(_vm._s(_vm.$t("newBook.title")))]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-row" }, [
                   _c("div", { staticClass: "col-9" }, [
@@ -272,7 +274,7 @@ var render = function() {
                         attrs: { type: "button" },
                         on: { click: _vm.getInfosFromApi }
                       },
-                      [_vm._v("Search")]
+                      [_vm._v(_vm._s(_vm.$t("newBook.search_btn")))]
                     )
                   ])
                 ]),
@@ -325,7 +327,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
-                _c("label", [_vm._v("ISBN")]),
+                _c("label", [_vm._v(_vm._s(_vm.$t("newBook.isbn")))]),
                 _c("input", {
                   directives: [
                     {
@@ -350,7 +352,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
-                _c("label", [_vm._v("Auteurs")]),
+                _c("label", [_vm._v(_vm._s(_vm.$t("newBook.authors")))]),
                 _c("input", {
                   directives: [
                     {
@@ -375,7 +377,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
-                _c("label", [_vm._v("Category")]),
+                _c("label", [_vm._v(_vm._s(_vm.$t("newBook.category")))]),
                 _vm._v(" "),
                 _c(
                   "select",
@@ -427,7 +429,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
-                _c("label", [_vm._v("Statuts")]),
+                _c("label", [_vm._v(_vm._s(_vm.$t("newBook.status")))]),
                 _vm._v(" "),
                 _c(
                   "select",
@@ -475,7 +477,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
-                _c("label", [_vm._v("language")]),
+                _c("label", [_vm._v(_vm._s(_vm.$t("newBook.language")))]),
                 _vm._v(" "),
                 _c(
                   "select",
@@ -523,7 +525,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
-                _c("label", [_vm._v("Resume")]),
+                _c("label", [_vm._v(_vm._s(_vm.$t("newBook.summary")))]),
                 _c("textarea", {
                   directives: [
                     {
@@ -588,7 +590,18 @@ var render = function() {
                 0
               ),
               _vm._v(" "),
-              _vm._m(0)
+              _c("div", { staticClass: "form-row" }, [
+                _c("div", { staticClass: "col offset-xl-10 text-right" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "submit" }
+                    },
+                    [_vm._v(_vm._s(_vm.$t("newBook.add_btn")))]
+                  )
+                ])
+              ])
             ]
           )
         ])
@@ -596,22 +609,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-row" }, [
-      _c("div", { staticClass: "col offset-xl-10 text-right" }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-          [_vm._v("Add book")]
-        )
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

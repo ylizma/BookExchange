@@ -134,7 +134,7 @@ var render = function() {
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col" }, [
         _c("div", [
-          _c("h3", [_vm._v("Exchange")]),
+          _c("h3", [_vm._v(" " + _vm._s(_vm.$t("exchange.header")) + " ")]),
           _vm._v(" "),
           _c(
             "div",
@@ -173,7 +173,7 @@ var render = function() {
                   staticClass: "btn btn-danger mb-3",
                   attrs: { tag: "button", id: "button", to: "/" }
                 },
-                [_vm._v("Go back!")]
+                [_vm._v(_vm._s(_vm.$t("exchange.goback")))]
               ),
               _vm._v(" "),
               _c("div", [
@@ -189,7 +189,9 @@ var render = function() {
                   },
                   [
                     _c("div", { staticClass: "form-group" }, [
-                      _c("label", [_vm._v("Desired book:")]),
+                      _c("label", [
+                        _vm._v(_vm._s(_vm.$t("exchange.desired_book")))
+                      ]),
                       _vm._v(" "),
                       _c("div", [
                         _vm.desired_book.livre !== undefined
@@ -221,7 +223,11 @@ var render = function() {
                                 ]),
                                 _vm._v(" "),
                                 _c("p", [
-                                  _c("strong", [_vm._v("Resume:")]),
+                                  _c("strong", [
+                                    _vm._v(
+                                      _vm._s(_vm.$t("exchange.summary")) + " :"
+                                    )
+                                  ]),
                                   _vm._v(
                                     " " +
                                       _vm._s(
@@ -235,7 +241,11 @@ var render = function() {
                                 ]),
                                 _vm._v(" "),
                                 _c("p", [
-                                  _c("strong", [_vm._v("Owner:")]),
+                                  _c("strong", [
+                                    _vm._v(
+                                      _vm._s(_vm.$t("exchange.owner")) + " :"
+                                    )
+                                  ]),
                                   _vm._v(
                                     " " + _vm._s(_vm.desired_book.user.name)
                                   )
@@ -247,7 +257,9 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
-                      _c("label", [_vm._v("Select one of your books:")]),
+                      _c("label", [
+                        _vm._v(_vm._s(_vm.$t("exchange.select_one_book")))
+                      ]),
                       _vm._v(" "),
                       _c(
                         "select",
@@ -294,7 +306,22 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _vm._m(0)
+                    _c("div", { staticClass: "form-row" }, [
+                      _c(
+                        "div",
+                        { staticClass: "col offset-xl-10 text-right" },
+                        [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-outline-success",
+                              attrs: { type: "submit" }
+                            },
+                            [_vm._v(_vm._s(_vm.$t("exchange.send_request")))]
+                          )
+                        ]
+                      )
+                    ])
                   ]
                 )
               ])
@@ -306,22 +333,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-row" }, [
-      _c("div", { staticClass: "col offset-xl-10 text-right" }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-outline-success", attrs: { type: "submit" } },
-          [_vm._v("Send Exchange Request")]
-        )
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

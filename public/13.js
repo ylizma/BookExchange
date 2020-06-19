@@ -81,7 +81,9 @@ var render = function() {
           "div",
           { staticClass: "px-3", staticStyle: { "background-color": "white" } },
           [
-            _c("h5", [_vm._v("Shortcuts")]),
+            _c("h5", [
+              _vm._v(" " + _vm._s(_vm.$t("usercp.shortcuts.header")) + " ")
+            ]),
             _vm._v(" "),
             _c(
               "div",
@@ -93,7 +95,7 @@ var render = function() {
                     staticStyle: { "font-size": "14px" },
                     attrs: { to: "/profile/infos" }
                   },
-                  [_vm._v("My profile")]
+                  [_vm._v(_vm._s(_vm.$t("usercp.shortcuts.myprofile")))]
                 ),
                 _vm._v(" "),
                 _c(
@@ -103,7 +105,7 @@ var render = function() {
                     staticStyle: { "font-size": "14px" },
                     attrs: { to: "/profile/books" }
                   },
-                  [_vm._v("My books")]
+                  [_vm._v(_vm._s(_vm.$t("usercp.shortcuts.mybooks")))]
                 ),
                 _vm._v(" "),
                 _c(
@@ -113,7 +115,7 @@ var render = function() {
                     staticStyle: { "font-size": "14px" },
                     attrs: { to: "/profile/requests/sent" }
                   },
-                  [_vm._v("Sent Requests")]
+                  [_vm._v(_vm._s(_vm.$t("usercp.shortcuts.sentrequests")))]
                 ),
                 _vm._v(" "),
                 _c(
@@ -123,7 +125,7 @@ var render = function() {
                     staticStyle: { "font-size": "14px" },
                     attrs: { to: "/profile/requests/received" }
                   },
-                  [_vm._v("Received Requests")]
+                  [_vm._v(_vm._s(_vm.$t("usercp.shortcuts.receivedrequests")))]
                 ),
                 _vm._v(" "),
                 _c(
@@ -133,7 +135,7 @@ var render = function() {
                     staticStyle: { "font-size": "14px" },
                     attrs: { to: "/profile/archived" }
                   },
-                  [_vm._v("Archived Books")]
+                  [_vm._v(_vm._s(_vm.$t("usercp.shortcuts.archivedbooks")))]
                 )
               ],
               1

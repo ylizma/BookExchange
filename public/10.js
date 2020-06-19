@@ -123,7 +123,7 @@ var render = function() {
   return _c("div", { staticClass: "col-md-9" }, [
     _c("div", [
       _c("div", { staticClass: "bg-white p-3 " }, [
-        _c("h3", [_vm._v("Profile")]),
+        _c("h3", [_vm._v(_vm._s(_vm.$t("usercp.profile.header")))]),
         _vm._v(" "),
         _c("div", { staticClass: "container" }, [
           _c(
@@ -153,7 +153,9 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("div", [
-                _c("label", { staticClass: "d-block" }, [_vm._v("Username:")]),
+                _c("label", { staticClass: "d-block" }, [
+                  _vm._v(" " + _vm._s(_vm.$t("usercp.profile.username")) + " ")
+                ]),
                 _c("input", {
                   directives: [
                     {
@@ -178,7 +180,9 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", [
-                _c("label", { staticClass: "d-block" }, [_vm._v("Email:")]),
+                _c("label", { staticClass: "d-block" }, [
+                  _vm._v(" " + _vm._s(_vm.$t("usercp.profile.email")) + " ")
+                ]),
                 _c("input", {
                   directives: [
                     {
@@ -203,7 +207,9 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", [
-                _c("label", { staticClass: "d-block" }, [_vm._v("City")]),
+                _c("label", { staticClass: "d-block" }, [
+                  _vm._v(" " + _vm._s(_vm.$t("usercp.profile.city")) + " ")
+                ]),
                 _vm._v(" "),
                 _c(
                   "select",
@@ -256,7 +262,9 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", [
-                _c("label", { staticClass: "d-block" }, [_vm._v("Tel:")]),
+                _c("label", { staticClass: "d-block" }, [
+                  _vm._v(" " + _vm._s(_vm.$t("usercp.profile.tel")) + " ")
+                ]),
                 _c("input", {
                   directives: [
                     {
@@ -281,7 +289,9 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", [
-                _c("label", { staticClass: "d-block" }, [_vm._v("Password:")]),
+                _c("label", { staticClass: "d-block" }, [
+                  _vm._v(" " + _vm._s(_vm.$t("usercp.profile.password")) + " ")
+                ]),
                 _c("input", {
                   directives: [
                     {
@@ -305,7 +315,17 @@ var render = function() {
                 })
               ]),
               _vm._v(" "),
-              _vm._m(0)
+              _c("div", { staticClass: "mt-3" }, [
+                _c(
+                  "button",
+                  { staticClass: "btn btn-success", attrs: { type: "submit" } },
+                  [
+                    _vm._v(
+                      " " + _vm._s(_vm.$t("usercp.profile.save_btn")) + " "
+                    )
+                  ]
+                )
+              ])
             ]
           )
         ])
@@ -313,20 +333,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "mt-3" }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-success", attrs: { type: "submit" } },
-        [_vm._v("Save")]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
