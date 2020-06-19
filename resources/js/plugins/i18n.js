@@ -110,7 +110,11 @@ const messages = {
             summary: 'Summary',
             owner: 'Owner',
             select_one_book: 'Select one of your books',
-            send_request: 'Send exchange request'
+            send_request: 'Send exchange request',
+            alerts: {
+                request_sent: 'Exchange request sent !!',
+                same_book_error: "You can't exchange with the same book"
+            }
         }
     },
     'fr': {
@@ -219,7 +223,11 @@ const messages = {
             summary: 'Résumé',
             owner: 'Propriétaire',
             select_one_book: "Sélectionnez l'un de vos livres",
-            send_request: "Envoyer une demande d'échange"
+            send_request: "Envoyer une demande d'échange",
+            alerts: {
+                request_sent: "Demande d'échange envoyée !!",
+                same_book_error: "Vous ne pouvez pas échanger avec le même livre !!"
+            }
         }
     },
     'ar': {
@@ -328,7 +336,11 @@ const messages = {
             summary: 'ملخص الكتاب',
             owner: 'مالك الكتاب',
             select_one_book: 'اختر كتاب من كتبك',
-            send_request: 'إرسال طلب تبادل كتاب'
+            send_request: 'إرسال طلب التبادل',
+            alerts: {
+                request_sent: "!!تم إرسال طلب التبادل",
+                same_book_error: "!! لا يمكنك التبادل بنفس الكتاب"
+            }
         }
     }
 };
