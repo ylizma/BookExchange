@@ -202,7 +202,8 @@ var render = function() {
                                   attrs: {
                                     src:
                                       _vm.desired_book.img.length > 0
-                                        ? _vm.desired_book.img[0].image
+                                        ? "/images/books/" +
+                                          _vm.desired_book.img[0].image
                                         : "",
                                     alt: ""
                                   }

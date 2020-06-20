@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PopulateCategorieFromCSV::class);
         $this->call(VilleSeeder::class);
         $this->call(UserSeeder::class);
+        $this->call(BookSeeder::class);
         $this->call(NotificationsTableSeeder::class);
     }
 }

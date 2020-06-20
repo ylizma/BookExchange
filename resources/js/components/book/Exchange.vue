@@ -16,7 +16,7 @@
                                     <div>
                                         <div class="form-row" v-if="desired_book.livre !== undefined">
                                             <div class="col text-center">
-                                                <img :src="(desired_book.img.length>0)?desired_book.img[0].image:''" alt="" class="img-fluid" />
+                                                <img :src="(desired_book.img.length>0)?'/images/books/'+desired_book.img[0].image:''" alt="" class="img-fluid" />
                                             </div>
                                             <div class="col">
                                                 <h4 class="text-center"><strong> {{ desired_book.livre.livre.titre }} </strong></h4>

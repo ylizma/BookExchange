@@ -20,9 +20,9 @@ class UserSeeder extends Seeder
 
             $ville->users()->saveMany(factory(App\User::class,3)->make());
         });
-        factory(App\Livre::class,20)->create()->each(function ($livre){
+        /*factory(App\Livre::class,20)->create()->each(function ($livre){
             $livre->exemplaires()->saveMany(factory(App\Exemplaire::class,3)->make());
         });
-        factory(App\PhotoLivre::class,60)->create();
+        factory(App\PhotoLivre::class,60)->create();*/
     }
 }

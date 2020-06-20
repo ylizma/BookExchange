@@ -25,7 +25,7 @@
         </li>
         <li v-else>
             <span href="#languages" data-toggle="collapse" aria-expanded="false" class="float-right px-4" style="font-size:1.3em;position:relative;top:8px;">
-                <i class="fas fa-caret-down" style="cursor:pointer;"></i>
+                <i class="fa fa-caret-down" style="cursor:pointer;"></i>
             </span>
             <a >
                 {{ $t('navsidebar.languages') }}
