@@ -41,6 +41,9 @@ const vuex = new Vuex.Store({
         },
         getBaseUrl(state) {
             return state.base;
+        },
+        user(state){
+            return state.user
         }
     },
     actions: {
@@ -56,6 +59,9 @@ const vuex = new Vuex.Store({
                         const token = response.data.access_token;
                         localStorage.setItem("access_token", token);
                         context.commit("retreiveToken", token);
+                        context.commit("getUser",response.data.user)
+                        console.log(response.data.user);
+                        
                         resolve(response);
                     })
                     .catch(error => {
@@ -198,15 +204,15 @@ const vuex = new Vuex.Store({
             }
         },
         getCategories(context) {
-            if (context.getters.logedIn) {
-                const config = {
-                    headers: {
-                        Authorization: "Bearer " + context.state.token
-                    }
-                };
+            // if (context.getters.logedIn) {
+            //     const config = {
+            //         headers: {
+            //             Authorization: "Bearer " + context.state.token
+            //         }
+            //     };
                 return new Promise((resolve, reject) => {
                     axios
-                        .get(context.state.base + "/cats", config)
+                        .get(context.state.base + "/cats")
                         .then(resp => {
                             // console.log(resp);
                             resolve(resp);
@@ -219,7 +225,7 @@ const vuex = new Vuex.Store({
                             reject(err);
                         });
                 });
-            }
+            // }
         },
         getInfoFromGoogleApi(context, title) {
             return new Promise((resolve, reject) => {
@@ -283,6 +289,24 @@ const vuex = new Vuex.Store({
             }
         },
         getHomeBooks(context, url) {
+            if (context.getters.logedIn) {
+                const config = {
+                    headers: {
+                        Authorization: "Bearer " + context.state.token
+                    }
+                };
+            return new Promise((resolve, reject) => {
+                axios
+                    .get(url || context.state.base + "/home",config)
+                    .then(res => {
+                        resolve(res.data);
+                    })
+                    .catch(err => {
+                        reject(err);
+                    });
+            });
+        }
+        else {
             return new Promise((resolve, reject) => {
                 axios
                     .get(url || context.state.base + "/home")
@@ -293,6 +317,7 @@ const vuex = new Vuex.Store({
                         reject(err);
                     });
             });
+        }
         },
         searchBook(context, data, url) {
             return new Promise((resolve, reject) => {

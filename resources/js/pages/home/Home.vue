@@ -52,8 +52,7 @@ export default {
         .catch(err => console.log(err));
     },
     makepagination(links) {
-      console.log(links);
-
+      // console.log(links);
       let pagination = {
         current_page: links.current_page,
         last_page: links.last_page,

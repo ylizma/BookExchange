@@ -76,9 +76,9 @@ const router = new VueRouter({
             path: "/",
             name: "home",
             component: Home,
-            meta: {
-                middleware: [auth]
-            }
+            // meta: {
+            //     middleware: [auth]
+            // }
         },
         {
             path: "/profile",

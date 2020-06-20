@@ -58,6 +58,7 @@ export default {
       this.$store
         .dispatch("getCategories")
         .then(res => {
+          // console.log(res);
           this.categories = res.data;
         })
         .catch(err => {

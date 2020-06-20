@@ -22,7 +22,7 @@ __webpack_require__.r(__webpack_exports__);
 
       _this.$router.push('/login');
     })["catch"](function (err) {
-      return console.error("nohjxbejhbcheb");
+      return console.error(err);
     });
   }
 });
