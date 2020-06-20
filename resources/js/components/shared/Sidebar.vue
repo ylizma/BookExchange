@@ -4,8 +4,9 @@
             <i class="fa fa-arrow-left"></i>
         </div>
 
-        <div class="sidebar-header">
-            <img class="img-fluid" src="/app/assets/img/logo.png" style="margin-top:20px"/>
+        <div class="sidebar-header d-flex flex-row justify-content-center align-items-center">
+            <img class="img-fluid mx-auto" src="logoB.png" style="margin-top:20px" width="75px" height="75px"/>
+            <h4>X&Read</h4>
         </div>
 
         <ul class="list-unstyled components">
@@ -15,7 +16,7 @@
                     >{{ $t('navsidebar.home') }}</router-link
                 >
             </li>
-            <li>
+            <!--<li>
                 <span href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="float-right px-4" style="font-size:1.3em;position:relative;top:8px;">
                     <i class="fas fa-caret-down" style="cursor:pointer;"></i>
                 </span>
@@ -52,7 +53,7 @@
                     </li>
                 </ul>
 
-            </li>
+            </li>-->
             <li>
                 <a href="#">{{ $t('navsidebar.aboutus') }}</a>
             </li>
