@@ -215,9 +215,9 @@ var render = function() {
           },
           [
             _vm._v(
-              "\n            " +
+              "\r\n            " +
                 _vm._s(_vm.$t("newBook.success")) +
-                " !!\n            "
+                " !!\r\n            "
             ),
             _c("router-link", { attrs: { to: "/profile/books" } }, [
               _vm._v(_vm._s(_vm.$t("newBook.preview")))

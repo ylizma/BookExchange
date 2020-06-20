@@ -11,7 +11,10 @@
             <router-link
                 to="/"
                 class="navbar-brand"
-                >Brand</router-link
+                >
+                <img src="/logo.png" alt="" width="30" height="30">
+                <i class="ml-2 mt-2">X&Read</i>
+                </router-link
             >
             <button
                 data-toggle="collapse"
