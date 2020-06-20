@@ -49,7 +49,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -234,22 +233,14 @@ var render = function() {
                         }
                       }
                     },
-                    [
-                      _c(
+                    _vm._l(_vm.villes, function(city) {
+                      return _c(
                         "option",
-                        { attrs: { selected: "", value: "skalsal" } },
-                        [_vm._v("ville")]
-                      ),
-                      _vm._v(" "),
-                      _vm._l(_vm.villes, function(city) {
-                        return _c(
-                          "option",
-                          { key: city.id, domProps: { value: city.id } },
-                          [_vm._v(_vm._s(city.name))]
-                        )
-                      })
-                    ],
-                    2
+                        { key: city.id, domProps: { value: city.id } },
+                        [_vm._v(_vm._s(city.name))]
+                      )
+                    }),
+                    0
                   )
                 ]),
                 _vm._v(" "),

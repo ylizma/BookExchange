@@ -12,8 +12,12 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Ville::class, 10)->create()->each(function ($ville) {
-            
+        /*factory(App\Ville::class, 10)->create()->each(function ($ville) {
+
+            $ville->users()->saveMany(factory(App\User::class,3)->make());
+        });*/
+        App\Ville::take(15)->get()->each(function ($ville) {
+
             $ville->users()->saveMany(factory(App\User::class,3)->make());
         });
         factory(App\Livre::class,20)->create()->each(function ($livre){
