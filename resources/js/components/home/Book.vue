@@ -3,7 +3,7 @@
 				<!-- Card-->
 				<div class="card rounded shadow-sm border-0">
 					<div class="card-body">
-						<img @click="test" :src="(book.img.length>0)?'/images/books/'+book.img[0].image:'https://dummyimage.com/128x200/000000/ffffff'"  alt="" class="img-fluid d-block mx-auto mb-3">
+						<img @click="test" :src="(book.img.length>0)?'/images/books/'+book.img[0].image:'https://dummyimage.com/128x200/000000/ffffff'"  alt="" class="img-fluid d-block mx-auto mb-3" width="125px" height="205px">
 						<h5><router-link :to="{ path: '/exchange/'+book.id}"> {{ book.livre.livre.titre }}  </router-link ></h5>
 						<p class="small text-muted font-italic">{{book.livre.livre.resume.substr(1,50)}}...</p>
                         <p class="small text-muted font-italic">

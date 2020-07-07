@@ -18,12 +18,14 @@ class RecommandationController extends Controller
                 // return $exchanges;
             $exemplaires = DB::table('exemplaires')
                 ->select('livre_id')
-                ->whereIn('id', $exchanges)
+                ->whereIn('id', json_decode(json_encode($exchanges), true))
                 ->orWhere('user_id', 1)
                 ->get()->toArray();
                 // return $exemplaires->toArray();
-            $books = DB::table('livres')->select('titre')->whereNotIn('id', $exemplaires)->get();
+            //var_dump($exemplaires);
+            $books = DB::table('livres')->select('titre')->whereNotIn('id', json_decode(json_encode($exemplaires), true))->get();
             return $books;
+
             // DB::table('exchanges')->select('desired_book')
             // ->where('name', '=', 'John')
             // ->orWhere(function($query)

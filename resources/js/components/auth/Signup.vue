@@ -7,7 +7,7 @@
         </div>
         <div v-show="error" :class="msg.error?'alert alert-danger':'alert alert-success'" class=" alert-dismissible fade show" role="alert">
             <center>{{msg.msg}}  {{passwordmsg}}</center>
-           
+
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -17,7 +17,6 @@
             <input type="text"  class="text-input form-control" required="" placeholder="Name" v-model="name">
             <div class="mt-2">
                 <select v-model="city" class="custom-select" required="" >
-                     <option selected value="skalsal" >ville</option>
                      <option v-for="city in villes" :key="city.id" v-bind:value="city.id">{{city.name}}</option>
                 </select>
             </div>
@@ -28,7 +27,7 @@
         <div class="submit-row" style="margin-bottom:8px;padding-top:0px;">
             <button type="submit" class="btn btn-primary btn-block box-shadow" id="submit-id-submit">Sign up</button>
         </div>
-        
+
         <div id="login-box-footer" style="padding:10px 20px;padding-bottom:23px;padding-top:18px;">
             <p style="margin-bottom:0px;">Do you have an account?<router-link to="/login">Sign In!</router-link></p>
         </div>
@@ -85,7 +84,7 @@ import axios from 'axios';
             },
         fetchData(){
             console.log("erere");
-            
+
             this.$store.dispatch('fetchCities').then(res=>{
                 this.villes=res.data;
                 console.log(res.data);

@@ -93,7 +93,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       if (this.selected_book.livre.livre.id === this.desired_book.livre.livre.id) {
-        this.alert_message = "you can't exchange with the same book";
+        this.alert_message = this.$t("exchange.alerts.same_book_error");
         this.hasError = true;
       } else {
         var fd = new FormData();
@@ -101,7 +101,7 @@ __webpack_require__.r(__webpack_exports__);
         fd.append('desired_book', this.desired_book.id);
         this.$store.dispatch('addExchangeRequest', fd).then(function (res) {
           _this3.submitted = true;
-          _this3.alert_message = "Exchange request sent !!";
+          _this3.alert_message = _this3.$t("exchange.alerts.request_sent");
           _this3.hasError = false;
         })["catch"](function (err) {});
       }
@@ -202,7 +202,8 @@ var render = function() {
                                   attrs: {
                                     src:
                                       _vm.desired_book.img.length > 0
-                                        ? _vm.desired_book.img[0].image
+                                        ? "/images/books/" +
+                                          _vm.desired_book.img[0].image
                                         : "",
                                     alt: ""
                                   }

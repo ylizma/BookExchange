@@ -16,7 +16,7 @@
                                     <div>
                                         <div class="form-row" v-if="desired_book.livre !== undefined">
                                             <div class="col text-center">
-                                                <img :src="(desired_book.img.length>0)?desired_book.img[0].image:''" alt="" class="img-fluid" />
+                                                <img :src="(desired_book.img.length>0)?'/images/books/'+desired_book.img[0].image:''" alt="" class="img-fluid" />
                                             </div>
                                             <div class="col">
                                                 <h4 class="text-center"><strong> {{ desired_book.livre.livre.titre }} </strong></h4>
@@ -77,7 +77,7 @@ export default {
         },
         submitExchangeRequest(){
             if(this.selected_book.livre.livre.id === this.desired_book.livre.livre.id){
-               this.alert_message = "you can't exchange with the same book";
+               this.alert_message = this.$t("exchange.alerts.same_book_error");
                this.hasError = true;
             }else{
                 const fd=new FormData();
@@ -87,7 +87,7 @@ export default {
                 this.$store.dispatch('addExchangeRequest',fd)
                 .then(res=>{
                     this.submitted=true;
-                    this.alert_message = "Exchange request sent !!";
+                    this.alert_message = this.$t("exchange.alerts.request_sent");
                     this.hasError = false;
                 })
                 .catch(err=>{

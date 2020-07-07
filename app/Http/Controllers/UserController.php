@@ -57,7 +57,7 @@ class UserController extends Controller
             })->with('userbook', 'desiredbook', 'user', 'user.ville', 'userbook.livre', 'desiredbook.livre','desiredbook.user','desiredbook.user.ville')->orderBy('requested_at','desc')->get();
         } else if ($type == 'sent') {
             // return $type;
-            return Exchange::where('user_id', '=', $user->id)->with('userbook', 'desiredbook', 'user', 'user.ville', 'userbook.livre', 'desiredbook.livre','desiredbook.user','desiredbook.user.ville')->orderBy('requested_at','desc');
+            return Exchange::where('user_id', '=', $user->id)->with('userbook', 'desiredbook', 'user', 'user.ville', 'userbook.livre', 'desiredbook.livre','desiredbook.user','desiredbook.user.ville')->orderBy('requested_at','desc')->get();
         }
     }
 

@@ -15,7 +15,7 @@ class VilleController extends Controller
      */
     public function index()
     {
-        $villes=Ville::All();
+        $villes=Ville::orderBy('name')->get();
         return VilleResource::collection($villes);
     }
     /**
