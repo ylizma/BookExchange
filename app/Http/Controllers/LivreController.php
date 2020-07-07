@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Livre;
 use App\Http\Resources\LivreResource;
 
@@ -32,6 +31,7 @@ class LivreController extends Controller
             'auteurs' => $request->auteurs,
             'isbn' => $request->isbn,
             'date_publication' => $request->date_publication,
+            'nbrpage' => $request->nbrpage,
             'resume' => $request->resume,
             'categorie_id' => $request->categorie_id
         ]);
