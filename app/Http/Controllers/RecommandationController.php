@@ -20,7 +20,7 @@ class RecommandationController extends Controller
                 ->select('livre_id')
                 ->whereIn('id', $exchanges)
                 ->orWhere('user_id', 1)
-                ->get();
+                ->get()->toArray();
                 // return $exemplaires->toArray();
             $books = DB::table('livres')->select('titre')->whereNotIn('id', $exemplaires)->get();
             return $books;
