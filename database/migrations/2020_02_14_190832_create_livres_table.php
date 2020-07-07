@@ -21,7 +21,7 @@ class CreateLivresTable extends Migration
             $table->string('auteurs');
             $table->string('isbn');
             $table->text('resume');
-            $table->int('nbrpage');
+            $table->bigInteger('nbrpage')->default(0);
             $table->timestamps();
             $table->bigInteger('categorie_id')->unsigned();
             $table->foreign('categorie_id')->references('id')->on('categories')->onDelete('cascade');
