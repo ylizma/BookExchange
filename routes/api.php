@@ -43,6 +43,9 @@ Route::group(['middleware' => ['jwt.auth']], function() {
     //Notifications
     Route::get('notification/index','NotificationController@index');
     Route::patch('notification/update','NotificationController@update');
+
+    //recommandation
+    Route::get('recom','RecommandationController@getRecommandedBooks');
 });
 
 

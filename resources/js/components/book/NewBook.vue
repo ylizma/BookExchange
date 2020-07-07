@@ -80,7 +80,8 @@ export default {
                 isbn:'',
                 status:'',
                 imgs:[3],
-                lang:''
+                lang:'',
+                pages:''
             },
             showBooks:false,
             categories:[],
@@ -122,10 +123,11 @@ export default {
                         }
         },
         choosedOne(index){
-                const cbook=this.apiresult[index];
+            const cbook=this.apiresult[index];
             this.book.title=cbook.title,
             this.book.author=cbook.authors.join(',')
             this.book.resume=cbook.resume
+            this.book.pages = cbook.pageCount
             this.book.isbn=cbook.isbn[0].identifier
             this.showBooks=false;
             },
@@ -147,6 +149,7 @@ export default {
             fd.append('isbn',this.book.isbn)
             fd.append('lang',this.book.lang)
             fd.append('status',this.book.status)
+            fd.append('nbrpage',this.book.pages)
             fd.append('categorie_id',this.book.categorie_id)
             for (let i = 0; i < this.book.imgs.length; i++) {
                 fd.append('imgs[' + i + ']', this.book.imgs[i]);
