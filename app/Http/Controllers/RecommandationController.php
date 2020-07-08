@@ -21,27 +21,25 @@ class RecommandationController extends Controller
                 ->whereIn('id', json_decode(json_encode($exchanges), true))
                 ->orWhere('user_id', 1)
                 ->get()->toArray();
-                // return $exemplaires->toArray();
-            //var_dump($exemplaires);
-            $books = DB::table('livres')->select('titre')->whereNotIn('id', json_decode(json_encode($exemplaires), true))->get();
+            $books = DB::table('livres')->select('id','nbrpage','categorie_id')->whereNotIn('id', json_decode(json_encode($exemplaires), true))->get();
+            $userLastBook = Exchange::where('user_id',1)->with('desiredbook.livre')->get();
+            return $this->booksDistances($books,$userLastBook);
             return $books;
 
-            // DB::table('exchanges')->select('desired_book')
-            // ->where('name', '=', 'John')
-            // ->orWhere(function($query)
-            // {
-            //     $query->where('votes', '>', 100)
-            //           ->where('title', '<>', 'Admin');
-            // })
-            // ->get();
-            // return DB::table('livres AS l')->select('l.*')
-            // ->whereNotIn('l.id', DB::table('exemplaires AS e')
-            //     ->select('e.livre_id')
-            //     ->whereIn('e.id',DB::table('exchanges AS x')
-            //         ->select('x.desired_book')->where(['x.user_id'=>1, 'x.status'=> 'accepted'])
-            //         ->get()->toArray()
-            //     )->orWhere('e.user_id',1)->get()->toArray())
-            //     ->get();
         } else return response()->json(null, 204);
+    }
+    function booksDistances($books,$userLastBook){
+        $count = 0;
+        $cbooks = array();
+        $distance = 0;
+        foreach (json_decode($books) as $book => $value) {
+            $distance = $this->distanceWithUserBook($value,$userLastBook);
+        }
+        // die($distance);
+        return $distance;
+    }
+    function distanceWithUserBook($book,$userLastBook){
+        $dist = sqrt(pow(($book['nbrpage']-$userLastBook['nbrpage']),2)+pow(($book['categorie_id']-$userLastBook['nbrpage']),2));
+        return $dist;
     }
 }
