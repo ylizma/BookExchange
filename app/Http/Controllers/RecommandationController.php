@@ -28,12 +28,12 @@ class RecommandationController extends Controller
             $sortedBooks = $this->sortBooksByDistance($calculatedDistances);
             $booksIds = $this->get4BooksIds($sortedBooks);
             return $this->get4books($booksIds);
-        } else return response()->json(null, 204);
+        } else
+            return response()->json(null, 204);
     }
 
     function booksDistances($books, $userLastBook)
     {
-        $count = 0;
         $cbooks = array();
         $distance = 0;
         // dd($userLastBook[0]);
@@ -71,14 +71,16 @@ class RecommandationController extends Controller
     function get4BooksIds($books)
     {
         $ids = array();
-        for ($i=0; $i < 4; $i++) { 
+        for ($i = 0; $i < 4; $i++) {
             $ids[] = $books[$i]['id'];
         }
         return $ids;
     }
 
-    function get4books($ids){
-        $books = Exemplaire::whereIn('livre_id',$ids)->get();
-        return  ($books);
+    function get4books($ids)
+    {
+        $books = Exemplaire::whereIn('livre_id', $ids)->get();
+        $books = $books->unique('livre_id');
+        return ($books);
     }
 }
