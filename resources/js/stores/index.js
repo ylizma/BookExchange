@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import axios from "axios";
 import router from "../router/routes.js";
 import VueJsonp from "vue-jsonp";
+import { reject } from "lodash";
 
 Vue.use(VueJsonp);
 Vue.use(Vuex);
@@ -42,8 +43,8 @@ const vuex = new Vuex.Store({
         getBaseUrl(state) {
             return state.base;
         },
-        user(state){
-            return state.user
+        user(state) {
+            return state.user;
         }
     },
     actions: {
@@ -59,9 +60,9 @@ const vuex = new Vuex.Store({
                         const token = response.data.access_token;
                         localStorage.setItem("access_token", token);
                         context.commit("retreiveToken", token);
-                        context.commit("getUser",response.data.user)
+                        context.commit("getUser", response.data.user);
                         console.log(response.data.user);
-                        
+
                         resolve(response);
                     })
                     .catch(error => {
@@ -210,21 +211,21 @@ const vuex = new Vuex.Store({
             //             Authorization: "Bearer " + context.state.token
             //         }
             //     };
-                return new Promise((resolve, reject) => {
-                    axios
-                        .get(context.state.base + "/cats")
-                        .then(resp => {
-                            // console.log(resp);
-                            resolve(resp);
-                        })
-                        .catch(err => {
-                            if (err.response.status == 401) {
-                                localStorage.removeItem("access_token");
-                                router.push("/login");
-                            }
-                            reject(err);
-                        });
-                });
+            return new Promise((resolve, reject) => {
+                axios
+                    .get(context.state.base + "/cats")
+                    .then(resp => {
+                        // console.log(resp);
+                        resolve(resp);
+                    })
+                    .catch(err => {
+                        if (err.response.status == 401) {
+                            localStorage.removeItem("access_token");
+                            router.push("/login");
+                        }
+                        reject(err);
+                    });
+            });
             // }
         },
         getInfoFromGoogleApi(context, title) {
@@ -295,29 +296,28 @@ const vuex = new Vuex.Store({
                         Authorization: "Bearer " + context.state.token
                     }
                 };
-            return new Promise((resolve, reject) => {
-                axios
-                    .get(url || context.state.base + "/home",config)
-                    .then(res => {
-                        resolve(res.data);
-                    })
-                    .catch(err => {
-                        reject(err);
-                    });
-            });
-        }
-        else {
-            return new Promise((resolve, reject) => {
-                axios
-                    .get(url || context.state.base + "/home")
-                    .then(res => {
-                        resolve(res.data);
-                    })
-                    .catch(err => {
-                        reject(err);
-                    });
-            });
-        }
+                return new Promise((resolve, reject) => {
+                    axios
+                        .get(url || context.state.base + "/home", config)
+                        .then(res => {
+                            resolve(res.data);
+                        })
+                        .catch(err => {
+                            reject(err);
+                        });
+                });
+            } else {
+                return new Promise((resolve, reject) => {
+                    axios
+                        .get(url || context.state.base + "/home")
+                        .then(res => {
+                            resolve(res.data);
+                        })
+                        .catch(err => {
+                            reject(err);
+                        });
+                });
+            }
         },
         searchBook(context, data, url) {
             return new Promise((resolve, reject) => {
@@ -544,6 +544,21 @@ const vuex = new Vuex.Store({
                 });
             }
         },
+        getRecommandedBooks(context) {
+            if (context.getters.logedIn) {
+                const config = {
+                    headers: {
+                        Authorization: "Bearer " + context.state.token
+                    }
+                };
+                return new Promise((resolve, reject) => {
+                    axios
+                        .get(context.getters.getBaseUrl + "/recom", config)
+                        .then(res => resolve(res.data))
+                        .catch(err => reject(err));
+                });
+            }
+        }
     }
 });
 

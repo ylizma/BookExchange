@@ -90,7 +90,8 @@ __webpack_require__.r(__webpack_exports__);
         isbn: '',
         status: '',
         imgs: [3],
-        lang: ''
+        lang: '',
+        pages: ''
       },
       showBooks: false,
       categories: [],
@@ -136,6 +137,7 @@ __webpack_require__.r(__webpack_exports__);
       var cbook = this.apiresult[index];
       this.book.title = cbook.title, this.book.author = cbook.authors.join(',');
       this.book.resume = cbook.resume;
+      this.book.pages = cbook.pageCount;
       this.book.isbn = cbook.isbn[0].identifier;
       this.showBooks = false;
     },
@@ -159,6 +161,7 @@ __webpack_require__.r(__webpack_exports__);
       fd.append('isbn', this.book.isbn);
       fd.append('lang', this.book.lang);
       fd.append('status', this.book.status);
+      fd.append('nbrpage', this.book.pages);
       fd.append('categorie_id', this.book.categorie_id);
 
       for (var i = 0; i < this.book.imgs.length; i++) {
@@ -215,9 +218,9 @@ var render = function() {
           },
           [
             _vm._v(
-              "\n            " +
+              "\r\n            " +
                 _vm._s(_vm.$t("newBook.success")) +
-                " !!\n            "
+                " !!\r\n            "
             ),
             _c("router-link", { attrs: { to: "/profile/books" } }, [
               _vm._v(_vm._s(_vm.$t("newBook.preview")))

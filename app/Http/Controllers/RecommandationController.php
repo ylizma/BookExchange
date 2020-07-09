@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Exemplaire;
 use App\Livre;
 use App\Exchange;
+use App\Http\Resources\ExemplaireResource;
 use Illuminate\Support\Facades\DB;
 
 class RecommandationController extends Controller
@@ -23,22 +24,27 @@ class RecommandationController extends Controller
                 ->orWhere('user_id', 1)
                 ->get()->toArray();
             $books = DB::table('livres')->select('id', 'nbrpage', 'categorie_id')->whereNotIn('id', json_decode(json_encode($exemplaires), true))->get();
-            $userLastBook = Exchange::where('user_id', 1)->with('desiredbook.livre')->get()->toArray();
+            $userLastBook = Exchange::where('user_id', 1)
+            ->with('desiredbook.livre')
+            ->orderBy('requested_at','desc')->first();
+            if(!$userLastBook){
+                return response()->json("not yet",500);
+            }
             $calculatedDistances =  $this->booksDistances($books, $userLastBook);
             $sortedBooks = $this->sortBooksByDistance($calculatedDistances);
             $booksIds = $this->get4BooksIds($sortedBooks);
             return $this->get4books($booksIds);
-        } else return response()->json(null, 204);
+        } else
+            return response()->json(null, 204);
     }
 
     function booksDistances($books, $userLastBook)
     {
-        $count = 0;
         $cbooks = array();
         $distance = 0;
         // dd($userLastBook[0]);
         foreach (json_decode($books, true) as $book => $value) {
-            $distance = $this->distanceWithUserBook($value, $userLastBook[0]);
+            $distance = $this->distanceWithUserBook($value, $userLastBook);
             $cbooks[] = array(
                 "id" => $value['id'],
                 "distance" => $distance
@@ -71,14 +77,16 @@ class RecommandationController extends Controller
     function get4BooksIds($books)
     {
         $ids = array();
-        for ($i=0; $i < 4; $i++) { 
+        for ($i = 0; $i < 4; $i++) {
             $ids[] = $books[$i]['id'];
         }
         return $ids;
     }
 
-    function get4books($ids){
-        $books = Exemplaire::whereIn('livre_id',$ids)->get();
-        return  ($books);
+    function get4books($ids)
+    {
+        $books = Exemplaire::whereIn('livre_id', $ids)->get();
+        $books = $books->unique('livre_id');
+        return ExemplaireResource::collection($books);
     }
 }
