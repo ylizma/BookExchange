@@ -23,7 +23,12 @@ class RecommandationController extends Controller
                 ->orWhere('user_id', 1)
                 ->get()->toArray();
             $books = DB::table('livres')->select('id', 'nbrpage', 'categorie_id')->whereNotIn('id', json_decode(json_encode($exemplaires), true))->get();
-            $userLastBook = Exchange::where('user_id', 1)->with('desiredbook.livre')->get()->toArray();
+            $userLastBook = Exchange::where('user_id', 1)
+            ->with('desiredbook.livre')
+            ->orderBy('requested_at','desc')->first();
+            if(!$userLastBook){
+                return response()->json("not yet",500);
+            }
             $calculatedDistances =  $this->booksDistances($books, $userLastBook);
             $sortedBooks = $this->sortBooksByDistance($calculatedDistances);
             $booksIds = $this->get4BooksIds($sortedBooks);
@@ -38,7 +43,7 @@ class RecommandationController extends Controller
         $distance = 0;
         // dd($userLastBook[0]);
         foreach (json_decode($books, true) as $book => $value) {
-            $distance = $this->distanceWithUserBook($value, $userLastBook[0]);
+            $distance = $this->distanceWithUserBook($value, $userLastBook);
             $cbooks[] = array(
                 "id" => $value['id'],
                 "distance" => $distance
