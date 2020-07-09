@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Exemplaire;
 use App\Livre;
 use App\Exchange;
+use App\Http\Resources\ExemplaireResource;
 use Illuminate\Support\Facades\DB;
 
 class RecommandationController extends Controller
@@ -86,6 +87,6 @@ class RecommandationController extends Controller
     {
         $books = Exemplaire::whereIn('livre_id', $ids)->get();
         $books = $books->unique('livre_id');
-        return ($books);
+        return ExemplaireResource::collection($books);
     }
 }
